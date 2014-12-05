@@ -82,19 +82,8 @@ public class PlayerController : MonoBehaviour {
 	
 	void OnCollisionEnter2D(Collision2D col)
 	{
-		// If red orton hits Cena enemy: destroy Cena
-		if (gameObject.renderer.material.name == "Angry (Instance)" & (col.gameObject.name == "Enemy" || col.gameObject.name == "Enemy(Clone)")) 
-		{
-			Destroy(col.gameObject);
-		}
-		// If Cena enemy hits normal Orton: destroy Orton, restart level
-		else if (col.gameObject.tag == "enemy") 
-		{
-			Destroy(gameObject);
-			Application.LoadLevel(Application.loadedLevel);
-		}
 		// If Orton hits a piece of floor, reset the available jumps and switch back to normal texture 
-		else if (col.gameObject.tag == "Ground") 
+		if (col.gameObject.tag == "Ground") 
 		{
 			jumpsMade = 0;
 			renderer.material = materials[matreset];

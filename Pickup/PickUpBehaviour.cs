@@ -46,7 +46,7 @@ public class PickUpBehaviour : MonoBehaviour {
 					currentbbw.gameObject.GetComponent<BBWController> ().moveRight = lrrhOldRight;
 					currentbbw.gameObject.GetComponent<BBWController> ().moveLeft = lrrhOldLeft;
 					currentbbw.gameObject.GetComponent<BBWController> ().moveJump = lrrhOldUp;
-					currentbbw.gameObject.GetComponent<BBWController> ().moveJump = lrrhOldDown;
+					currentbbw.gameObject.GetComponent<BBWController> ().moveDown = lrrhOldDown;
 
 
 					Instantiate (currentbbw, currentlrrh.gameObject.transform.position, currentlrrh.gameObject.transform.rotation);

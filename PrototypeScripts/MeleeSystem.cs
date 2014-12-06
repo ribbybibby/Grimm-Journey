@@ -6,17 +6,33 @@ public class MeleeSystem : MonoBehaviour {
 	public float theDamage; // Amount of damage done with each attack
 	public float theDistance; // Range/distance of the boxcast/the attack
 	public KeyCode attackKey; // The key to attack
+	public KeyCode huffKey; //Key to Huff and puff attack
 	public KeyCode attackKeyUp; // The up key
 	public KeyCode attackKeyDown; // The down key
 	public KeyCode attackKeyLeft; // The left key
 	public KeyCode attackKeyRight; // The right key
 	public Material[] materials; // 0 normal, 1 attack
 
+	//Claw attack code
+	public GameObject sword;
+	public float swordLength;
+
+	//Huff and Puff attack
+	public GameObject huffpuffL;
+	public GameObject huffpuffR;
+
+	//Bite Attack
+	public GameObject bite;
+
 
 		
 	// Press attackKeyUp to attack in the direction you're facing
 	// We do a directional attack if Up or Down are held !!! CURRENTLY NOT WORKING IF THE CHARACTER TIPS OVER !!!
 	// ^ TODO: Possible workaround would be to flip the character back to Y orientation on hitting the ground 
+
+	/*Rob Update - Added Left and Right to the Input.GetKey due to how I now spawn attacks
+	 Attacks are now spawned as their own objects. For example the claw attack will spawn a claw that does the attack
+	 All attack damage and collision detection is handled by the claw object rather than here. This class only instantiates each attack :) */
 	void Update () {
 		gameObject.renderer.material = materials[0];
 		if (Input.GetKeyDown (attackKey))
@@ -24,16 +40,28 @@ public class MeleeSystem : MonoBehaviour {
 
 			if (Input.GetKey (attackKeyUp))
 			{
-				DoMelee (materials[1], transform.position, collider2D.bounds.size, 0f, transform.up, theDistance, theDamage);
+				//DoMelee (materials[1], transform.position, collider2D.bounds.size, 0f, transform.up, theDistance, theDamage);
+				Instantiate(sword, new Vector3(transform.position.x, transform.position.y+swordLength, transform.position.z), Quaternion.Euler(new Vector3(0, 0, 100)));
+				Instantiate(bite, new Vector3(transform.position.x, transform.position.y+swordLength, transform.position.z), Quaternion.Euler(new Vector3(0, 0, 100)));
 			}
 			if (Input.GetKey (attackKeyDown))
 			{
-				DoMelee (materials[1], transform.position, collider2D.bounds.size, 0f, -transform.up, theDistance, theDamage);
+				//DoMelee (materials[1], transform.position, collider2D.bounds.size, 0f, -transform.up, theDistance, theDamage);
+				Instantiate(sword, new Vector3(transform.position.x, transform.position.y-swordLength, transform.position.z), Quaternion.Euler(new Vector3(0, 0, -100)));
+				Instantiate(bite, new Vector3(transform.position.x, transform.position.y-swordLength, transform.position.z), Quaternion.Euler(new Vector3(0, 0, -100)));
 			}
-			else
+			if (Input.GetKey (attackKeyRight))
 			{
-				DoMelee (materials[1], transform.position, new Vector2 (collider2D.bounds.size.x, collider2D.bounds.size.y * 1.3f), 0f, transform.right, theDistance, theDamage);
-			}	
+				//DoMelee (materials[1], transform.position, collider2D.bounds.size, 0f, -transform.up, theDistance, theDamage);
+				Instantiate(sword, new Vector3(transform.position.x+swordLength, transform.position.y, transform.position.z), Quaternion.Euler(new Vector3(0, 0, 0)));
+				Instantiate(huffpuffR, new Vector3(transform.position.x+swordLength, transform.position.y, transform.position.z), Quaternion.Euler(new Vector3(0, 0, 0)));
+			}
+			if (Input.GetKey (attackKeyLeft))
+			{
+				//DoMelee (materials[1], transform.position, collider2D.bounds.size, 0f, -transform.up, theDistance, theDamage);
+				Instantiate(sword, new Vector3(transform.position.x-swordLength, transform.position.y, transform.position.z), Quaternion.Euler(new Vector3(0, 0, 0)));
+				Instantiate(huffpuffL, new Vector3(transform.position.x-swordLength, transform.position.y, transform.position.z), Quaternion.Euler(new Vector3(0, 0, 0)));
+			}
 		}
 
 	}

@@ -1,11 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class SwordMechanic : MonoBehaviour {
+public class BiteAttack : MonoBehaviour {
 
 	public float killDelay;
 	public float damage;
-
+	
 	// Use this for initialization
 	void Start () {
 		StartCoroutine(waitThenKill());
@@ -13,9 +13,9 @@ public class SwordMechanic : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
+		
 	}
-
+	
 	void OnTriggerEnter2D(Collider2D other) {
 		if(other.name == "Enemy"){
 			Debug.Log("Test collision");
@@ -23,7 +23,7 @@ public class SwordMechanic : MonoBehaviour {
 		}
 		//gameObject.transform.SendMessage("ApplyDamage", 5.0F, SendMessageOptions.DontRequireReceiver);
 	}
-
+	
 	IEnumerator waitThenKill(){
 		yield return new WaitForSeconds(killDelay);
 		Destroy(gameObject);

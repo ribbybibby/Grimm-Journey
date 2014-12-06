@@ -1,27 +1,37 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class SwordMechanic : MonoBehaviour {
+public class HuffNPuff : MonoBehaviour {
 
 	public float killDelay;
-	public float damage;
+	public string direction;
 
 	// Use this for initialization
 	void Start () {
 		StartCoroutine(waitThenKill());
+		huffBlast(direction);
 	}
 	
 	// Update is called once per frame
 	void Update () {
-	
-	}
 
+	}
+	
 	void OnTriggerEnter2D(Collider2D other) {
 		if(other.name == "Enemy"){
 			Debug.Log("Test collision");
-			other.transform.SendMessage("ApplyDamage", damage, SendMessageOptions.DontRequireReceiver);
+			other.transform.SendMessage("ApplyDamage", 20.0F, SendMessageOptions.DontRequireReceiver);
 		}
-		//gameObject.transform.SendMessage("ApplyDamage", 5.0F, SendMessageOptions.DontRequireReceiver);
+	}
+
+	void huffBlast(string direction){
+		if(direction == "Left"){
+			rigidbody2D.AddForce (new Vector2(-400F,0));
+		}
+
+		if(direction == "Right"){
+			rigidbody2D.AddForce (new Vector2(400F,0));
+		}
 	}
 
 	IEnumerator waitThenKill(){

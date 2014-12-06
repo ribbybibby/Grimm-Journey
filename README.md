@@ -1,4 +1,4 @@
 LudumDare31
 ===========
 
-My prototypes and other things for LudumDare31 (Jam).
+Shared repo for our LD31 scripts etc.

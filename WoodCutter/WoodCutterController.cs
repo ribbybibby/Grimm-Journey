@@ -2,26 +2,40 @@
 using System.Collections;
 
 public class WoodCutterController : MonoBehaviour {
-	public int speed;
-	public Camera camera;
-	public float sightdistance;
-	public float chance;
-	public int timeout;
-	private int startTimeOut;
-	public int losIncrease;
 
+	// Set in Unity
+	public int speed; // Speed of the character
+	public int losIncrease; // Multiplier to * speed by if WC spots BBW
+	public float sightDownDistance; // LOS downwards
+	public float sightSideDistance; // Line of sight for charge (speed increase)
+	public float sightCloseDistance; // Line of sight for turning around
+	public int timeout; // Time out for FallThroughFloor, so he doesn't just drop through 3 platforms in a second
+
+	// Private
+	private int startTimeOut; //
 	private bool headingright;
 	private int startSpeed;
-	
+
+	// Remember starting speed, the start of the timeout and make sure chars in the 'Enemy' layer ignore each other
 	void Start() {
 		startSpeed = speed;
 		startTimeOut = timeout;
-
+		Physics2D.IgnoreLayerCollision (11, 11);
 	}
-	// Update is called once per frame
-	void Update () {
+
+	/* Main method:
+	 * - Fix orientation every update
+	 * - Move timeout along for FallThroughFloor
+	 * - Speed up if BBW is in LOS
+	 * - Turn Around if BBW is within sightCloseDistance
+	 * - Translate left or right based on current heading
+	 * - Drop down if conditions are satisfied
+	 */
+	void FixedUpdate () {
+		transform.eulerAngles = new Vector3(0,0,0);
 		timeout--;
 		SpeedUpOnLOS ();
+		TurnAround ();
 		KeepOnMoving ();
 		FallThroughFloor ();
 	}
@@ -37,9 +51,8 @@ public class WoodCutterController : MonoBehaviour {
 
 		if ((bbwdiffx > -10 & bbwdiffx < 10) & bbwdiffy > 2 & timeout <= 0)
 		{
-			RaycastHit2D[] hit = Physics2D.RaycastAll (transform.position, -Vector2.up, sightdistance);
-
-			if (hit.Length >= 5 & hit[1].collider.tag == "PlatformTrigger") 
+			RaycastHit2D[] hit = Physics2D.RaycastAll (transform.position, -Vector2.up, sightDownDistance);
+			if (hit.Length > 3 & hit[1].collider.tag == "PlatformTrigger") 
 			{
 				Physics2D.IgnoreCollision(gameObject.collider2D, hit[2].rigidbody.collider2D);
 				timeout = startTimeOut;
@@ -47,22 +60,24 @@ public class WoodCutterController : MonoBehaviour {
 		}
 	}
 
+	// Tag the left and right boundary walls as LeftBound and RightBound
+	// Woody will turn around when he hits one
+	void OnCollisionEnter2D(Collision2D col)
+	{
+		if (col.collider.tag == "LeftBound") 
+		{
+			headingright = true;
+		}
+		if (col.collider.tag == "RightBound")
+		{
+			headingright = false;
+		}
+	}
+
 	// Woodsman moves along the X axis until he reaches near the camera's edge, 
 	// then he turns around and goes the other way
 	void KeepOnMoving ()
 	{
-		transform.eulerAngles = new Vector3(0,0,0);
-		Vector3 cam = camera.WorldToScreenPoint(transform.position);
-		if (cam.x < 100)
-		{
-			headingright = true;
-		}
-		else if (cam.x > 500)
-		{
-			headingright = false;
-			transform.Translate (-Vector2.right * speed * Time.deltaTime);
-		}
-		
 		if (headingright == true)
 		{
 			transform.Translate (Vector2.right * speed * Time.deltaTime);
@@ -77,7 +92,7 @@ public class WoodCutterController : MonoBehaviour {
 	void SpeedUpOnLOS() {
 		if (headingright == true)
 		{
-			RaycastHit2D[] hit = Physics2D.RaycastAll (transform.position, Vector2.right, sightdistance);
+			RaycastHit2D[] hit = Physics2D.RaycastAll (transform.position, Vector2.right, sightSideDistance);
 			for (int i = 0; i < hit.Length; i++)
 			{
 				if (hit[i].collider.tag == "BBW")
@@ -91,9 +106,9 @@ public class WoodCutterController : MonoBehaviour {
 				}
 			}
 		}
-		else if (headingright == false)
+		if (headingright == false)
 		{
-			RaycastHit2D[] hit = Physics2D.RaycastAll (transform.position, -Vector2.right, sightdistance);
+			RaycastHit2D[] hit = Physics2D.RaycastAll (transform.position, -Vector2.right, sightSideDistance);
 			for (int i = 0; i < hit.Length; i++)
 			{
 				if (hit[i].collider.tag == "BBW")
@@ -109,4 +124,31 @@ public class WoodCutterController : MonoBehaviour {
 		}
 
 	}
+
+	// If the BBW comes within sightCloseDistance of WC, WC will turn around to face BBW
+	void TurnAround ()
+	{
+		RaycastHit2D[] hitleft = Physics2D.RaycastAll (transform.position, -Vector2.right, sightCloseDistance);
+		RaycastHit2D[] hitright = Physics2D.RaycastAll (transform.position, Vector2.right, sightCloseDistance);
+
+		for (int i = 0; i < hitright.Length; i++)
+		{
+			if (hitright[i].collider.tag == "BBW")
+			{
+				headingright = true;
+			}
+		}
+
+		for (int i = 0; i < hitleft.Length; i++)
+		{
+			if (hitleft[i].collider.tag == "BBW")
+			{
+				headingright = false;
+			}
+		}
+
+
+
+	}
+
 }

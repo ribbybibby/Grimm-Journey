@@ -1,4 +1,4 @@
-LudumDare31
+A Grimm Journey
 ===========
 
-Shared repo for our LD31 scripts etc.
+The shared repo for our LD31 project.

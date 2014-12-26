@@ -26,17 +26,14 @@ public class MeleeSystem : MonoBehaviour {
 
 	//Bite Attack
 	public GameObject bite;
-
-
-		
-	// Press attackKeyUp to attack in the direction you're facing
-	// We do a directional attack if Up or Down are held !!! CURRENTLY NOT WORKING IF THE CHARACTER TIPS OVER !!!
-	// ^ TODO: Possible workaround would be to flip the character back to Y orientation on hitting the ground 
-
+	
 	/*Rob Update - Added Left and Right to the Input.GetKey due to how I now spawn attacks
 	 Attacks are now spawned as their own objects. For example the claw attack will spawn a claw that does the attack
 	 All attack damage and collision detection is handled by the claw object rather than here. This class only instantiates each attack :) */
 	void Update () {
+		// Which direction is BBW facing?
+		bool facingDirection = gameObject.GetComponent<BBWController>().facingRight;
+
 		//Debug.Log(Input.GetAxis("ClawBitePad"));
 		//Claw Attack
 		if (Input.GetKeyDown (attackClawKey) || Input.GetButtonDown("ClawBitePad"))
@@ -54,13 +51,13 @@ public class MeleeSystem : MonoBehaviour {
 				Instantiate(sword, new Vector3(transform.position.x, transform.position.y-swordLength, transform.position.z), Quaternion.Euler(new Vector3(0, 0, -100)));
 				//Instantiate(bite, new Vector3(transform.position.x, transform.position.y-swordLength, transform.position.z), Quaternion.Euler(new Vector3(0, 0, -100)));
 			}
-			if (Input.GetKey (attackKeyRight) || Input.GetAxis("Horizontal_PLR1") > 0)
+			if (Input.GetKey (attackKeyRight) || Input.GetAxis("Horizontal_PLR1") > 0 || (facingDirection == true && (!Input.GetKey (attackKeyUp) && !Input.GetKey (attackKeyDown))))
 			{
 				//DoMelee (materials[1], transform.position, collider2D.bounds.size, 0f, -transform.up, theDistance, theDamage);
 				Instantiate(sword, new Vector3(transform.position.x+swordLength, transform.position.y, transform.position.z), Quaternion.Euler(new Vector3(0, 0, 0)));
 				//Instantiate(huffpuffR, new Vector3(transform.position.x+swordLength, transform.position.y, transform.position.z), Quaternion.Euler(new Vector3(0, 0, 0)));
 			}
-			if (Input.GetKey (attackKeyLeft) || Input.GetAxis("Horizontal_PLR1") < 0)
+			if (Input.GetKey (attackKeyLeft) || Input.GetAxis("Horizontal_PLR1") < 0 || (facingDirection == false && (!Input.GetKey (attackKeyUp) && !Input.GetKey (attackKeyDown))))
 			{
 				//DoMelee (materials[1], transform.position, collider2D.bounds.size, 0f, -transform.up, theDistance, theDamage);
 				Instantiate(sword, new Vector3(transform.position.x-swordLength, transform.position.y, transform.position.z), Quaternion.Euler(new Vector3(0, 0, 0)));
@@ -70,11 +67,11 @@ public class MeleeSystem : MonoBehaviour {
 		//Huff Attack
 		if (Input.GetKeyDown (attackHuffKey)|| Input.GetButtonUp("HuffPad"))
 		{
-			if (Input.GetKey (attackKeyRight) || Input.GetAxis("Horizontal_PLR1") > 0)
+			if (Input.GetKey (attackKeyRight) || Input.GetAxis("Horizontal_PLR1") > 0 || facingDirection == true)
 			{
 				Instantiate(huffpuffR, new Vector3(transform.position.x+swordLength, transform.position.y, transform.position.z), Quaternion.Euler(new Vector3(0, 0, 0)));
 			}
-			if (Input.GetKey (attackKeyLeft)|| Input.GetAxis("Horizontal_PLR1") < 0)
+			if (Input.GetKey (attackKeyLeft)|| Input.GetAxis("Horizontal_PLR1") < 0 || facingDirection == false)
 			{
 				Instantiate(huffpuffL, new Vector3(transform.position.x-swordLength, transform.position.y, transform.position.z), Quaternion.Euler(new Vector3(0, 0, 0)));
 			}
@@ -91,11 +88,11 @@ public class MeleeSystem : MonoBehaviour {
 			{
 				Instantiate(bite, new Vector3(transform.position.x, transform.position.y-swordLength, transform.position.z), Quaternion.Euler(new Vector3(0, 0, -100)));
 			}
-			if (Input.GetKey (attackKeyRight) || Input.GetAxis("Horizontal_PLR1") > 0)
+			if (Input.GetKey (attackKeyRight) || Input.GetAxis("Horizontal_PLR1") > 0 || (facingDirection == true && (!Input.GetKey (attackKeyUp) && !Input.GetKey (attackKeyDown))))
 			{
 				Instantiate(bite, new Vector3(transform.position.x+swordLength, transform.position.y, transform.position.z), Quaternion.Euler(new Vector3(0, 0, 0)));
 			}
-			if (Input.GetKey (attackKeyLeft) || Input.GetAxis("Horizontal_PLR1") < 0)
+			if (Input.GetKey (attackKeyLeft) || Input.GetAxis("Horizontal_PLR1") < 0 || (facingDirection == false && (!Input.GetKey (attackKeyUp) && !Input.GetKey (attackKeyDown))))
 			{
 				Instantiate(bite, new Vector3(transform.position.x-swordLength, transform.position.y, transform.position.z), Quaternion.Euler(new Vector3(0, 0, 0)));
 			}

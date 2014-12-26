@@ -12,10 +12,14 @@ public class BBWController : MonoBehaviour {
 	public KeyCode moveJump; // Jump
 	public KeyCode moveDown; // Dash
 	public Material[] materials; //0 = Skin, 1 = Attack
+	public bool facingRight; // Allows Melee System to tell which direction BBW is facing 
+
+
 
 	//Used to load in the textures for the swap (left text for moving left / right text for moving right)
-	Texture leftTexture;
-	Texture rightTexture;
+	public Texture leftTexture;
+	public Texture rightTexture;
+
 
 	// Private
 	private int jumpsMade; //Number of jumps performed since leaving the ground
@@ -48,12 +52,15 @@ public class BBWController : MonoBehaviour {
 			{
 				transform.Translate (Vector2.right * speed * Time.deltaTime);
 				GameObject.Find("BBW").gameObject.GetComponent<Renderer>().material.SetTexture("_MainTex", rightTexture);
+				facingRight = true;
+
 			}
 			//Move Left
 			if (Input.GetKey (moveLeft)|| Input.GetAxis("Horizontal_PLR1") < 0) 
 			{
 				transform.Translate (-Vector2.right * speed * Time.deltaTime);	
 				GameObject.Find("BBW").gameObject.GetComponent<Renderer>().material.SetTexture("_MainTex", leftTexture);
+				facingRight = false;
 			}
 
 		}	

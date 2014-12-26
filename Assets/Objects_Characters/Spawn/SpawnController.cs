@@ -37,9 +37,9 @@ public class SpawnController : MonoBehaviour {
 		// a player char, instantiate a new WoodCutter
 		if (Time.time == woodtimer)
 		{
-			int rndNum = Random.Range(0,9);
-			if (rndNum < 6)
-			{
+			//int rndNum = Random.Range(0,9);
+			//if (rndNum < 6)
+			//{
 				Vector2 nearSpawn = GetClosestSpawn(aboveWood, "wood");
 				hitter = Physics2D.RaycastAll(nearSpawn, Vector2.right, Mathf.Infinity);
 				hitter2 = Physics2D.RaycastAll(nearSpawn, -Vector2.right, Mathf.Infinity);
@@ -66,7 +66,7 @@ public class SpawnController : MonoBehaviour {
 					}
 					
 				}
-			}	
+			//}	
 			woodtimer = Time.time + woodInterval;
 		}
 

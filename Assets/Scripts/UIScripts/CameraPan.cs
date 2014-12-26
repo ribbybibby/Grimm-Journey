@@ -17,8 +17,6 @@ public class CameraPan : MonoBehaviour {
 		if(stopPan == false){
 			gameObject.transform.position += new Vector3(0,0,15)*Time.deltaTime;
 		}
-		Debug.Log (stopPan);
-
 	}
 
 	void OnTriggerEnter(Collider other) {

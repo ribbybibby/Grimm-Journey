@@ -18,8 +18,6 @@ public class CameraPanUp : MonoBehaviour {
 		if(stopPan == false){
 			gameObject.transform.position += new Vector3(0,15,0)*Time.deltaTime;
 		}
-		Debug.Log (stopPan);
-		
 	}
 
 
@@ -36,7 +34,6 @@ public class CameraPanUp : MonoBehaviour {
 	void OnTriggerEnter(Collider other) {
 		if(other.name == "GroundMeet"){
 			stopPan = true;
-			Debug.Log(other);
 		}
 	}
 }

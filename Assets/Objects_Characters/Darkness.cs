@@ -29,7 +29,6 @@ public class Darkness : MonoBehaviour {
 		{
 			Application.LoadLevel(0);
 		}
-		Debug.Log (other);
 		//}
 	}
 }

@@ -19,7 +19,7 @@ public class BiteAttack : MonoBehaviour {
 	}
 	
 	void OnTriggerEnter2D(Collider2D other) {
-		if(other.name == "Enemy"){
+		if(other.gameObject.layer == 11){
 			Debug.Log("Test collision");
 			other.transform.SendMessage("ApplyDamage", damage, SendMessageOptions.DontRequireReceiver);
 		}

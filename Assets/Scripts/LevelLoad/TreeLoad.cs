@@ -20,9 +20,6 @@ public class TreeLoad : MonoBehaviour {
 		if(stopPan == false && direction == "right"){
 			gameObject.transform.position += new Vector3(-10,0,0)*Time.deltaTime;
 		}
-
-		Debug.Log (stopPan);
-		
 	}
 
 	void OnTriggerEnter(Collider other) {

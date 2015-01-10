@@ -20,10 +20,8 @@ public class HuffNPuff : MonoBehaviour {
 	}
 	
 	void OnTriggerEnter2D(Collider2D other) {
-		Debug.Log ("Hit the mark");
 		if (other.gameObject.layer == 11)
 		{
-			Debug.Log("Test collision");
 			other.transform.SendMessage("ApplyDamage", 20.0F, SendMessageOptions.DontRequireReceiver);
 		}
 	}

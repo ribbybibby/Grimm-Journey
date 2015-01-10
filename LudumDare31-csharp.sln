@@ -5,6 +5,8 @@ Project("{191FCF08-67CE-F2E8-A181-3A437EEBA8E7}") = "LudumDare31", "Assembly-CSh
 EndProject
 Project("{191FCF08-67CE-F2E8-A181-3A437EEBA8E7}") = "LudumDare31", "Assembly-CSharp-vs.csproj", "{C91849E4-3D95-D3E1-78E7-A3364DD0D8B4}"
 EndProject
+Project("{191FCF08-67CE-F2E8-A181-3A437EEBA8E7}") = "LudumDare31", "Assembly-CSharp-Editor-vs.csproj", "{7FC970E5-1C57-E6BD-D047-D2FF7F4A824E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,11 +21,15 @@ Global
 		{C91849E4-3D95-D3E1-78E7-A3364DD0D8B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C91849E4-3D95-D3E1-78E7-A3364DD0D8B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C91849E4-3D95-D3E1-78E7-A3364DD0D8B4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7FC970E5-1C57-E6BD-D047-D2FF7F4A824E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7FC970E5-1C57-E6BD-D047-D2FF7F4A824E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7FC970E5-1C57-E6BD-D047-D2FF7F4A824E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7FC970E5-1C57-E6BD-D047-D2FF7F4A824E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
-										GlobalSection(MonoDevelopProperties) = preSolution
+																GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = Assembly-CSharp.csproj
 		Policies = $0
 		$0.TextStylePolicy = $1

@@ -15,7 +15,7 @@ public class WitchController : MonoBehaviour {
 	private int startTimeOut; //
 	private bool headingright;
 	private bool headingup;
-	private bool dropped;
+	//private bool dropped;
 	
 	//Used to load in the textures for the swap (left text for moving left / right text for moving right)
 	Texture leftTexture;
@@ -24,7 +24,7 @@ public class WitchController : MonoBehaviour {
 	// Make sure chars in the 'Enemy' layer ignore each other, set 'dropped' to false
 	void Start() {
 		headingup = true;
-		dropped = false;
+		// dropped = false;
 		Physics2D.IgnoreLayerCollision (11, 11);
 		
 		//Loading in the textures :D

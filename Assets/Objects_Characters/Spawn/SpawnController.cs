@@ -32,10 +32,13 @@ public class SpawnController : MonoBehaviour {
 	// Fixed Update, for the sake of the timers
 	void FixedUpdate () 
 	{
+		//Debug.Log ("Time:" + Time.time);
+		//Debug.Log ("Wood Timer:" + woodtimer);
+		//Debug.Log ("Wood Interval:" + woodInterval);
 
 		// Cast a ray out to the left and right of the spawn points, if it hits
 		// a player char, instantiate a new WoodCutter
-		if (Time.time == woodtimer)
+		if (Time.time >= woodtimer)
 		{
 			//int rndNum = Random.Range(0,9);
 			//if (rndNum < 6)
@@ -70,8 +73,9 @@ public class SpawnController : MonoBehaviour {
 			woodtimer = Time.time + woodInterval;
 		}
 
+
 		// Spawn witch at the Vector returned by nearSpawn
-		if (Time.time == witchtimer)
+		if (Time.time >= witchtimer)
 		{
 			int rndNum = Random.Range(0,9);
 			if (rndNum < 3)
@@ -86,7 +90,7 @@ public class SpawnController : MonoBehaviour {
 		}
 
 		// Spawn troll at the Vector returned by GetClosestSpawn 
-		if (Time.time == trolltimer)
+		if (Time.time >= trolltimer)
 		{
 			int rndNum = Random.Range(0,9);
 			if (rndNum < 2)

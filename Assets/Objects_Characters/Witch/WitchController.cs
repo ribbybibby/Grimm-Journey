@@ -48,13 +48,13 @@ public class WitchController : MonoBehaviour {
 	
 	// Tag the left and right boundary walls as LeftBound and RightBound
 	// T will turn around when he hits one
-	void OnCollisionEnter2D(Collision2D col)
+	void OnTriggerEnter2D(Collider2D col)
 	{
-		if (col.collider.tag == "LeftBound") 
+		if (col.gameObject.tag == "LeftBound") 
 		{
 			headingright = true;
 		}
-		if (col.collider.tag == "RightBound")
+		if (col.gameObject.tag == "RightBound")
 		{
 			headingright = false;
 		}

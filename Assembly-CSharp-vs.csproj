@@ -63,6 +63,7 @@
      <Compile Include="Assets\Objects_Characters\Troll\TrollController.cs" />
      <Compile Include="Assets\Objects_Characters\Witch\WitchController.cs" />
      <Compile Include="Assets\Objects_Characters\WoodCutter\WoodCutterController.cs" />
+     <Compile Include="Assets\Resources\LRRHTouching.cs" />
      <Compile Include="Assets\Resources\Scripts\LevelLoad\LoadNextLevel.cs" />
      <Compile Include="Assets\Scripts\LevelLoad\BackGroundDrop.cs" />
      <Compile Include="Assets\Scripts\LevelLoad\CameraPanUp.cs" />

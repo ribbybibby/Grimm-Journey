@@ -7,6 +7,8 @@ public class BBWController : MonoBehaviour {
 	public float speed; //Player move speed
 	public int jumpLimit; // Number of jumps allowed before having to return to the floor
 	public int jumpHeight; //Jump Height
+	public float airMoveIncrement; //How much to decrease the airborne x-axis movement by each frame
+	public float airGravityIncrement; //How much to increment the airborne gravity by each frame
 	public KeyCode moveRight; // Right
 	public KeyCode moveLeft; // Left
 	public KeyCode moveJump; // Jump
@@ -23,6 +25,9 @@ public class BBWController : MonoBehaviour {
 
 	// Private
 	private int jumpsMade; //Number of jumps performed since leaving the ground
+	private float airMoves; //Incremented value for x-axis movement while in the air
+	private float airGravity; //Incremented value for x-axis movement while in the air
+	private float origGravity; //Original gravity of the character
 	private SoundManager play;
 
 
@@ -38,6 +43,9 @@ public class BBWController : MonoBehaviour {
 		//Loading in the textures :D
 		leftTexture = Resources.Load ("Textures/BBW", typeof(Texture)) as Texture;
 		rightTexture = Resources.Load ("Textures/BBW_Flip", typeof(Texture)) as Texture;
+
+		airMoves = 1;
+		origGravity = gameObject.rigidbody2D.gravityScale;
 	}
 
 	// Movement controls
@@ -50,7 +58,17 @@ public class BBWController : MonoBehaviour {
 			//Move Right
 			if (Input.GetKey (moveRight)|| Input.GetAxis("Horizontal_PLR1") > 0)
 			{
-				transform.Translate (Vector2.right * speed * Time.deltaTime);
+				if (airMoves == 1)
+				{
+					transform.Translate (Vector2.right * speed * Time.deltaTime);
+				}
+				else if (airMoves > 1) 
+				{
+					transform.Translate (Vector2.right * (speed/airMoves) * Time.deltaTime);
+					airMoves = airMoves + airMoveIncrement; 
+					gameObject.rigidbody2D.gravityScale = gameObject.rigidbody2D.gravityScale + airGravityIncrement;
+				}
+
 				GameObject.Find("BBW").gameObject.GetComponent<Renderer>().material.SetTexture("_MainTex", rightTexture);
 				facingRight = true;
 
@@ -58,7 +76,17 @@ public class BBWController : MonoBehaviour {
 			//Move Left
 			if (Input.GetKey (moveLeft)|| Input.GetAxis("Horizontal_PLR1") < 0) 
 			{
-				transform.Translate (-Vector2.right * speed * Time.deltaTime);	
+				if (airMoves == 1)
+				{
+					transform.Translate (-Vector2.right * speed * Time.deltaTime);
+				}
+				else if (airMoves > 1) 
+				{
+					transform.Translate (-Vector2.right * (speed/airMoves) * Time.deltaTime);
+					airMoves = airMoves + airMoveIncrement; 
+					gameObject.rigidbody2D.gravityScale = gameObject.rigidbody2D.gravityScale + airGravityIncrement;
+				}
+
 				GameObject.Find("BBW").gameObject.GetComponent<Renderer>().material.SetTexture("_MainTex", leftTexture);
 				facingRight = false;
 			}
@@ -66,6 +94,14 @@ public class BBWController : MonoBehaviour {
 		}	
 	}
 
+	void OnCollisionEnter2D(Collision2D col)
+	{
+		if (col.gameObject.tag == "Ground") {
+			jumpsMade = 0;
+			airMoves = 1;
+			gameObject.rigidbody2D.gravityScale = origGravity;
+		}
+	}
 
 	// On Collision with LRRH, allow jumping
 	void OnTriggerEnter2D(Collider2D other)
@@ -91,6 +127,8 @@ public class BBWController : MonoBehaviour {
 		if (other.tag == "PlatformTrigger" || other.gameObject.tag == "LRRHTrigger") 
 		{
 			jumpsMade = 0;
+			airMoves = 1;
+			gameObject.rigidbody2D.gravityScale = origGravity;
 		}
 	}
 
@@ -107,6 +145,7 @@ public class BBWController : MonoBehaviour {
 					play.PlayJumpBBW();
 					rigidbody2D.AddForce (Vector2.up * jumpHeight);
 					jumpsMade++;
+					airMoves = airMoves + airMoveIncrement;
 				}
 			}
 		}

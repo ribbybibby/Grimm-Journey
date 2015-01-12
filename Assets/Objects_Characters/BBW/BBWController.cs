@@ -93,16 +93,7 @@ public class BBWController : MonoBehaviour {
 
 		}	
 	}
-
-	void OnCollisionEnter2D(Collision2D col)
-	{
-		if (col.gameObject.tag == "Ground") {
-			jumpsMade = 0;
-			airMoves = 1;
-			gameObject.rigidbody2D.gravityScale = origGravity;
-		}
-	}
-
+	
 	// On Collision with LRRH, allow jumping
 	void OnTriggerEnter2D(Collider2D other)
 	{
@@ -124,7 +115,7 @@ public class BBWController : MonoBehaviour {
 		}
 		
 		//If BBW hits a piece of floor, reset the available jumps and switch back to normal texture 
-		if (other.tag == "PlatformTrigger" || other.gameObject.tag == "LRRHTrigger") 
+		if (other.tag == "Ground" || other.gameObject.tag == "LRRHTrigger") 
 		{
 			jumpsMade = 0;
 			airMoves = 1;

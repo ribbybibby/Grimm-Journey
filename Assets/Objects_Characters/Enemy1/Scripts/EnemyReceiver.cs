@@ -2,7 +2,27 @@
 using System.Collections;
 
 public class EnemyReceiver : MonoBehaviour {
-	public float health;
+	// Set in Unity
+	public float health; // Health value
+	public float healthDecay; // Value health decays by each update that it is above the starting value
+
+	// Leave alone
+	public float startingHealth; // The original health value
+
+	// Save the initial health value
+	void Start() 
+	{
+		startingHealth = health;
+	}
+
+	void Update()
+	{
+		// If health is above the initial value, apply health decay
+		if (health > startingHealth) 
+		{
+			health = health - healthDecay;
+		}
+	}
 	
 	public void ApplyDamage(float theDamage)
 	{

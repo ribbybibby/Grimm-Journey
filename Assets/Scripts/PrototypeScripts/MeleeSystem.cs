@@ -23,9 +23,19 @@ public class MeleeSystem : MonoBehaviour {
 	//Huff and Puff attack
 	public GameObject huffpuffL;
 	public GameObject huffpuffR;
-
+	public bool huffCooldown;
+	
 	//Bite Attack
 	public GameObject bite;
+	public float biteCooldown;
+	private float biteTimer;
+
+
+	void Start () 
+	{
+		huffCooldown = true;
+		biteTimer = Time.time;
+	}
 	
 	/*Rob Update - Added Left and Right to the Input.GetKey due to how I now spawn attacks
 	 Attacks are now spawned as their own objects. For example the claw attack will spawn a claw that does the attack
@@ -65,40 +75,72 @@ public class MeleeSystem : MonoBehaviour {
 			}
 		}
 		//Huff Attack
+		/* 
+		 * 1. Cooldown is controlled by the huffCooldown bool
+		 * 
+		 * 2. When we instantiate the huff object we set this object 
+		 * as the parent so that huff can set huffCooldown back to true
+		 * when it destroys itself
+		 * 
+		 */
 		if (Input.GetKeyDown (attackHuffKey)|| Input.GetButtonUp("HuffPad"))
 		{
-			if (Input.GetKey (attackKeyRight) || Input.GetAxis("Horizontal_PLR1") > 0 || facingDirection == true)
+			if (huffCooldown == true) 
 			{
-				Instantiate(huffpuffR, new Vector3(transform.position.x+swordLength, transform.position.y, transform.position.z), Quaternion.Euler(new Vector3(0, 0, 0)));
-			}
-			if (Input.GetKey (attackKeyLeft)|| Input.GetAxis("Horizontal_PLR1") < 0 || facingDirection == false)
-			{
-				Instantiate(huffpuffL, new Vector3(transform.position.x-swordLength, transform.position.y, transform.position.z), Quaternion.Euler(new Vector3(0, 0, 0)));
+				if (Input.GetKey (attackKeyRight) || Input.GetAxis("Horizontal_PLR1") > 0 || facingDirection == true)
+				{
+					huffCooldown = false;
+					GameObject newHuff = (GameObject)Instantiate(huffpuffR, new Vector3(transform.position.x+swordLength, transform.position.y, transform.position.z), Quaternion.Euler(new Vector3(0, 0, 0)));
+					newHuff.GetComponent<HuffNPuff>().parentBBW = gameObject;
+
+				}
+				if (Input.GetKey (attackKeyLeft)|| Input.GetAxis("Horizontal_PLR1") < 0 || facingDirection == false)
+				{
+					huffCooldown = false;
+					GameObject newHuff = (GameObject)Instantiate(huffpuffL, new Vector3(transform.position.x-swordLength, transform.position.y, transform.position.z), Quaternion.Euler(new Vector3(0, 0, 0)));
+					newHuff.GetComponent<HuffNPuff>().parentBBW = gameObject;
+				}
 			}
 		}
 		//Bite Attack
+		/* 
+		 * 1. Cooldown is controlled by the biteCooldown public variable
+		 * 
+		 * 2. When we instantiate the Bite object we set this object as 
+		 * the parent so that Bite can send stuff back to it (health) 
+		 * 
+		 */
 		if (Input.GetKeyDown (attackBiteKey)|| Input.GetButtonUp("BitePad"))
 		{
 			
-			if (Input.GetKey (attackKeyUp) || Input.GetAxis("Vertical_PLR1") > 0)
+			if (Time.time >= biteTimer)
 			{
-				Instantiate(bite, new Vector3(transform.position.x, transform.position.y+swordLength, transform.position.z), Quaternion.Euler(new Vector3(0, 0, 100)));
-			}
-			if (Input.GetKey (attackKeyDown) || Input.GetAxis("Vertical_PLR1") < 0)
-			{
-				Instantiate(bite, new Vector3(transform.position.x, transform.position.y-swordLength, transform.position.z), Quaternion.Euler(new Vector3(0, 0, -100)));
-			}
-			if (Input.GetKey (attackKeyRight) || Input.GetAxis("Horizontal_PLR1") > 0 || (facingDirection == true && (!Input.GetKey (attackKeyUp) && !Input.GetKey (attackKeyDown))))
-			{
-				Instantiate(bite, new Vector3(transform.position.x+swordLength, transform.position.y, transform.position.z), Quaternion.Euler(new Vector3(0, 0, 0)));
-			}
-			if (Input.GetKey (attackKeyLeft) || Input.GetAxis("Horizontal_PLR1") < 0 || (facingDirection == false && (!Input.GetKey (attackKeyUp) && !Input.GetKey (attackKeyDown))))
-			{
-				Instantiate(bite, new Vector3(transform.position.x-swordLength, transform.position.y, transform.position.z), Quaternion.Euler(new Vector3(0, 0, 0)));
+				biteTimer = Time.time + biteCooldown;
+				if (Input.GetKey (attackKeyUp) || Input.GetAxis("Vertical_PLR1") > 0)
+				{
+					GameObject newBite = (GameObject)Instantiate(bite, new Vector3(transform.position.x, transform.position.y+swordLength, transform.position.z), Quaternion.Euler(new Vector3(0, 0, 100)));
+					newBite.GetComponent<BiteAttack>().parentBBW = gameObject;
+				}
+				if (Input.GetKey (attackKeyDown) || Input.GetAxis("Vertical_PLR1") < 0)
+				{
+					GameObject newBite = (GameObject)Instantiate(bite, new Vector3(transform.position.x, transform.position.y-swordLength, transform.position.z), Quaternion.Euler(new Vector3(0, 0, -100)));
+					newBite.GetComponent<BiteAttack>().parentBBW = gameObject;
+				}
+				if (Input.GetKey (attackKeyRight) || Input.GetAxis("Horizontal_PLR1") > 0 || (facingDirection == true && (!Input.GetKey (attackKeyUp) && !Input.GetKey (attackKeyDown))))
+				{
+					GameObject newBite = (GameObject)Instantiate(bite, new Vector3(transform.position.x+swordLength, transform.position.y, transform.position.z), Quaternion.Euler(new Vector3(0, 0, 0)));
+					newBite.GetComponent<BiteAttack>().parentBBW = gameObject;
+				}
+				if (Input.GetKey (attackKeyLeft) || Input.GetAxis("Horizontal_PLR1") < 0 || (facingDirection == false && (!Input.GetKey (attackKeyUp) && !Input.GetKey (attackKeyDown))))
+				{
+					GameObject newBite = (GameObject)Instantiate(bite, new Vector3(transform.position.x-swordLength, transform.position.y, transform.position.z), Quaternion.Euler(new Vector3(0, 0, 0)));
+					newBite.GetComponent<BiteAttack>().parentBBW = gameObject;
+				}
 			}
 
 		}
 	}
+
 
 	/* Boxcast melee attack method 
 	void DoMelee (Material skin, Vector2 origin, Vector2 size, float angle, Vector2 direction, float distance, float damage)

@@ -3,8 +3,11 @@ using System.Collections;
 
 public class HuffNPuff : MonoBehaviour {
 
+	public float huffForce;
 	public float killDelay;
 	public string direction;
+
+	public GameObject parentBBW;
 
 	// Use this for initialization
 	void Start () {
@@ -28,16 +31,17 @@ public class HuffNPuff : MonoBehaviour {
 
 	void huffBlast(string direction){
 		if(direction == "Left"){
-			rigidbody2D.AddForce (new Vector2(-400F,0));
+			rigidbody2D.AddForce (new Vector2(-huffForce,0));
 		}
 
 		if(direction == "Right"){
-			rigidbody2D.AddForce (new Vector2(400F,0));
+			rigidbody2D.AddForce (new Vector2(huffForce,0));
 		}
 	}
 
 	IEnumerator waitThenKill(){
 		yield return new WaitForSeconds(killDelay);
+		parentBBW.GetComponent<MeleeSystem> ().huffCooldown = true;
 		Destroy(gameObject);
 	}
 }

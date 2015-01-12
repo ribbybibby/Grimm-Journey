@@ -23,7 +23,6 @@ public class SwordMechanic : MonoBehaviour {
 	//Note to self - fix this
 	void OnTriggerEnter2D(Collider2D other) {
 		if(other.name == "Cat" || other.name == "WoodCutter" || other.name == "Troll" || other.name == "Witch"){
-			Debug.Log("CLAW IT");
 			other.transform.SendMessage("ApplyDamage", damage, SendMessageOptions.DontRequireReceiver);
 		}
 	}

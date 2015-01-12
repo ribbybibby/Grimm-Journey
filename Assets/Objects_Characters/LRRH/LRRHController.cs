@@ -97,7 +97,7 @@ public class LRRHController : MonoBehaviour {
 		}	
 	}
 
-	void OnCollisionEnter2D(Collision2D col)
+	void OnTriggerEnter2D(Collider2D col)
 	{
 		// If she hits a piece of floor, reset the available jumps
 		if (col.gameObject.tag == "Ground" || col.gameObject.tag == "BBW") 

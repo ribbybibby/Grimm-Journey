@@ -11,7 +11,7 @@ public class TrollController : MonoBehaviour {
 	// Private
 	private int startTimeOut; //
 	public bool headingright;
-	private bool dropped;
+	//private bool dropped;
 
 	//Used to load in the textures for the swap (left text for moving left / right text for moving right)
 	Texture leftTexture;
@@ -19,7 +19,7 @@ public class TrollController : MonoBehaviour {
 
 	// Make sure chars in the 'Enemy' layer ignore each other, set 'dropped' to false
 	void Start() {
-		dropped = false;
+		//dropped = false;
 		Physics2D.IgnoreLayerCollision (11, 11);
 
 		//Loading in the textures :D
@@ -38,10 +38,10 @@ public class TrollController : MonoBehaviour {
 		transform.eulerAngles = new Vector3(0,0,0);
 		TurnAround ();
 		KeepOnMoving ();
-		FallThroughFloor ();
+		//FallThroughFloor ();
 	}
 	
-	// Troll will only fall through the floor if he is above LRRH and there is a platform to land on
+	/*// Troll will only fall through the floor if he is above LRRH and there is a platform to land on
 	// Once he has dropped once, he will never drop again
 	void FallThroughFloor ()
 	{
@@ -69,7 +69,7 @@ public class TrollController : MonoBehaviour {
 				}
 			}
 		}
-	}
+	}*/
 
 	// Tag the left and right boundary walls as LeftBound and RightBound
 	// T will turn around when he hits one

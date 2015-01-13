@@ -17,6 +17,7 @@ public class WoodCutterController : MonoBehaviour {
 	private int startTimeOut; //
 	public bool headingright;
 	private int startSpeed;
+	private bool chasing;
 
 	//Used to load in the textures for the swap (left text for moving left / right text for moving right)
 	Texture leftTexture;
@@ -26,6 +27,7 @@ public class WoodCutterController : MonoBehaviour {
 	void Start() {
 		startSpeed = speed;
 		startTimeOut = timeout;
+		chasing = false;
 		Physics2D.IgnoreLayerCollision (11, 11);
 
 		//Loading in the textures :D
@@ -47,10 +49,10 @@ public class WoodCutterController : MonoBehaviour {
 		SpeedUpOnLOS ();
 		TurnAround ();
 		KeepOnMoving ();
-		FallThroughFloor ();
+		//FallThroughFloor ();
 	}
 	
-	// Woodcutter will only fall through the floor if he is above BBW and there is a platform to land on
+	/*// Woodcutter will only fall through the floor if he is above BBW and there is a platform to land on
 	// There is also a slight timeout on it.
 	void FallThroughFloor ()
 	{
@@ -75,17 +77,17 @@ public class WoodCutterController : MonoBehaviour {
 				}
 			}
 		}
-	}
+	}*/
 
 	// Tag the left and right boundary walls as LeftBound and RightBound
 	// Woody will turn around when he hits one
 	void OnTriggerEnter2D(Collider2D col)
 	{
-		if (col.gameObject.tag == "LeftBound") 
+		if (col.gameObject.tag == "LeftBound" || (col.gameObject.tag == "LeftBoundPatrol" && chasing != true)) 
 		{
 			headingright = true;
 		}
-		if (col.gameObject.tag == "RightBound")
+		if (col.gameObject.tag == "RightBound" || (col.gameObject.tag == "RightBoundPatrol" && chasing != true))
 		{
 			headingright = false;
 		}
@@ -117,11 +119,13 @@ public class WoodCutterController : MonoBehaviour {
 				if (hit[i].collider.tag == "BBW")
 				{
 					speed = speed * losIncrease;
+					chasing = true;
 					break;
 				}
 				else 
 				{
 					speed = startSpeed;
+					chasing = false;
 				}
 			}
 		}
@@ -133,11 +137,13 @@ public class WoodCutterController : MonoBehaviour {
 				if (hit[i].collider.tag == "BBW")
 				{
 					speed = speed * losIncrease;
+					chasing = true;
 					break;
 				}
 				else 
 				{
 					speed = startSpeed;
+					chasing = false;
 				}
 			}
 		}

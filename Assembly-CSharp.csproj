@@ -59,6 +59,8 @@
      <Compile Include="Assets\Objects_Characters\Platforms\PlatformCollisions.cs" />
      <Compile Include="Assets\Objects_Characters\SoundManager\SoundManager.cs" />
      <Compile Include="Assets\Objects_Characters\Spawn\SpawnController.cs" />
+     <Compile Include="Assets\Objects_Characters\Spawn\TrollSpawn.cs" />
+     <Compile Include="Assets\Objects_Characters\Spawn\WoodSpawn.cs" />
      <Compile Include="Assets\Objects_Characters\SpawnEnemy.cs" />
      <Compile Include="Assets\Objects_Characters\Troll\TrollController.cs" />
      <Compile Include="Assets\Objects_Characters\Witch\WitchController.cs" />

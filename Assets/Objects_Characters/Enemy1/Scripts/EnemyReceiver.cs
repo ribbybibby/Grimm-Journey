@@ -8,6 +8,7 @@ public class EnemyReceiver : MonoBehaviour {
 
 	// Leave alone
 	public float startingHealth; // The original health value
+	public GameObject spawnParent; // If enemy, which spawn created you?
 
 	// Save the initial health value
 	void Start() 
@@ -59,6 +60,19 @@ public class EnemyReceiver : MonoBehaviour {
 			}
 
 			Destroy(gameObject);
+
+			if (spawnParent != null)
+			{
+				switch (spawnParent.name)
+				{
+				case "WoodSpawn":
+					spawnParent.GetComponent<WoodSpawn> ().child--;
+					break;
+				case "TrollSpawn":
+					spawnParent.GetComponent<TrollSpawn> ().child--;
+					break;
+				}
+			}
 
 			if(gameObject.name == "BBW" || gameObject.name == "LRRH")
 			{

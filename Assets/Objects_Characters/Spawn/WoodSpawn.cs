@@ -23,10 +23,16 @@ public class WoodSpawn : MonoBehaviour {
 	void Start () {
 		bbw = GameObject.FindGameObjectWithTag ("BBW");
 		lrrh = GameObject.FindGameObjectWithTag ("LRRH");
-		timerUpdate = Time.time + timer;
-
+		timerUpdate = UpdateTimer (timer);
 	}
-	
+
+	// Fixed Update:
+	/* We only spawn an enemy if:
+	 * 1. BBW is below or level with the spawn
+	 * 2. The number of spawned children is lower than childLimit
+	 * 3. The timer has proc'd
+	 * 4. BBW and LRRH are distanceFromPlayers away from the spawn 
+	 */
 	void FixedUpdate () {
 		bbwDistance = Vector3.Distance(gameObject.transform.position, bbw.gameObject.transform.position);
 		lrrhDistance = Vector3.Distance(gameObject.transform.position, lrrh.gameObject.transform.position);
@@ -37,7 +43,17 @@ public class WoodSpawn : MonoBehaviour {
 			newWood.GetComponent<EnemyReceiver>().spawnParent = gameObject;
 			newWood.name = "WoodCutter";
 			child++;
-			timerUpdate = Time.time + timer;
+			timerUpdate = UpdateTimer (timer);
 		}
+	}
+
+	// Update Timer:
+	// Returns a value to set timerUpdate to
+	// This is the current time + (timer value + the timer value divided by a random number between 1 and 5)
+	public float UpdateTimer (float thetime) 
+	{
+		float rndNo = Random.Range(1,5);
+		float newTime = Time.time + (thetime + (thetime / rndNo));
+		return newTime;
 	}
 }

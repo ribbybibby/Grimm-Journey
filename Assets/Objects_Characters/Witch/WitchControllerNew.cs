@@ -1,12 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class WitchController : MonoBehaviour {
+public class WitchControllerNew : MonoBehaviour {
 	
 	// Set in Unity
 	public int speed; // Speed of the character
 	public float sightDownDistance; // LOS downwards
 	public float sightCloseDistance; // Line of sight for turning around
+	public float catTimer;
 
 	//CATS! D:
 	public GameObject cat; 
@@ -15,8 +16,7 @@ public class WitchController : MonoBehaviour {
 	private int startTimeOut; //
 	private bool headingright;
 	private bool headingup;
-	//private bool dropped;
-	
+	private float catTimerUpdate;
 	//Used to load in the textures for the swap (left text for moving left / right text for moving right)
 	Texture leftTexture;
 	Texture rightTexture;
@@ -26,10 +26,12 @@ public class WitchController : MonoBehaviour {
 		headingup = true;
 		// dropped = false;
 		Physics2D.IgnoreLayerCollision (11, 11);
-		
+
 		//Loading in the textures :D
 		leftTexture = Resources.Load ("Textures/witch", typeof(Texture)) as Texture;
 		rightTexture = Resources.Load ("Textures/witch", typeof(Texture)) as Texture;
+
+		catTimerUpdate = UpdateTimer (catTimer);
 	}
 	
 	/* Main method:
@@ -58,18 +60,36 @@ public class WitchController : MonoBehaviour {
 		{
 			headingright = false;
 		}
+		if (col.gameObject.tag == "Roof")
+		{
+			headingup = false;
+		}
+		if (col.gameObject.tag == "Floor")
+		{
+			headingup = true;
+		}
 	}
 
 	//Randomness 50% chance to go up or down
 	void rndCatFling(){
-		int rnd = Random.Range(0, 50);
-
-		if(rnd == 1){
+		if(Time.time >= catTimerUpdate)
+		{
 			GameObject newCat = (GameObject)Instantiate(cat, new Vector3(transform.position.x, transform.position.y, transform.position.z), Quaternion.Euler(new Vector3(0, 0, 0)));
 			newCat.name = "Cat";
+			catTimerUpdate = UpdateTimer (catTimer);
 		}
 	}
-	
+
+	// Update Timer:
+	// Returns a value to set timerUpdate to
+	// This is the current time + (timer value + the timer value divided by a random number between 1 and 5)
+	private float UpdateTimer (float thetime) 
+	{
+		float rndNo = Random.Range(1,5);
+		float newTime = Time.time + (thetime + (thetime / rndNo));
+		return newTime;
+	}
+
 	// T moves in one direction along the X axis until 'headright' changes
 	void KeepOnMoving ()
 	{
@@ -92,12 +112,12 @@ public class WitchController : MonoBehaviour {
 		if (headingup == true)
 		{
 			transform.Translate (Vector2.up * speed * Time.deltaTime);
-			gameObject.GetComponent<Renderer>().material.SetTexture("_MainTex", rightTexture);
+			//gameObject.GetComponent<Renderer>().material.SetTexture("_MainTex", rightTexture);
 		}
 		else if (headingup == false)
 		{
 			transform.Translate (-Vector2.up * speed * Time.deltaTime);
-			gameObject.GetComponent<Renderer>().material.SetTexture("_MainTex", leftTexture);
+			//gameObject.GetComponent<Renderer>().material.SetTexture("_MainTex", leftTexture);
 		}
 	}
 	

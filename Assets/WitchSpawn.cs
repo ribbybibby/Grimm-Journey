@@ -1,15 +1,15 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class WoodSpawn : MonoBehaviour {
+public class WitchSpawn : MonoBehaviour {
 
 	// Edit in Unity
 	public int childLimit;
-	public GameObject woody; // Woodcutter prefab
+	public GameObject witchy; // Woodcutter prefab
 	public float timer;
 	public float distanceFromPlayers;
 
-	// Don't edit in Unity
+	// Don't touch in unity
 	public int child;
 
 	// Private vars
@@ -18,7 +18,7 @@ public class WoodSpawn : MonoBehaviour {
 	private float timerUpdate;
 	private float bbwDistance;
 	private float lrrhDistance;
-	
+
 	// Use this for initialization
 	void Start () {
 		bbw = GameObject.FindGameObjectWithTag ("BBW");
@@ -26,23 +26,16 @@ public class WoodSpawn : MonoBehaviour {
 		timerUpdate = UpdateTimer (timer);
 		child = 0;
 	}
-
-	// Fixed Update:
-	/* We only spawn an enemy if:
-	 * 1. BBW is below or level with the spawn
-	 * 2. The number of spawned children is lower than childLimit
-	 * 3. The timer has proc'd
-	 * 4. BBW and LRRH are distanceFromPlayers away from the spawn 
-	 */
-	void FixedUpdate () {
+	
+	// Update is called once per frame
+	void Update () {
 		bbwDistance = Vector3.Distance(gameObject.transform.position, bbw.gameObject.transform.position);
 		lrrhDistance = Vector3.Distance(gameObject.transform.position, lrrh.gameObject.transform.position);
-		if ((gameObject.transform.position.y - bbw.gameObject.transform.position.y) >= -1.5f && child < childLimit 
-		    && Time.time >= timerUpdate && bbwDistance > distanceFromPlayers && lrrhDistance > distanceFromPlayers) 
+		if (child < childLimit && Time.time >= timerUpdate && bbwDistance > distanceFromPlayers && lrrhDistance > distanceFromPlayers)		
 		{
-			GameObject newWood = (GameObject)Instantiate(woody, gameObject.transform.position, Quaternion.identity);
-			newWood.GetComponent<EnemyReceiver>().spawnParent = gameObject;
-			newWood.name = "WoodCutter";
+			GameObject newWitch = (GameObject)Instantiate(witchy, gameObject.transform.position, Quaternion.identity);
+			newWitch.GetComponent<EnemyReceiver>().spawnParent = gameObject;
+			newWitch.name = "Witch";
 			child++;
 			timerUpdate = UpdateTimer (timer);
 		}

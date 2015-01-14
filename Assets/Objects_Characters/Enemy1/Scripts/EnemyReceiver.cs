@@ -71,6 +71,9 @@ public class EnemyReceiver : MonoBehaviour {
 				case "TrollSpawn":
 					spawnParent.GetComponent<TrollSpawn> ().child--;
 					break;
+				case "WitchSpawn":
+					spawnParent.GetComponent<WitchSpawn> ().child--;
+					break;
 				}
 			}
 

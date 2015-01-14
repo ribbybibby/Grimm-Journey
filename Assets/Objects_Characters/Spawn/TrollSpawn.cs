@@ -26,7 +26,7 @@ public class TrollSpawn : MonoBehaviour {
 		bbw = GameObject.FindGameObjectWithTag ("BBW");
 		lrrh = GameObject.FindGameObjectWithTag ("LRRH");
 		timerUpdate = UpdateTimer (timer);
-		
+		child = 0;
 	}
 
 	// Fixed Update:

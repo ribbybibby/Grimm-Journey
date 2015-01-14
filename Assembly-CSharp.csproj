@@ -64,6 +64,7 @@
      <Compile Include="Assets\Objects_Characters\SpawnEnemy.cs" />
      <Compile Include="Assets\Objects_Characters\Troll\TrollController.cs" />
      <Compile Include="Assets\Objects_Characters\Witch\WitchController.cs" />
+     <Compile Include="Assets\Objects_Characters\Witch\WitchControllerNew.cs" />
      <Compile Include="Assets\Objects_Characters\WoodCutter\WoodCutterController.cs" />
      <Compile Include="Assets\Resources\Scripts\LevelLoad\LoadNextLevel.cs" />
      <Compile Include="Assets\Scripts\LevelLoad\BackGroundDrop.cs" />
@@ -82,6 +83,7 @@
      <Compile Include="Assets\Scripts\UIScripts\MainMenuClick.cs" />
      <Compile Include="Assets\Scripts\UIScripts\QuitOut.cs" />
      <Compile Include="Assets\TrollAttack.cs" />
+     <Compile Include="Assets\WitchSpawn.cs" />
      <None Include="Assets\Standard Assets\Projectors\Guidelines.txt" />
      <None Include="Assets\Standard Assets\Toon Shading\Sources\Shaders\Toony-Basic.shader" />
      <None Include="Assets\Standard Assets\Projectors\Sources\Shaders\Projector Multiply.shader" />

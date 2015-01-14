@@ -2,23 +2,27 @@
 using System.Collections;
 
 public class PickUpBehaviour : MonoBehaviour {
-	public int timeout;
+	public float timeout;
 	public GameObject bbw1p;
 	public GameObject bbw2p;
 	public GameObject lrrh1p;
 	public GameObject lrrh2p;
+	public float distanceFromPickup;
 
-	private int startTimeOut;
+	private float startTimeOut;
 	private bool hidden;
 	private Vector2 startPos;
+	private GameObject bbw;
+	private GameObject lrrh;
+	private float bbwDistance;
+	private float lrrhDistance;
 
 	// Save the initial timeout value set in Unity and set hidden to false
 	void Start()
 	{
 		hidden = false;
-		startTimeOut = timeout;
+		startTimeOut = UpdateTimer (timeout);
 		startPos = transform.position;
-		timeout = 0;
 	}
 
 	// Bring back pick up if the time has ran down
@@ -26,8 +30,11 @@ public class PickUpBehaviour : MonoBehaviour {
 	{
 		if (hidden == true) // 
 		{
-			timeout--;
-			if (timeout <= 0)
+			bbw = GameObject.FindGameObjectWithTag ("BBW");
+			lrrh = GameObject.FindGameObjectWithTag ("LRRH");
+			bbwDistance = Vector3.Distance(startPos, bbw.gameObject.transform.position);
+			lrrhDistance = Vector3.Distance(startPos, lrrh.gameObject.transform.position);
+			if (Time.time >= startTimeOut && bbwDistance > distanceFromPickup && lrrhDistance > distanceFromPickup)
 			{
 				transform.position = startPos;
 				hidden = false;
@@ -39,7 +46,7 @@ public class PickUpBehaviour : MonoBehaviour {
 	// then switch positions, change the clone's name and destroy old objects.
 	void OnCollisionEnter2D(Collision2D col)
 	{
-		if (timeout <= 0 & (col.gameObject.tag == "BBW" || col.gameObject.tag == "LRRH"))
+		if /*(timeout >= startTimeOut &*/ (col.gameObject.tag == "BBW" || col.gameObject.tag == "LRRH")
 		{
 
 			SoundManager play = GameObject.Find("SoundManager").gameObject.GetComponent<SoundManager>();
@@ -70,9 +77,18 @@ public class PickUpBehaviour : MonoBehaviour {
 
 			Destroy (currentlrrh);
 			Destroy (currentbbw);
-			timeout = startTimeOut;
+			startTimeOut = UpdateTimer (timeout);
 			transform.position = new Vector2 (-100f, -100f);
 			hidden = true;
 		}
+	}
+
+		// Update Timer:
+	// Returns a value to set timerUpdate to
+	// This is the current time + (timer value + the timer value divided by a random number between 1 and 5)
+	public float UpdateTimer (float thetime) 
+	{
+		float newTime = Time.time + thetime;
+		return newTime;
 	}
 }

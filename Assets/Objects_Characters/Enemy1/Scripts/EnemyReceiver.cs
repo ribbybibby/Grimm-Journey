@@ -79,7 +79,7 @@ public class EnemyReceiver : MonoBehaviour {
 
 			if(gameObject.name == "BBW" || gameObject.name == "LRRH")
 			{
-				Application.LoadLevel(0);
+				Application.LoadLevel(6);
 			}
 		}
 

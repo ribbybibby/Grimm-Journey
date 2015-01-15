@@ -27,7 +27,7 @@ public class Darkness : MonoBehaviour {
 
 		if(other.gameObject.name == "BBW" || other.gameObject.name == "LRRH")
 		{
-			Application.LoadLevel(6);
+			Application.LoadLevel(0);
 		}
 		//}
 	}

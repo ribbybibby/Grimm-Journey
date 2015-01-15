@@ -4,7 +4,6 @@ using System.Collections;
 public class MainMenuClick : MonoBehaviour {
 
 	bool yesToStart;
-	public int loadLevelNumber;
 
 	// Use this for initialization
 	void Start () {
@@ -25,7 +24,7 @@ public class MainMenuClick : MonoBehaviour {
 		//if (Input.anyKey){
 		yield return new WaitForSeconds(3);
 		if (yesToStart == true){
-			Application.LoadLevel(loadLevelNumber);
+			Application.LoadLevel(1);
 		}
 	}
 }

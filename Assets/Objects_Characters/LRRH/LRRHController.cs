@@ -50,50 +50,103 @@ public class LRRHController : MonoBehaviour {
 //		Debug.Log(Input.GetAxis("Horizontal_PLR2"));
 		if (gameObject.tag == "LRRH")
 		{
-			//Move Right
-			if (Input.GetKey (moveRight) || Input.GetAxis("Horizontal_PLR2") > 0) 
-			{
-				if (airMoves == 1)
+			//We check the layer to make sure its player one (layer 12)
+			// If it is we let the pad controls work fine if its not we dont cause it's not player one
+			if (gameObject.layer == 12)
 				{
-					transform.Translate (Vector2.right * speed * Time.deltaTime);
-				}
-				else if (airMoves > 1) 
+				//Move Right
+				if (Input.GetKey (moveRight) || Input.GetAxis("Horizontal_PLR1") > 0) 
 				{
-					transform.Translate (Vector2.right * (speed/airMoves) * Time.deltaTime);
-					airMoves = airMoves + airMoveIncrement; 
-					gameObject.rigidbody2D.gravityScale = gameObject.rigidbody2D.gravityScale + airGravityIncrement;
+					if (airMoves == 1)
+					{
+						transform.Translate (Vector2.right * speed * Time.deltaTime);
+					}
+					else if (airMoves > 1) 
+					{
+						transform.Translate (Vector2.right * (speed/airMoves) * Time.deltaTime);
+						airMoves = airMoves + airMoveIncrement; 
+						gameObject.rigidbody2D.gravityScale = gameObject.rigidbody2D.gravityScale + airGravityIncrement;
+					}
+					//transform.eulerAngles = new Vector2(0,0); 
+					GameObject.Find("LRRH").gameObject.GetComponent<Renderer>().material.SetTexture("_MainTex", rightTexture);
 				}
-				//transform.eulerAngles = new Vector2(0,0); 
-				GameObject.Find("LRRH").gameObject.GetComponent<Renderer>().material.SetTexture("_MainTex", rightTexture);
-			}
-			//Move Left
-			if (Input.GetKey (moveLeft) || Input.GetAxis("Horizontal_PLR2") < 0) 
-			{
-				if (airMoves == 1)
+				//Move Left
+				if (Input.GetKey (moveLeft) || Input.GetAxis("Horizontal_PLR1") < 0) 
 				{
-					transform.Translate (-Vector2.right * speed * Time.deltaTime);
+					if (airMoves == 1)
+					{
+						transform.Translate (-Vector2.right * speed * Time.deltaTime);
+					}
+					else if (airMoves > 1) 
+					{
+						transform.Translate (-Vector2.right * (speed/airMoves) * Time.deltaTime);
+						airMoves = airMoves + airMoveIncrement; 
+						gameObject.rigidbody2D.gravityScale = gameObject.rigidbody2D.gravityScale + airGravityIncrement;
+					}
+					//transform.eulerAngles = new Vector2(0,0); //flip the character on its x axis
+					GameObject.Find("LRRH").gameObject.GetComponent<Renderer>().material.SetTexture("_MainTex", leftTexture);
 				}
-				else if (airMoves > 1) 
+				//Jump
+				if (Input.GetKeyDown (moveJump) || Input.GetButtonUp("Jump"))
 				{
-					transform.Translate (-Vector2.right * (speed/airMoves) * Time.deltaTime);
-					airMoves = airMoves + airMoveIncrement; 
-					gameObject.rigidbody2D.gravityScale = gameObject.rigidbody2D.gravityScale + airGravityIncrement;
+					if (jumpsMade < jumpLimit)
+					{
+						SoundManager play = GameObject.Find("SoundManager").gameObject.GetComponent<SoundManager>();
+						play.PlayJumpLRRH();
+						rigidbody2D.AddForce (Vector2.up * jumpHeight);
+						jumpsMade++;
+						airMoves = airMoves + airMoveIncrement;
+					}
 				}
-				//transform.eulerAngles = new Vector2(0,0); //flip the character on its x axis
-				GameObject.Find("LRRH").gameObject.GetComponent<Renderer>().material.SetTexture("_MainTex", leftTexture);
-			}
-			//Jump
-			if (Input.GetKeyDown (moveJump) || Input.GetButtonUp("Jump2"))
-			{
-				if (jumpsMade < jumpLimit)
-				{
-					SoundManager play = GameObject.Find("SoundManager").gameObject.GetComponent<SoundManager>();
-					play.PlayJumpLRRH();
-					rigidbody2D.AddForce (Vector2.up * jumpHeight);
-					jumpsMade++;
-					airMoves = airMoves + airMoveIncrement;
+				}else{
+				//Copy Paste of the above code, this will be the controls for any player that != player1 (layer12)
+				//As I only have one pad, for now I am removing pad support for player 2. SHould be quick to set up
+				//In the future though.
+					//Move Right
+					if (Input.GetKey (moveRight)) 
+					{
+						if (airMoves == 1)
+						{
+							transform.Translate (Vector2.right * speed * Time.deltaTime);
+						}
+						else if (airMoves > 1) 
+						{
+							transform.Translate (Vector2.right * (speed/airMoves) * Time.deltaTime);
+							airMoves = airMoves + airMoveIncrement; 
+							gameObject.rigidbody2D.gravityScale = gameObject.rigidbody2D.gravityScale + airGravityIncrement;
+						}
+						//transform.eulerAngles = new Vector2(0,0); 
+						GameObject.Find("LRRH").gameObject.GetComponent<Renderer>().material.SetTexture("_MainTex", rightTexture);
+					}
+					//Move Left
+					if (Input.GetKey (moveLeft)) 
+					{
+						if (airMoves == 1)
+						{
+							transform.Translate (-Vector2.right * speed * Time.deltaTime);
+						}
+						else if (airMoves > 1) 
+						{
+							transform.Translate (-Vector2.right * (speed/airMoves) * Time.deltaTime);
+							airMoves = airMoves + airMoveIncrement; 
+							gameObject.rigidbody2D.gravityScale = gameObject.rigidbody2D.gravityScale + airGravityIncrement;
+						}
+						//transform.eulerAngles = new Vector2(0,0); //flip the character on its x axis
+						GameObject.Find("LRRH").gameObject.GetComponent<Renderer>().material.SetTexture("_MainTex", leftTexture);
+					}
+					//Jump
+					if (Input.GetKeyDown (moveJump))
+					{
+						if (jumpsMade < jumpLimit)
+						{
+							SoundManager play = GameObject.Find("SoundManager").gameObject.GetComponent<SoundManager>();
+							play.PlayJumpLRRH();
+							rigidbody2D.AddForce (Vector2.up * jumpHeight);
+							jumpsMade++;
+							airMoves = airMoves + airMoveIncrement;
+						}
+					}
 				}
-			}
 		}	
 	}
 

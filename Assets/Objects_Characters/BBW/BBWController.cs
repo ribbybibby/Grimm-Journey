@@ -53,61 +53,93 @@ public class BBWController : MonoBehaviour {
 	{
 		transform.eulerAngles = new Vector3(0,0,0);
 		//Debug.Log(Input.GetAxis("Horizontal_PLR1"));
-		if (gameObject.tag == "BBW")
-		{
-			//Move Right
-			if (Input.GetKey (moveRight)|| Input.GetAxis("Horizontal_PLR1") > 0)
-			{
-				if (airMoves == 1)
-				{
-					transform.Translate (Vector2.right * speed * Time.deltaTime);
+		if (gameObject.tag == "BBW") {
+			//We check the layer to make sure its player one (layer 12)
+			// If it is we let the pad controls work fine if its not we dont cause it's not player one
+			if (gameObject.layer == 12) {
+				//Move Right
+				if (Input.GetKey (moveRight) || Input.GetAxis ("Horizontal_PLR1") > 0) {
+					if (airMoves == 1) {
+						transform.Translate (Vector2.right * speed * Time.deltaTime);
+					} else if (airMoves > 1) {
+						transform.Translate (Vector2.right * (speed / airMoves) * Time.deltaTime);
+						airMoves = airMoves + airMoveIncrement; 
+						gameObject.rigidbody2D.gravityScale = gameObject.rigidbody2D.gravityScale + airGravityIncrement;
+					}
+					
+					GameObject.Find ("BBW").gameObject.GetComponent<Renderer> ().material.SetTexture ("_MainTex", rightTexture);
+					facingRight = true;
+					
 				}
-				else if (airMoves > 1) 
-				{
-					transform.Translate (Vector2.right * (speed/airMoves) * Time.deltaTime);
-					airMoves = airMoves + airMoveIncrement; 
-					gameObject.rigidbody2D.gravityScale = gameObject.rigidbody2D.gravityScale + airGravityIncrement;
+				//Move Left
+				if (Input.GetKey (moveLeft) || Input.GetAxis ("Horizontal_PLR1") < 0) {
+					if (airMoves == 1) {
+						transform.Translate (-Vector2.right * speed * Time.deltaTime);
+					} else if (airMoves > 1) {
+						transform.Translate (-Vector2.right * (speed / airMoves) * Time.deltaTime);
+						airMoves = airMoves + airMoveIncrement; 
+						gameObject.rigidbody2D.gravityScale = gameObject.rigidbody2D.gravityScale + airGravityIncrement;
+					}
+					
+					GameObject.Find ("BBW").gameObject.GetComponent<Renderer> ().material.SetTexture ("_MainTex", leftTexture);
+					facingRight = false;
+				}	
+			}else{
+			//END OF PLAYER 1 LAYER CHECK
+				if (gameObject.tag == "BBW") {
+					//Move Right
+					if (Input.GetKey (moveRight)) {
+						if (airMoves == 1) {
+							transform.Translate (Vector2.right * speed * Time.deltaTime);
+						} else if (airMoves > 1) {
+							transform.Translate (Vector2.right * (speed / airMoves) * Time.deltaTime);
+							airMoves = airMoves + airMoveIncrement; 
+							gameObject.rigidbody2D.gravityScale = gameObject.rigidbody2D.gravityScale + airGravityIncrement;
+						}
+						
+						GameObject.Find ("BBW").gameObject.GetComponent<Renderer> ().material.SetTexture ("_MainTex", rightTexture);
+						facingRight = true;
+						
+					}
+					//Move Left
+					if (Input.GetKey (moveLeft)) {
+						if (airMoves == 1) {
+							transform.Translate (-Vector2.right * speed * Time.deltaTime);
+						} else if (airMoves > 1) {
+							transform.Translate (-Vector2.right * (speed / airMoves) * Time.deltaTime);
+							airMoves = airMoves + airMoveIncrement; 
+							gameObject.rigidbody2D.gravityScale = gameObject.rigidbody2D.gravityScale + airGravityIncrement;
+						}
+						
+						GameObject.Find ("BBW").gameObject.GetComponent<Renderer> ().material.SetTexture ("_MainTex", leftTexture);
+						facingRight = false;
+					}
 				}
-
-				GameObject.Find("BBW").gameObject.GetComponent<Renderer>().material.SetTexture("_MainTex", rightTexture);
-				facingRight = true;
-
 			}
-			//Move Left
-			if (Input.GetKey (moveLeft)|| Input.GetAxis("Horizontal_PLR1") < 0) 
-			{
-				if (airMoves == 1)
-				{
-					transform.Translate (-Vector2.right * speed * Time.deltaTime);
-				}
-				else if (airMoves > 1) 
-				{
-					transform.Translate (-Vector2.right * (speed/airMoves) * Time.deltaTime);
-					airMoves = airMoves + airMoveIncrement; 
-					gameObject.rigidbody2D.gravityScale = gameObject.rigidbody2D.gravityScale + airGravityIncrement;
-				}
-
-				GameObject.Find("BBW").gameObject.GetComponent<Renderer>().material.SetTexture("_MainTex", leftTexture);
-				facingRight = false;
-			}
-
-		}	
+		}
 	}
 	
 	// On Collision with LRRH, allow jumping
 	void OnTriggerEnter2D(Collider2D other)
 	{
 
-		if (other.gameObject.tag == "LRRHTrigger") 
-		{
+		if (other.gameObject.tag == "LRRHTrigger") {
+					if (gameObject.layer == 12) {
+
+							//Jump
+							if (Input.GetKeyDown (moveJump) || Input.GetButtonUp ("Jump")) {
+									if (jumpsMade < jumpLimit) {
+																		play.PlayJumpBBW ();
+											rigidbody2D.AddForce (Vector2.up * jumpHeight);
+											jumpsMade++;
+									}
+							}
+					}
 
 			//Jump
-			if (Input.GetKeyDown (moveJump) || Input.GetButtonUp("Jump"))
-			{
-				if (jumpsMade < jumpLimit)
-				{
-
-					play.PlayJumpBBW();
+			if (Input.GetKeyDown (moveJump)) {
+				if (jumpsMade < jumpLimit) {
+					play.PlayJumpBBW ();
 					rigidbody2D.AddForce (Vector2.up * jumpHeight);
 					jumpsMade++;
 				}
@@ -128,8 +160,22 @@ public class BBWController : MonoBehaviour {
 
 		if (other.gameObject.tag == "LRRHTrigger") 
 		{
+			if (gameObject.layer == 12) 
+			{
+				//Jump
+				if (Input.GetKeyDown (moveJump) || Input.GetButtonUp("Jump"))
+				{
+					if (jumpsMade < jumpLimit)
+					{
+						play.PlayJumpBBW();
+						rigidbody2D.AddForce (Vector2.up * jumpHeight);
+						jumpsMade++;
+						airMoves = airMoves + airMoveIncrement;
+					}
+				}
+			}
 			//Jump
-			if (Input.GetKeyDown (moveJump) || Input.GetButtonUp("Jump"))
+			if (Input.GetKeyDown (moveJump))
 			{
 				if (jumpsMade < jumpLimit)
 				{
@@ -147,15 +193,17 @@ public class BBWController : MonoBehaviour {
 
 		if (other.gameObject.tag == "LRRHTrigger") 
 		{
-
-			//Jump
-			if (Input.GetKeyDown (moveJump))
+			if (gameObject.layer == 12)
 			{
-				if (jumpsMade < jumpLimit)
+				//Jump
+				if (Input.GetKeyDown (moveJump) || Input.GetButtonUp("Jump"))
 				{
-					play.PlayJumpBBW();
-					rigidbody2D.AddForce (Vector2.up * jumpHeight);
-					jumpsMade++;
+					if (jumpsMade < jumpLimit)
+					{
+						play.PlayJumpBBW();
+						rigidbody2D.AddForce (Vector2.up * jumpHeight);
+						jumpsMade++;
+					}
 				}
 			}
 		}

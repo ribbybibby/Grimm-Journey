@@ -35,6 +35,11 @@ public class WoodSpawn : MonoBehaviour {
 	 * 4. BBW and LRRH are distanceFromPlayers away from the spawn 
 	 */
 	void FixedUpdate () {
+<<<<<<< Updated upstream
+=======
+		bbw = GameObject.FindGameObjectWithTag ("BBW");
+		lrrh = GameObject.FindGameObjectWithTag ("LRRH");
+>>>>>>> Stashed changes
 		bbwDistance = Vector3.Distance(gameObject.transform.position, bbw.gameObject.transform.position);
 		lrrhDistance = Vector3.Distance(gameObject.transform.position, lrrh.gameObject.transform.position);
 		if ((gameObject.transform.position.y - bbw.gameObject.transform.position.y) >= -1.5f && child < childLimit 

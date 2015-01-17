@@ -1,4 +1,5 @@
 ﻿<Properties>
+<<<<<<< Updated upstream
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Objects_Characters/Witch/WitchControllerNew.cs">
     <Files>
@@ -6,6 +7,12 @@
       <File FileName="Assets/WitchSpawn.cs" Line="44" Column="1" />
       <File FileName="Assets/Objects_Characters/Enemy1/Scripts/EnemyReceiver.cs" Line="1" Column="1" />
       <File FileName="Assets/Objects_Characters/Witch/WitchControllerNew.cs" Line="29" Column="1" />
+=======
+  <MonoDevelop.Ide.Workspace />
+  <MonoDevelop.Ide.Workbench ActiveDocument="../../CubeyGoodingJunior/Assets/ChaserMovement.cs">
+    <Files>
+      <File FileName="../../CubeyGoodingJunior/Assets/ChaserMovement.cs" Line="16" Column="45" />
+>>>>>>> Stashed changes
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

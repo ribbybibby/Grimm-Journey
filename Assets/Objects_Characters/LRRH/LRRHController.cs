@@ -93,6 +93,8 @@ public class LRRHController : MonoBehaviour {
 					{
 						SoundManager play = GameObject.Find("SoundManager").gameObject.GetComponent<SoundManager>();
 						play.PlayJumpLRRH();
+						rigidbody2D.isKinematic = true;
+						rigidbody2D.isKinematic = false;
 						rigidbody2D.AddForce (Vector2.up * jumpHeight);
 						jumpsMade++;
 						airMoves = airMoves + airMoveIncrement;
@@ -141,6 +143,8 @@ public class LRRHController : MonoBehaviour {
 						{
 							SoundManager play = GameObject.Find("SoundManager").gameObject.GetComponent<SoundManager>();
 							play.PlayJumpLRRH();
+							rigidbody2D.isKinematic = true;
+							rigidbody2D.isKinematic = false;
 							rigidbody2D.AddForce (Vector2.up * jumpHeight);
 							jumpsMade++;
 							airMoves = airMoves + airMoveIncrement;

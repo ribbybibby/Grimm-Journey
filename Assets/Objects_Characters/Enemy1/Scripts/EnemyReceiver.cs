@@ -9,10 +9,12 @@ public class EnemyReceiver : MonoBehaviour {
 	// Leave alone
 	public float startingHealth; // The original health value
 	public GameObject spawnParent; // If enemy, which spawn created you?
+	public bool invuln; // Is the character invulnerable atm?
 
 	// Save the initial health value
 	void Start() 
 	{
+		invuln = false;
 		startingHealth = health;
 	}
 
@@ -27,82 +29,85 @@ public class EnemyReceiver : MonoBehaviour {
 	
 	public void ApplyDamage(float theDamage)
 	{
-		// Load in sound manager
-		SoundManager play = GameObject.Find("SoundManager").gameObject.GetComponent<SoundManager>();
-
-		// Lose health
-		health = health - theDamage;
-
-		// Cause enemy to lose all applied force and movement
-		transform.rigidbody2D.isKinematic = true;
-		transform.rigidbody2D.isKinematic = false;
-
-		// If health is depleted, play kill sound 
-		if (health <= 0) 
+		if (invuln == false)
 		{
-			switch (gameObject.name)
-			{
-			case "LRRH":
-				play.PlayLRRHKilled ();
-				break;
-			case "BBW":
-				play.PlayBBWKilled ();
-				break;
-			case "WoodCutter":
-				play.PlayWCKilled ();
-				break;
-			case "Witch":
-				play.PlayCWKilled ();
-				break;
-			case "Troll":
-				play.PlayTKilled ();
-				break;
-			}
+			// Load in sound manager
+			SoundManager play = GameObject.Find("SoundManager").gameObject.GetComponent<SoundManager>();
 
-			Destroy(gameObject);
+			// Lose health
+			health = health - theDamage;
 
-			if (spawnParent != null)
+			// Cause enemy to lose all applied force and movement
+			transform.rigidbody2D.isKinematic = true;
+			transform.rigidbody2D.isKinematic = false;
+
+			// If health is depleted, play kill sound 
+			if (health <= 0) 
 			{
-				switch (spawnParent.name)
+				switch (gameObject.name)
 				{
-				case "WoodSpawn":
-					spawnParent.GetComponent<WoodSpawn> ().child--;
+				case "LRRH":
+					play.PlayLRRHKilled ();
 					break;
-				case "TrollSpawn":
-					spawnParent.GetComponent<TrollSpawn> ().child--;
+				case "BBW":
+					play.PlayBBWKilled ();
 					break;
-				case "WitchSpawn":
-					spawnParent.GetComponent<WitchSpawn> ().child--;
+				case "WoodCutter":
+					play.PlayWCKilled ();
 					break;
+				case "Witch":
+					play.PlayCWKilled ();
+					break;
+				case "Troll":
+					play.PlayTKilled ();
+					break;
+				}
+
+				Destroy(gameObject);
+
+				if (spawnParent != null)
+				{
+					switch (spawnParent.name)
+					{
+					case "WoodSpawn":
+						spawnParent.GetComponent<WoodSpawn> ().child--;
+						break;
+					case "TrollSpawn":
+						spawnParent.GetComponent<TrollSpawn> ().child--;
+						break;
+					case "WitchSpawn":
+						spawnParent.GetComponent<WitchSpawn> ().child--;
+						break;
+					}
+				}
+
+				if(gameObject.name == "BBW" || gameObject.name == "LRRH")
+				{
+					Application.LoadLevel(6);
 				}
 			}
 
-			if(gameObject.name == "BBW" || gameObject.name == "LRRH")
+			// Else, play hit sound
+			else
 			{
-				Application.LoadLevel(6);
-			}
-		}
-
-		// Else, play hit sound
-		else
-		{
-			switch (gameObject.name)
-			{
-			case "LRRH":
-				play.PlayLRRHHit ();
-				break;
-			case "BBW":
-				play.PlayBBWHit ();
-				break;
-			case "WoodCutter":
-				play.PlayWCHit ();
-				break;
-			case "Witch":
-				play.PlayCWHurt ();
-				break;
-			case "Troll":
-				play.PlayTHit ();
-				break;
+				switch (gameObject.name)
+				{
+				case "LRRH":
+					play.PlayLRRHHit ();
+					break;
+				case "BBW":
+					play.PlayBBWHit ();
+					break;
+				case "WoodCutter":
+					play.PlayWCHit ();
+					break;
+				case "Witch":
+					play.PlayCWHurt ();
+					break;
+				case "Troll":
+					play.PlayTHit ();
+					break;
+				}
 			}
 		}
 	}

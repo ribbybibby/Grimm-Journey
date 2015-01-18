@@ -26,6 +26,11 @@ public class LoadNextLevel : MonoBehaviour {
 	}
 
 	void OnTriggerEnter2D(Collider2D other) {
+		if (other.name == "BBW" || other.name == "LRRH")
+		{
+			other.GetComponent<EnemyReceiver>().invuln = true;
+		}
+
 		if (other.name == "BBW")
 		{
 			bbw = true;
@@ -38,6 +43,11 @@ public class LoadNextLevel : MonoBehaviour {
 	}
 
 	void OnTriggerExit2D(Collider2D other) {
+		if (other.name == "BBW" || other.name == "LRRH")
+		{
+			other.GetComponent<EnemyReceiver>().invuln = false;
+		}
+
 		if (other.name == "BBW")
 		{
 			bbw = false;

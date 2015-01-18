@@ -37,44 +37,64 @@ public class MeleeSystem : MonoBehaviour {
 		biteTimer = Time.time;
 	}
 	
-	/*Rob Update - Added Left and Right to the Input.GetKey due to how I now spawn attacks
+	/*Rob J Update - Added Left and Right to the Input.GetKey due to how I now spawn attacks
 	 Attacks are now spawned as their own objects. For example the claw attack will spawn a claw that does the attack
 	 All attack damage and collision detection is handled by the claw object rather than here. This class only instantiates each attack :) */
+
+	/* A few notes for future Rob(s):
+	 * 
+	 * 1. We use && game.object.layer ==12' alongside pad controls to ensure
+	 * that it is player one who is attacking with the pad. This is because
+	 * we only support one pad.
+	 * 
+	 * 2. We use the facingDirection bool to tell whether BBW is facing right 
+	 * or left in cases where he is standing still. facingDirection essentially
+	 * subs in for attackKeyRight and attackKeyLeft with an '||' in the if 
+	 *  statements in these situations.
+	 * 
+	 * 3. In cases where we need to hear back from the attacks we instantiate,
+	 * we set this object as a parent variable in the instantiated object 
+
+	 */
+
 	void Update () {
 		// Which direction is BBW facing?
 		bool facingDirection = gameObject.GetComponent<BBWController>().facingRight;
-		
+
 		//Claw Attack
-		if (gameObject.layer == 12) { //Layer 12 = player 1
-			if (Input.GetKeyDown (attackClawKey) || Input.GetButtonDown("ClawBitePad"))
+		/* 
+		 * 1. No cooldown on this attack, it can be spammed as much as you like
+		 */
+		//if (gameObject.layer == 12) { //Layer 12 = player 1
+			if (Input.GetKeyDown (attackClawKey) || (Input.GetButtonDown("ClawBitePad") && gameObject.layer == 12))
 			{
 
-				if (Input.GetKey (attackKeyUp) || Input.GetAxis("Vertical_PLR1") > 0)
+				if (Input.GetKey (attackKeyUp) || (Input.GetAxis("Vertical_PLR1") > 0 && gameObject.layer == 12))
 				{
 					//DoMelee (materials[1], transform.position, collider2D.bounds.size, 0f, transform.up, theDistance, theDamage);
 					Instantiate(sword, new Vector3(transform.position.x, transform.position.y+swordLength, transform.position.z), Quaternion.Euler(new Vector3(0, 0, 100)));
 					//Instantiate(bite, new Vector3(transform.position.x, transform.position.y+swordLength, transform.position.z), Quaternion.Euler(new Vector3(0, 0, 100)));
 				}
-				if (Input.GetKey (attackKeyDown) || Input.GetAxis("Vertical_PLR1") < 0)
+				if (Input.GetKey (attackKeyDown) || (Input.GetAxis("Vertical_PLR1") < 0 && gameObject.layer == 12))
 				{
 					//DoMelee (materials[1], transform.position, collider2D.bounds.size, 0f, -transform.up, theDistance, theDamage);
 					Instantiate(sword, new Vector3(transform.position.x, transform.position.y-swordLength, transform.position.z), Quaternion.Euler(new Vector3(0, 0, -100)));
 					//Instantiate(bite, new Vector3(transform.position.x, transform.position.y-swordLength, transform.position.z), Quaternion.Euler(new Vector3(0, 0, -100)));
 				}
-				if (Input.GetKey (attackKeyRight) || Input.GetAxis("Horizontal_PLR1") > 0 || (facingDirection == true && (!Input.GetKey (attackKeyUp) && !Input.GetKey (attackKeyDown))))
+				if (Input.GetKey (attackKeyRight) || (Input.GetAxis("Horizontal_PLR1") > 0 && gameObject.layer == 12) || (facingDirection == true && (!Input.GetKey (attackKeyUp) && !Input.GetKey (attackKeyDown))))
 				{
 					//DoMelee (materials[1], transform.position, collider2D.bounds.size, 0f, -transform.up, theDistance, theDamage);
 					Instantiate(sword, new Vector3(transform.position.x+swordLength, transform.position.y, transform.position.z), Quaternion.Euler(new Vector3(0, 0, 0)));
 					//Instantiate(huffpuffR, new Vector3(transform.position.x+swordLength, transform.position.y, transform.position.z), Quaternion.Euler(new Vector3(0, 0, 0)));
 				}
-				if (Input.GetKey (attackKeyLeft) || Input.GetAxis("Horizontal_PLR1") < 0 || (facingDirection == false && (!Input.GetKey (attackKeyUp) && !Input.GetKey (attackKeyDown))))
+				if (Input.GetKey (attackKeyLeft) || (Input.GetAxis("Horizontal_PLR1") < 0 && gameObject.layer == 12) || (facingDirection == false && (!Input.GetKey (attackKeyUp) && !Input.GetKey (attackKeyDown))))
 				{
 					//DoMelee (materials[1], transform.position, collider2D.bounds.size, 0f, -transform.up, theDistance, theDamage);
 					Instantiate(sword, new Vector3(transform.position.x-swordLength, transform.position.y, transform.position.z), Quaternion.Euler(new Vector3(0, 0, 0)));
 					//Instantiate(huffpuffL, new Vector3(transform.position.x-swordLength, transform.position.y, transform.position.z), Quaternion.Euler(new Vector3(0, 0, 0)));
 				}
 			}
-		}
+		//}
 		//Huff Attack
 		/* 
 		 * 1. Cooldown is controlled by the huffCooldown bool
@@ -83,24 +103,20 @@ public class MeleeSystem : MonoBehaviour {
 		 * as the parent so that huff can set huffCooldown back to true
 		 * when it destroys itself
 		 * 
-		 * 3. gameObject.layer is being used ensure that it's player one
-		 * who is attacking. This is to fix the bug that results
-		 * when swapping characters and attempting to attack with the gamepad
-		 * 
 		 */
-		if (gameObject.layer == 12) { //Layer 12 = player 1
-			if (Input.GetKeyDown (attackHuffKey)|| Input.GetButtonUp("HuffPad"))
+		//if (gameObject.layer == 12) {
+			if (Input.GetKeyDown (attackHuffKey)|| (Input.GetButtonUp("HuffPad") && gameObject.layer == 12))
 			{
 				if (huffCooldown == true) 
 				{
-					if (Input.GetKey (attackKeyRight) || Input.GetAxis("Horizontal_PLR1") > 0 || facingDirection == true)
+					if (Input.GetKey (attackKeyRight) || (Input.GetAxis("Horizontal_PLR1") > 0 && gameObject.layer == 12) || facingDirection == true)
 					{
 						huffCooldown = false;
 						GameObject newHuff = (GameObject)Instantiate(huffpuffR, new Vector3(transform.position.x+swordLength, transform.position.y, transform.position.z), Quaternion.Euler(new Vector3(0, 0, 0)));
 						newHuff.GetComponent<HuffNPuff>().parentBBW = gameObject;
 
 					}
-					if (Input.GetKey (attackKeyLeft)|| Input.GetAxis("Horizontal_PLR1") < 0 || facingDirection == false)
+					if (Input.GetKey (attackKeyLeft)|| (Input.GetAxis("Horizontal_PLR1") < 0 && gameObject.layer == 12) || facingDirection == false)
 					{
 						huffCooldown = false;
 						GameObject newHuff = (GameObject)Instantiate(huffpuffL, new Vector3(transform.position.x-swordLength, transform.position.y, transform.position.z), Quaternion.Euler(new Vector3(0, 0, 0)));
@@ -108,42 +124,38 @@ public class MeleeSystem : MonoBehaviour {
 					}
 				}
 			}
-		}
+		//}
 		//Bite Attack
 		/* 
 		 * 1. Cooldown is controlled by the biteCooldown public variable
 		 * 
 		 * 2. When we instantiate the Bite object we set this object as 
-		 * the parent so that Bite can send stuff back to it (health) 
-		 * 
-		 * 3. gameObject.layer is being used ensure that it's player one
-		 * who is attacking. This is to fix the bug that results
-		 * when swapping characters and attempting to attack with the gamepad
+		 * the parent so that Bite can send stuff back to it (health)
 		 * 
 		 */
-		if (gameObject.layer == 12) { //Layer 12 = player 1
-			if (Input.GetKeyDown (attackBiteKey)|| Input.GetButtonUp("BitePad"))
+		//if (gameObject.layer == 12) { //Layer 12 = player 1
+			if (Input.GetKeyDown (attackBiteKey)|| (Input.GetButtonUp("BitePad") && gameObject.layer == 12))
 			{
 				
 				if (Time.time >= biteTimer)
 				{
 					biteTimer = Time.time + biteCooldown;
-					if (Input.GetKey (attackKeyUp) || Input.GetAxis("Vertical_PLR1") > 0)
+					if (Input.GetKey (attackKeyUp) || (Input.GetAxis("Vertical_PLR1") > 0 && gameObject.layer == 12))
 					{
 						GameObject newBite = (GameObject)Instantiate(bite, new Vector3(transform.position.x, transform.position.y+swordLength, transform.position.z), Quaternion.Euler(new Vector3(0, 0, 100)));
 						newBite.GetComponent<BiteAttack>().parentBBW = gameObject;
 					}
-					if (Input.GetKey (attackKeyDown) || Input.GetAxis("Vertical_PLR1") < 0)
+					if (Input.GetKey (attackKeyDown) || (Input.GetAxis("Vertical_PLR1") < 0 && gameObject.layer == 12))
 					{
 						GameObject newBite = (GameObject)Instantiate(bite, new Vector3(transform.position.x, transform.position.y-swordLength, transform.position.z), Quaternion.Euler(new Vector3(0, 0, -100)));
 						newBite.GetComponent<BiteAttack>().parentBBW = gameObject;
 					}
-					if (Input.GetKey (attackKeyRight) || Input.GetAxis("Horizontal_PLR1") > 0 || (facingDirection == true && (!Input.GetKey (attackKeyUp) && !Input.GetKey (attackKeyDown))))
+					if (Input.GetKey (attackKeyRight) || (Input.GetAxis("Horizontal_PLR1") > 0 && gameObject.layer == 12) || (facingDirection == true && (!Input.GetKey (attackKeyUp) && !Input.GetKey (attackKeyDown))))
 					{
 						GameObject newBite = (GameObject)Instantiate(bite, new Vector3(transform.position.x+swordLength, transform.position.y, transform.position.z), Quaternion.Euler(new Vector3(0, 0, 0)));
 						newBite.GetComponent<BiteAttack>().parentBBW = gameObject;
 					}
-					if (Input.GetKey (attackKeyLeft) || Input.GetAxis("Horizontal_PLR1") < 0 || (facingDirection == false && (!Input.GetKey (attackKeyUp) && !Input.GetKey (attackKeyDown))))
+					if (Input.GetKey (attackKeyLeft) || (Input.GetAxis("Horizontal_PLR1") < 0 && gameObject.layer == 12) || (facingDirection == false && (!Input.GetKey (attackKeyUp) && !Input.GetKey (attackKeyDown))))
 					{
 						GameObject newBite = (GameObject)Instantiate(bite, new Vector3(transform.position.x-swordLength, transform.position.y, transform.position.z), Quaternion.Euler(new Vector3(0, 0, 0)));
 						newBite.GetComponent<BiteAttack>().parentBBW = gameObject;
@@ -151,7 +163,7 @@ public class MeleeSystem : MonoBehaviour {
 				}
 
 			}
-		}
+		//}
 	}
 
 

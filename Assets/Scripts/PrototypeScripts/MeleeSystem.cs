@@ -65,7 +65,7 @@ public class MeleeSystem : MonoBehaviour {
 		/* 
 		 * 1. No cooldown on this attack, it can be spammed as much as you like
 		 */
-		//if (gameObject.layer == 12) { //Layer 12 = player 1
+		//if (gameObject.layer == 12)
 			if (Input.GetKeyDown (attackClawKey) || (Input.GetButtonDown("ClawBitePad") && gameObject.layer == 12))
 			{
 

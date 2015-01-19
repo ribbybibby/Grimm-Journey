@@ -20,7 +20,7 @@ public class EnemyReceiver : MonoBehaviour {
 
 	void Update()
 	{
-		// If health is above the initial value, apply health decay (BBW thing)
+		//If health is above the initial value, apply health decay (BBW thing)
 		if (health > startingHealth) 
 		{
 			health = health - healthDecay;
@@ -34,8 +34,13 @@ public class EnemyReceiver : MonoBehaviour {
 			// Load in sound manager
 			SoundManager play = GameObject.Find("SoundManager").gameObject.GetComponent<SoundManager>();
 
-			// Lose health
 			health = health - theDamage;
+
+			if (gameObject.layer == 12 || gameObject.layer == 13)
+			{
+				gameObject.GetComponentInChildren<HealthBar>().SendMessage("TakeDamage", health, SendMessageOptions.DontRequireReceiver);
+			}
+
 
 			// Cause enemy to lose all applied force and movement
 			transform.rigidbody2D.isKinematic = true;

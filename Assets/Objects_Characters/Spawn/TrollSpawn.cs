@@ -37,6 +37,8 @@ public class TrollSpawn : MonoBehaviour {
 	 * 4. BBW and LRRH are distanceFromPlayers away from the spawn 
 	 */
 	void FixedUpdate () {
+		bbw = GameObject.FindGameObjectWithTag ("BBW");
+		lrrh = GameObject.FindGameObjectWithTag ("LRRH");
 		bbwDistance = Vector3.Distance(gameObject.transform.position, bbw.gameObject.transform.position);
 		lrrhDistance = Vector3.Distance(gameObject.transform.position, lrrh.gameObject.transform.position);
 		if ((gameObject.transform.position.y - lrrh.gameObject.transform.position.y) >= -1.5f && child < childLimit 

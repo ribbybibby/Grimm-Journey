@@ -29,6 +29,8 @@ public class WitchSpawn : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		bbw = GameObject.FindGameObjectWithTag ("BBW");
+		lrrh = GameObject.FindGameObjectWithTag ("LRRH");
 		bbwDistance = Vector3.Distance(gameObject.transform.position, bbw.gameObject.transform.position);
 		lrrhDistance = Vector3.Distance(gameObject.transform.position, lrrh.gameObject.transform.position);
 		if (child < childLimit && Time.time >= timerUpdate && bbwDistance > distanceFromPlayers && lrrhDistance > distanceFromPlayers)		

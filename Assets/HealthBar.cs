@@ -2,20 +2,19 @@
 using System.Collections;
 
 public class HealthBar : MonoBehaviour {
-	public float hurtDelay;
+	// Set in Unity
+	public float hurtDelay; // How long should the health bar flash for on attack/lifesteal?
 
-	private float totalHealth;	
-	private float totalBarSize;
-	private float barToHealthRatio;
-	private float newScale;
-	private float currhealth;
-	private bool hurt;
+	// Private
+	private float totalHealth;	// The character's total HP
+	private float totalBarSize; // The max size of the health bar
+	private float newScale; // The new bar scale that we apply in TakeDamage and GainHealth
+	private bool hurt; // Bool that controls whether we should revert the bar colour to white
 
 	// Use this for initialization
 	void Start () {
 		totalHealth = gameObject.GetComponentInParent<EnemyReceiver>().health;
 		totalBarSize = gameObject.transform.localScale.x;
-		currhealth = totalHealth;
 	}
 	
 	// Update is called once per frame
@@ -43,7 +42,6 @@ public class HealthBar : MonoBehaviour {
 		hurt = true;
 		StartCoroutine(waitWhileHurt());
 		newScale = totalBarSize * (health/totalHealth);
-		currhealth = health;
 
 		if (newScale > totalBarSize)
 		{
@@ -63,7 +61,6 @@ public class HealthBar : MonoBehaviour {
 		hurt = true;
 		StartCoroutine(waitWhileHurt());
 		newScale = totalBarSize * (health/totalHealth);
-		currhealth = health;
 
 		if (newScale > totalBarSize)
 		{
@@ -73,7 +70,7 @@ public class HealthBar : MonoBehaviour {
 	}
 	
 
-
+	// Standard coroutine
 	IEnumerator waitWhileHurt ()
 	{
 		yield return new WaitForSeconds(hurtDelay);

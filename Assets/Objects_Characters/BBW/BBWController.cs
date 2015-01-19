@@ -28,7 +28,7 @@ public class BBWController : MonoBehaviour {
 	private float airMoves; //Incremented value for x-axis movement while in the air
 	private float airGravity; //Incremented value for x-axis movement while in the air
 	private float origGravity; //Original gravity of the character
-	private SoundManager play;
+	private SoundManager play; // The sound manager
 
 
 	// At start we set the number of jumps performed since leaving the ground to 0

@@ -34,8 +34,10 @@ public class EnemyReceiver : MonoBehaviour {
 			// Load in sound manager
 			SoundManager play = GameObject.Find("SoundManager").gameObject.GetComponent<SoundManager>();
 
+			// Deplete health by theDamage
 			health = health - theDamage;
 
+			// If this is a player char, tell the Health Bar about the change in health
 			if (gameObject.layer == 12 || gameObject.layer == 13)
 			{
 				gameObject.GetComponentInChildren<HealthBar>().SendMessage("TakeDamage", health, SendMessageOptions.DontRequireReceiver);
@@ -70,6 +72,8 @@ public class EnemyReceiver : MonoBehaviour {
 
 				Destroy(gameObject);
 
+				// Let the spawn point that birthed this character (if enemy)
+				// know that it has been destroyed. 
 				if (spawnParent != null)
 				{
 					switch (spawnParent.name)
@@ -86,6 +90,7 @@ public class EnemyReceiver : MonoBehaviour {
 					}
 				}
 
+				// If this is a player-character, then the game is over.
 				if(gameObject.name == "BBW" || gameObject.name == "LRRH")
 				{
 					Application.LoadLevel(6);

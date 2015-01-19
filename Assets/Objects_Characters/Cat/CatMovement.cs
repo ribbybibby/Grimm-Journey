@@ -9,11 +9,15 @@ public class CatMovement : MonoBehaviour {
 	public string targetTag; // The tag of the object to hunt (BBW)
 	public string targetTagTwo; // Another tag to hunt (LRRH)
 	public float killDelay; // Time before cat offs itself
-	public int damage;
+	public int damage; // Damage done by the cat
+	public float attackDelay; // Time between attacks
 
 	//Used to load in the textures for the swap (left text for moving left / right text for moving right)
 	public Texture leftTexture;
 	public Texture rightTexture;
+
+	// Bool that controls whether we are ready for another attack
+	private bool readyToAttack;
 	
 	// Start the count down to the cat's death, load in textures, make sure collisions with other
 	// enemies are disabled
@@ -23,7 +27,7 @@ public class CatMovement : MonoBehaviour {
 		//Loading in the textures :D
 		leftTexture = Resources.Load ("Textures/flycatflip", typeof(Texture)) as Texture;
 		rightTexture = Resources.Load ("Textures/flycat", typeof(Texture)) as Texture;
-
+		readyToAttack = true;
 		Physics2D.IgnoreLayerCollision (11, 11);
 		SoundManager play = GameObject.Find("SoundManager").gameObject.GetComponent<SoundManager>();
 		play.PlayProjectileCat();
@@ -36,11 +40,16 @@ public class CatMovement : MonoBehaviour {
 	}
 
 	// On collision, apply force upwards and then left/right depending on Player's relation to the cat on the X-axis
+	// Also apply damage, if the timer on the attack has ran down
 	void OnCollisionEnter2D(Collision2D col) {
 		rigidbody2D.AddForce (Vector3.up * jumpForce);
 		MoveEnemy (jumpForce);
-		col.transform.SendMessage("ApplyDamage", damage, SendMessageOptions.DontRequireReceiver);
-
+		if (readyToAttack = true)
+		{
+			col.transform.SendMessage("ApplyDamage", damage, SendMessageOptions.DontRequireReceiver);
+			readyToAttack = false;
+			StartCoroutine(waitForAttack());
+		}
 	}
 	
 	// If the cat gets stuck for too long on any surface, we give it a strong force 
@@ -98,12 +107,18 @@ public class CatMovement : MonoBehaviour {
 		return target;
 	}
 
+	// Timeout on the attack
+	IEnumerator waitForAttack(){
+		yield return new WaitForSeconds(attackDelay);
+		readyToAttack = true;
+	}
+
 	// Die, cat, die
 	IEnumerator waitThenKill(){
 		yield return new WaitForSeconds(killDelay);
 		Destroy(gameObject);
 	}
-
+	
 	// Die even more
 	public void ApplyDamage() {
 		Destroy (gameObject);

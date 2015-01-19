@@ -70,7 +70,7 @@ public class WitchControllerNew : MonoBehaviour {
 		}
 	}
 
-	//Randomness 50% chance to go up or down
+	// Throw a cat
 	void rndCatFling(){
 		if(Time.time >= catTimerUpdate)
 		{

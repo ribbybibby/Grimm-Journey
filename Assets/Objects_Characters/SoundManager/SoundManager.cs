@@ -31,12 +31,25 @@ public class SoundManager : MonoBehaviour
 		AudioSource WCHit;
 		AudioSource WCKilled;
 		AudioSource WoodCutterAxe;
+		//Testing narration
+		AudioSource IntroNarration;
+		//music
+		AudioSource musicLoop;
+		//Array to store sources
 		AudioSource[] Asources;
+
+		//Used to store a volume to be used to quiet down the audio during narration
+		public float setVolume;
+		
+		bool talking;
 
 		// Use this for initialization
 		void Start ()
 		{
-		
+
+			setVolume = 1.0F;
+			talking = false;
+
 			Asources = gameObject.GetComponents<AudioSource> ();
 		
 			BBWHit = Asources [0];
@@ -66,15 +79,73 @@ public class SoundManager : MonoBehaviour
 			WCHit = Asources [24];
 			WCKilled = Asources [25];
 			WoodCutterAxe = Asources [26];
-
+			
+			IntroNarration = Asources [27];
+			
+			musicLoop = Asources [28];
 		}
 	
 		// Update is called once per frame
 		void Update ()
 		{
+			/*Manage the volume of the levels audio
+			 *  This does not include the narration volume
+			 *  As we want that to drown out the other audio until its finished
+			 * */
+			BBWHit.volume = setVolume;
+			BBWKilled.volume = setVolume;
+			Bite.volume = setVolume;
+			BroomstickWhoosh.volume = setVolume;
+			Claw.volume = setVolume;
+			ColdCastle.volume = setVolume;
+			CollapsingPlatform.volume = setVolume;
+			CreepyWoods.volume = setVolume;
+			CWHurt.volume = setVolume;
+			CWKilled.volume = setVolume;
+			Howl.volume = setVolume;
+			HuffAndPuff.volume = setVolume;
+			JumpBBW.volume = setVolume;
+			JumpLRRH.volume = setVolume;
+			LRRHHit.volume = setVolume;
+			LRRHKilled.volume = setVolume;
+			PlayerSpawn.volume = setVolume;
+			ProjectileCat.volume = setVolume;
+			ReachedExit.volume = setVolume;
+			THit.volume = setVolume;
+			TKilled.volume = setVolume;
+			ToweringBeanstalk.volume = setVolume;
+			TransformingLight.volume = setVolume;
+			TrollHeadCrush.volume = setVolume;
+			WCHit.volume = setVolume;
+			WCKilled.volume = setVolume;
+			WoodCutterAxe.volume = setVolume;
+			musicLoop.volume = setVolume;
+
+			if (!IntroNarration.isPlaying) {
+				setVolume = 1.0F;
+				Debug.Log (setVolume);
+			}
+		}
+		
+		//Once narration is over, reset the volume to max
+		//.volume is normalized so  between 0.0F and 1.0F
+		//private void checkForNaration(){
+			//Intro to level narration
+			//if (!IntroNarration.isPlaying) {
+				//talking = false;	
+				//setVolume = 1.0F;
+				//Debug.Log (setVolume);
+			//}
+		//}
+
+		public void PlayIntroNarration ()
+		{
+
+			setVolume = 0.2F;
+			IntroNarration.Play ();
 
 		}
-	
+
 		public void PlayBBWHit ()
 		{
 				BBWHit.Play ();

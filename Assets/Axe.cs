@@ -13,13 +13,7 @@ public class Axe : MonoBehaviour {
 		SoundManager play = GameObject.Find("SoundManager").gameObject.GetComponent<SoundManager>();
 		play.PlayWoodCutterAxe ();
 	}
-	
-	// Update is called once per frame
-	void Update () 
-	{
-		
-	}
-	
+
 	void OnTriggerEnter2D(Collider2D other) 
 	{
 		if(other.gameObject.layer == 12 || other.gameObject.layer == 13)

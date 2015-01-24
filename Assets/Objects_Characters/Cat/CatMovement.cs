@@ -44,7 +44,7 @@ public class CatMovement : MonoBehaviour {
 	void OnCollisionEnter2D(Collision2D col) {
 		rigidbody2D.AddForce (Vector3.up * jumpForce);
 		MoveEnemy (jumpForce);
-		if (readyToAttack = true)
+		if (readyToAttack == true)
 		{
 			col.transform.SendMessage("ApplyDamage", damage, SendMessageOptions.DontRequireReceiver);
 			readyToAttack = false;

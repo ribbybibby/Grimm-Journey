@@ -36,7 +36,7 @@ public class SoundManager : MonoBehaviour
 		//music
 		AudioSource musicLoop;
 		//Array to store sources
-		AudioSource[] Asources;
+		public AudioSource[] Asources;
 
 		//Used to store a volume to be used to quiet down the audio during narration
 		public float setVolume;

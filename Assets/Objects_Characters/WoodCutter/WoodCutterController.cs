@@ -52,33 +52,6 @@ public class WoodCutterController : MonoBehaviour {
 		//FallThroughFloor ();
 	}
 	
-	/*// Woodcutter will only fall through the floor if he is above BBW and there is a platform to land on
-	// There is also a slight timeout on it.
-	void FallThroughFloor ()
-	{
-		GameObject bbw = GameObject.FindGameObjectWithTag ("BBW");
-
-		float bbwdiffx = bbw.transform.position.x - transform.position.x;
-		float bbwdiffy = transform.position.y - bbw.transform.position.y;
-
-		if ((bbwdiffx > wolfRangeLeft & bbwdiffx < wolfRangeRight) & bbwdiffy > 2 & timeout <= 0)
-		{
-			RaycastHit2D[] hit = Physics2D.RaycastAll (transform.position, -Vector2.up, sightDownDistance);
-			if (hit.Length > 3)
-			{
-				for (int i = 0; i < hit.Length; i++)
-				{
-					if (hit[i].collider.tag == "Ground" || hit[i].collider.name == "Platform")
-					{
-						Physics2D.IgnoreCollision(gameObject.collider2D, hit[i].rigidbody.collider2D);
-						timeout = startTimeOut;
-						break;
-					}
-				}
-			}
-		}
-	}*/
-
 	// Tag the left and right boundary walls as LeftBound and RightBound
 	// Woody will turn around when he hits one
 	void OnTriggerEnter2D(Collider2D col)
@@ -175,5 +148,33 @@ public class WoodCutterController : MonoBehaviour {
 
 
 	}
+
+	// #DROPDOWN#
+	/*// Woodcutter will only fall through the floor if he is above BBW and there is a platform to land on
+	// There is also a slight timeout on it.
+	void FallThroughFloor ()
+	{
+		GameObject bbw = GameObject.FindGameObjectWithTag ("BBW");
+		
+		float bbwdiffx = bbw.transform.position.x - transform.position.x;
+		float bbwdiffy = transform.position.y - bbw.transform.position.y;
+		
+		if ((bbwdiffx > wolfRangeLeft & bbwdiffx < wolfRangeRight) & bbwdiffy > 2 & timeout <= 0)
+		{
+			RaycastHit2D[] hit = Physics2D.RaycastAll (transform.position, -Vector2.up, sightDownDistance);
+			if (hit.Length > 3)
+			{
+				for (int i = 0; i < hit.Length; i++)
+				{
+					if (hit[i].collider.tag == "Ground" || hit[i].collider.name == "Platform")
+					{
+						Physics2D.IgnoreCollision(gameObject.collider2D, hit[i].rigidbody.collider2D);
+						timeout = startTimeOut;
+						break;
+					}
+				}
+			}
+		}
+	}*/
 
 }

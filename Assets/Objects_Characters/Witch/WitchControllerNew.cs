@@ -7,16 +7,16 @@ public class WitchControllerNew : MonoBehaviour {
 	public int speed; // Speed of the character
 	public float sightDownDistance; // LOS downwards
 	public float sightCloseDistance; // Line of sight for turning around
-	public float catTimer;
+	public float catTimer; // Time between cat throws
 
 	//CATS! D:
 	public GameObject cat; 
 	
 	// Private
-	private int startTimeOut; //
-	private bool headingright;
-	private bool headingup;
-	private float catTimerUpdate;
+	private bool headingright; // Is the char heading right?
+	private bool headingup; // Is the char heading uP?
+	private bool readyToFling; // Bool that controls whether a cat can be thrown
+
 	//Used to load in the textures for the swap (left text for moving left / right text for moving right)
 	Texture leftTexture;
 	Texture rightTexture;
@@ -31,7 +31,9 @@ public class WitchControllerNew : MonoBehaviour {
 		leftTexture = Resources.Load ("Textures/witch", typeof(Texture)) as Texture;
 		rightTexture = Resources.Load ("Textures/witch", typeof(Texture)) as Texture;
 
-		catTimerUpdate = UpdateTimer (catTimer);
+		// Start the cooldown on the cat fling
+		StartCoroutine (flingCooldown ());
+
 	}
 	
 	/* Main method:
@@ -72,22 +74,20 @@ public class WitchControllerNew : MonoBehaviour {
 
 	// Throw a cat
 	void rndCatFling(){
-		if(Time.time >= catTimerUpdate)
+		if(readyToFling == true)
 		{
 			GameObject newCat = (GameObject)Instantiate(cat, new Vector3(transform.position.x, transform.position.y, transform.position.z), Quaternion.Euler(new Vector3(0, 0, 0)));
 			newCat.name = "Cat";
-			catTimerUpdate = UpdateTimer (catTimer);
+			StartCoroutine(flingCooldown());
 		}
 	}
 
-	// Update Timer:
-	// Returns a value to set timerUpdate to
-	// This is the current time + (timer value + the timer value divided by a random number between 1 and 5)
-	private float UpdateTimer (float thetime) 
-	{
-		float rndNo = Random.Range(1,5);
-		float newTime = Time.time + (thetime + (thetime / rndNo));
-		return newTime;
+	// Cooldown that controls the readyToSpawn bool
+	IEnumerator flingCooldown(){
+		readyToFling = false;
+		float rndNo = Random.Range (1, 5);
+		yield return new WaitForSeconds(catTimer + (catTimer / rndNo));
+		readyToFling = true;
 	}
 
 	// T moves in one direction along the X axis until 'headright' changes

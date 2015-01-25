@@ -9,8 +9,7 @@ public class TrollController : MonoBehaviour {
 	public float sightCloseDistance; // Line of sight for turning around
 
 	// Private
-	private int startTimeOut; //
-	public bool headingright;
+	public bool headingright; // Which direction is Troll heading in?
 	//private bool dropped;
 
 	//Used to load in the textures for the swap (left text for moving left / right text for moving right)
@@ -19,7 +18,8 @@ public class TrollController : MonoBehaviour {
 
 	// Make sure chars in the 'Enemy' layer ignore each other, set 'dropped' to false
 	void Start() {
-		//dropped = false;
+		// #DROP DOWN# dropped = false;
+
 		Physics2D.IgnoreLayerCollision (11, 11);
 
 		//Loading in the textures :D
@@ -38,38 +38,8 @@ public class TrollController : MonoBehaviour {
 		transform.eulerAngles = new Vector3(0,0,0);
 		TurnAround ();
 		KeepOnMoving ();
-		//FallThroughFloor ();
+		// #DROP DOWN# FallThroughFloor ();
 	}
-	
-	/*// Troll will only fall through the floor if he is above LRRH and there is a platform to land on
-	// Once he has dropped once, he will never drop again
-	void FallThroughFloor ()
-	{
-		if (dropped == false)
-		{
-			GameObject lrrh = GameObject.FindGameObjectWithTag ("LRRH");
-		
-			float bbwdiffx = lrrh.transform.position.x - transform.position.x;
-			float bbwdiffy = transform.position.y - lrrh.transform.position.y;
-		
-			if ((bbwdiffx > -10 & bbwdiffx < 10) & bbwdiffy > 2)
-			{
-				RaycastHit2D[] hit = Physics2D.RaycastAll (transform.position, -Vector2.up, sightDownDistance);
-				if (hit.Length > 3)
-				{
-					for (int i = 0; i < hit.Length; i++)
-					{
-						if (hit[i].collider.tag == "Ground" || hit[i].collider.name == "Platform")
-						{
-							Physics2D.IgnoreCollision(gameObject.collider2D, hit[i].rigidbody.collider2D);
-							dropped = true;
-							break;
-						}
-					}
-				}
-			}
-		}
-	}*/
 
 	// Tag the left and right boundary walls as LeftBound and RightBound
 	// T will turn around when he hits one
@@ -85,7 +55,7 @@ public class TrollController : MonoBehaviour {
 		}
 	}
 	
-	// T moves in one direction along the X axis until 'headright' changes
+	// T moves in one direction along the X axis until 'headingright' changes
 	void KeepOnMoving ()
 	{
 		if (headingright == true)
@@ -122,8 +92,36 @@ public class TrollController : MonoBehaviour {
 				headingright = false;
 			}
 		}
-		
-		
-		
 	}
+
+	// ### DROP DOWN CODE ###
+	/*// Troll will only fall through the floor if he is above LRRH and there is a platform to land on
+	// Once he has dropped once, he will never drop again
+	void FallThroughFloor ()
+	{
+		if (dropped == false)
+		{
+			GameObject lrrh = GameObject.FindGameObjectWithTag ("LRRH");
+			
+			float bbwdiffx = lrrh.transform.position.x - transform.position.x;
+			float bbwdiffy = transform.position.y - lrrh.transform.position.y;
+			
+			if ((bbwdiffx > -10 & bbwdiffx < 10) & bbwdiffy > 2)
+			{
+				RaycastHit2D[] hit = Physics2D.RaycastAll (transform.position, -Vector2.up, sightDownDistance);
+				if (hit.Length > 3)
+				{
+					for (int i = 0; i < hit.Length; i++)
+					{
+						if (hit[i].collider.tag == "Ground" || hit[i].collider.name == "Platform")
+						{
+							Physics2D.IgnoreCollision(gameObject.collider2D, hit[i].rigidbody.collider2D);
+							dropped = true;
+							break;
+						}
+					}
+				}
+			}
+		}
+	}*/
 }

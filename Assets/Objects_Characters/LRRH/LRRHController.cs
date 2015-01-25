@@ -13,7 +13,6 @@ public class LRRHController : MonoBehaviour {
 	public KeyCode moveLeft; // Left
 	public KeyCode moveJump; // Jump
 	public KeyCode moveDown; // Dash
-	public Material[] materials; //0 = Character Skin, 1 = Attack
 
 	// Private
 	private int jumpsMade; //Number of jumps performed since leaving the ground
@@ -27,8 +26,10 @@ public class LRRHController : MonoBehaviour {
 
 	// At start we set the number of jumps performed since leaving the ground to 0
 	void Start () {
-
+		// Ignore P1 and P2 collisions
 		Physics2D.IgnoreLayerCollision(12, 13);
+
+		// Reset jumps
 		if (gameObject.tag == "LRRH") 
 		{
 			jumpsMade = 0;
@@ -38,6 +39,7 @@ public class LRRHController : MonoBehaviour {
 		leftTexture = Resources.Load ("Textures/LRRH_Flip", typeof(Texture)) as Texture;
 		rightTexture = Resources.Load ("Textures/LRRH", typeof(Texture)) as Texture;
 
+		// Set airMoves to 1; save the initial gravity as origGravity
 		airMoves = 1;
 		origGravity = gameObject.rigidbody2D.gravityScale;
 
@@ -156,7 +158,7 @@ public class LRRHController : MonoBehaviour {
 
 	void OnTriggerEnter2D(Collider2D col)
 	{
-		// If she hits a piece of floor, reset the available jumps
+		// If she hits a piece of floor (or BBW's head) reset the available jumps
 		if (col.gameObject.tag == "Ground" || col.gameObject.tag == "BBW") 
 		{
 			jumpsMade = 0;

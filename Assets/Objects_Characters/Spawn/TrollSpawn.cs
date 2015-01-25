@@ -4,28 +4,28 @@ using System.Collections;
 public class TrollSpawn : MonoBehaviour {
 
 	// Edit in Unity
-	public int childLimit;
+	public int childLimit; // Number of trolls that can be spawned and exist at once
 	public GameObject trolly; // Troll prefab
-	public float timer;
-	public float distanceFromPlayers;
+	public float timer; // Cooldown time
+	public float distanceFromPlayers; // Distance from the players at which a spawn can happen
 
 	
 	// Don't edit in Unity
 	public int child;
 	
 	// Private vars
-	private GameObject bbw;
-	private GameObject lrrh;
-	private float timerUpdate;
-	private float bbwDistance;
-	private float lrrhDistance;
+	private GameObject bbw; // BBW
+	private GameObject lrrh; // LRRH
+	private float bbwDistance; // BBW distance
+	private float lrrhDistance; // LRRH distance
+	private bool readyToSpawn; // Has the cooldown ran down?
 
 	
-	// Use this for initialization
+	// Find BBW and LRRH, start the cooldown, set children to 0
 	void Start () {
 		bbw = GameObject.FindGameObjectWithTag ("BBW");
 		lrrh = GameObject.FindGameObjectWithTag ("LRRH");
-		timerUpdate = UpdateTimer (timer);
+		StartCoroutine (spawnCooldown());
 		child = 0;
 	}
 
@@ -37,28 +37,30 @@ public class TrollSpawn : MonoBehaviour {
 	 * 4. BBW and LRRH are distanceFromPlayers away from the spawn 
 	 */
 	void FixedUpdate () {
+
+		// Find distance from players
 		bbw = GameObject.FindGameObjectWithTag ("BBW");
 		lrrh = GameObject.FindGameObjectWithTag ("LRRH");
 		bbwDistance = Vector3.Distance(gameObject.transform.position, bbw.gameObject.transform.position);
 		lrrhDistance = Vector3.Distance(gameObject.transform.position, lrrh.gameObject.transform.position);
+
+		// Spawn
 		if ((gameObject.transform.position.y - lrrh.gameObject.transform.position.y) >= -1.5f && child < childLimit 
-		    && Time.time >= timerUpdate && bbwDistance > distanceFromPlayers && lrrhDistance > distanceFromPlayers)		
+		    && readyToSpawn == true && bbwDistance > distanceFromPlayers && lrrhDistance > distanceFromPlayers)		
 		{
 			GameObject newTroll = (GameObject)Instantiate(trolly, gameObject.transform.position, Quaternion.identity);
 			newTroll.GetComponent<EnemyReceiver>().spawnParent = gameObject;
 			newTroll.name = "Troll";
 			child++;
-			timerUpdate = UpdateTimer (timer);
+			StartCoroutine (spawnCooldown());
 		}
 	}
 
-	// Update Timer:
-	// Returns a value to set timerUpdate to
-	// This is the current time + (timer value + the timer value divided by a random number between 1 and 5)
-	public float UpdateTimer (float thetime) 
-	{
-		float rndNo = Random.Range(1,5);
-		float newTime = Time.time + (thetime + (thetime / rndNo));
-		return newTime;
+	// Cooldown that controls the readyToSpawn bool
+	IEnumerator spawnCooldown(){
+		readyToSpawn = false;
+		float rndNo = Random.Range (1, 5);
+		yield return new WaitForSeconds(timer + (timer / rndNo));
+		readyToSpawn = true;
 	}
 }

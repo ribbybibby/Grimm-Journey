@@ -22,11 +22,17 @@ public class CatMovement : MonoBehaviour {
 	// Start the count down to the cat's death, load in textures, make sure collisions with other
 	// enemies are disabled
 	void Start() {
-
+		// Countdown to the Cat's auto-death begins
 		StartCoroutine(waitThenKill());
+
 		//Loading in the textures :D
 		leftTexture = Resources.Load ("Textures/flycatflip", typeof(Texture)) as Texture;
 		rightTexture = Resources.Load ("Textures/flycat", typeof(Texture)) as Texture;
+
+		// Cat's attack is activated, 
+		// We make sure that objects in the Enemy layer ignore each other,
+		// We find the soundmanager,
+		// And then play the cat noise.
 		readyToAttack = true;
 		Physics2D.IgnoreLayerCollision (11, 11);
 		SoundManager play = GameObject.Find("SoundManager").gameObject.GetComponent<SoundManager>();
@@ -39,25 +45,37 @@ public class CatMovement : MonoBehaviour {
 		transform.eulerAngles = new Vector3(0,0,0);
 	}
 
-	// On collision, apply force upwards and then left/right depending on Player's relation to the cat on the X-axis
+	// On hitting the floor, apply force upwards and then left/right depending on Player's relation to the cat on the X-axis
 	// Also apply damage, if the timer on the attack has ran down
-	void OnCollisionEnter2D(Collision2D col) {
-		rigidbody2D.AddForce (Vector3.up * jumpForce);
-		MoveEnemy (jumpForce);
-		if (readyToAttack == true)
+	void OnTriggerEnter2D(Collider2D col) {
+		if (col.tag == "Ground")
 		{
-			col.transform.SendMessage("ApplyDamage", damage, SendMessageOptions.DontRequireReceiver);
-			readyToAttack = false;
-			StartCoroutine(waitForAttack());
+			rigidbody2D.AddForce (Vector3.up * jumpForce);
+			MoveEnemy (jumpForce);
+		}
+	}
+
+	// On collision with BBW or LRRH, apply damage
+	void OnCollisionEnter2D(Collision2D col) {
+		if (col.gameObject.tag == "BBW" || col.gameObject.tag == "LRRH")
+		{
+			if (readyToAttack == true)
+			{
+				col.transform.SendMessage("ApplyDamage", damage, SendMessageOptions.DontRequireReceiver);
+				StartCoroutine(waitForAttack());
+			}
 		}
 	}
 	
-	// If the cat gets stuck for too long on any surface, we give it a strong force 
+	// If the cat gets stuck for too long, we give it a strong force 
 	//towards the player to try and dislodge it 
-	void OnCollisionStay2D(Collision2D col) {
-		float rndNo = Random.Range (1, 20);
-		if (rndNo == 3) {
-			MoveEnemy(jumpForce * 1.5f);
+	void OnTriggerStay2D(Collider2D col) {
+		if (col.tag == "Ground")
+		{
+			float rndNo = Random.Range (1, 20);
+			if (rndNo == 3) {
+				MoveEnemy(jumpForce * 1.5f);
+			}
 		}
 	}
 	
@@ -109,6 +127,7 @@ public class CatMovement : MonoBehaviour {
 
 	// Timeout on the attack
 	IEnumerator waitForAttack(){
+		readyToAttack = false;
 		yield return new WaitForSeconds(attackDelay);
 		readyToAttack = true;
 	}

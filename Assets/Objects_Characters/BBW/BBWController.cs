@@ -13,10 +13,8 @@ public class BBWController : MonoBehaviour {
 	public KeyCode moveLeft; // Left
 	public KeyCode moveJump; // Jump
 	public KeyCode moveDown; // Dash
-	public Material[] materials; //0 = Skin, 1 = Attack
 	public bool facingRight; // Allows Melee System to tell which direction BBW is facing 
-
-
+	
 	//Used to load in the textures for the swap (left text for moving left / right text for moving right)
 	public Texture leftTexture;
 	public Texture rightTexture;
@@ -28,16 +26,14 @@ public class BBWController : MonoBehaviour {
 	private float airGravity; //Incremented value for x-axis movement while in the air
 	private float origGravity; //Original gravity of the character
 	private SoundManager play; // The sound manager
-	//private Transform[] findGlowTransform;
-	//private Transform glowTransform;
-	private GameObject[] findGlow;
-	private GameObject glow;
+	private GameObject glow; // The glow object on BBW
 
-
-	// At start we set the number of jumps performed since leaving the ground to 0
 	void Start () 
 	{	
+		// Grab the soundmanager
 		play = GameObject.Find("SoundManager").gameObject.GetComponent<SoundManager>();
+
+		// Reset jumps to 0
 		if (gameObject.tag == "BBW") 
 		{
 			jumpsMade = 0;
@@ -47,6 +43,7 @@ public class BBWController : MonoBehaviour {
 		leftTexture = Resources.Load ("Textures/BBW", typeof(Texture)) as Texture;
 		rightTexture = Resources.Load ("Textures/BBW_Flip", typeof(Texture)) as Texture;
 
+		// Set airMoves to 1; save the initial gravity as origGravity
 		airMoves = 1;
 		origGravity = gameObject.rigidbody2D.gravityScale;
 
@@ -69,6 +66,7 @@ public class BBWController : MonoBehaviour {
 			// If it is we let the pad controls work fine if its not we dont cause it's not player one
 			if (gameObject.layer == 12) {
 				//Move Right
+				// If BBW is in the air, start to limit movement
 				if (Input.GetKey (moveRight) || Input.GetAxis ("Horizontal_PLR1") > 0) {
 					if (airMoves == 1) 
 					{
@@ -157,6 +155,7 @@ public class BBWController : MonoBehaviour {
 	void OnTriggerEnter2D(Collider2D other)
 	{
 
+		// Enable glow, if Player 1 accept pad and key input, if not just key
 		if (other.gameObject.tag == "LRRHTrigger") {
 			glow.renderer.enabled = true;		
 			if (gameObject.layer == 12) {
@@ -170,13 +169,15 @@ public class BBWController : MonoBehaviour {
 					}
 				}
 			}
-
-			//Jump
-			if (Input.GetKeyDown (moveJump)) {
-				if (jumpsMade < jumpLimit) {
-					play.PlayJumpBBW ();
-					rigidbody2D.AddForce (Vector2.up * jumpHeight);
-					jumpsMade++;
+			else
+			{
+				//Jump
+				if (Input.GetKeyDown (moveJump)) {
+					if (jumpsMade < jumpLimit) {
+						play.PlayJumpBBW ();
+						rigidbody2D.AddForce (Vector2.up * jumpHeight);
+						jumpsMade++;
+					}
 				}
 			}
 		}
@@ -193,6 +194,7 @@ public class BBWController : MonoBehaviour {
 	void OnTriggerStay2D(Collider2D other)
 	{
 
+		// Enable glow, if Player 1 accept pad and key input, if not just key
 		if (other.gameObject.tag == "LRRHTrigger") 
 		{
 			glow.renderer.enabled = true;		
@@ -210,15 +212,18 @@ public class BBWController : MonoBehaviour {
 					}
 				}
 			}
-			//Jump
-			if (Input.GetKeyDown (moveJump))
+			else
 			{
-				if (jumpsMade < jumpLimit)
+				//Jump
+				if (Input.GetKeyDown (moveJump))
 				{
-					play.PlayJumpBBW();
-					rigidbody2D.AddForce (Vector2.up * jumpHeight);
-					jumpsMade++;
-					airMoves = airMoves + airMoveIncrement;
+					if (jumpsMade < jumpLimit)
+					{
+						play.PlayJumpBBW();
+						rigidbody2D.AddForce (Vector2.up * jumpHeight);
+						jumpsMade++;
+						airMoves = airMoves + airMoveIncrement;
+					}
 				}
 			}
 		}
@@ -226,6 +231,7 @@ public class BBWController : MonoBehaviour {
 
 	void OnTriggerExit2D(Collider2D other)
 	{
+		// Disable glow, if Player 1 accept pad and key input, if not just key
 		glow.renderer.enabled = false;		
 		if (other.gameObject.tag == "LRRHTrigger") 
 		{
@@ -239,6 +245,20 @@ public class BBWController : MonoBehaviour {
 						play.PlayJumpBBW();
 						rigidbody2D.AddForce (Vector2.up * jumpHeight);
 						jumpsMade++;
+					}
+				}
+			}
+			else
+			{
+				//Jump
+				if (Input.GetKeyDown (moveJump))
+				{
+					if (jumpsMade < jumpLimit)
+					{
+						play.PlayJumpBBW();
+						rigidbody2D.AddForce (Vector2.up * jumpHeight);
+						jumpsMade++;
+						airMoves = airMoves + airMoveIncrement;
 					}
 				}
 			}

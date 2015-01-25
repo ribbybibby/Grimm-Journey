@@ -4,7 +4,7 @@ using System.Collections;
 /*
  * This class is used to store and manage narration
  * If any narration is played we should set talking to true
- * This should then be passed to the sound manage via GetTalking
+ * This should then be passed to the sound manager via GetTalking
  * This will then be checked in sound managers upate and if set to true will manage the SFX audio
  */
 public class NarrationManager : MonoBehaviour {
@@ -49,6 +49,46 @@ public class NarrationManager : MonoBehaviour {
 	void Update ()
 	{
 
+	}
+
+	void playNoAttackNar(){
+		BBWNoAttackNarration.Play ();
+	}
+
+	void playNoJumpNar(){
+		BBWNoJumpNarration.Play ();
+	}
+
+	void playBeanstalkNar(){
+		BeanstalkNarration.Play ();
+	}
+
+	void playCastleNar(){
+		CastleNarration.Play ();
+	}
+
+	void playSwitchNar(){
+		FirstTransformNarration.Play ();
+	}
+
+	void playForestNar(){
+		ForestNarration.Play ();
+	}
+
+	void playIntroNar(){
+		IntroNarration.Play ();
+	}
+
+	void playLittleHealthNar(){
+		LittleHealthNarration.Play ();
+	}
+
+	void playLRRHFirstHitNar(){
+		LRRHFirstHitNarration.Play ();
+	}
+
+	void playNoBothExitNar(){
+		NoBothExitNarration.Play ();
 	}
 
 	public bool getTalking(){

@@ -1,11 +1,10 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Objects_Characters\SoundManager\NarrationManager.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Objects_Characters\SoundManager\MusicManager.cs">
     <Files>
-      <File FileName="Assets\Objects_Characters\BBW\BBWController.cs" Line="34" Column="41" />
-      <File FileName="Assets\Objects_Characters\SoundManager\SoundManager.cs" Line="58" Column="24" />
-      <File FileName="Assets\Objects_Characters\SoundManager\NarrationManager.cs" Line="14" Column="19" />
-      <File FileName="Assets\Scripts\LevelLoad\CameraPanUp.cs" Line="14" Column="5" />
+      <File FileName="Assets\Objects_Characters\SoundManager\NarrationManager.cs" Line="11" Column="2" />
+      <File FileName="Assets\Objects_Characters\SoundManager\SoundManager.cs" Line="35" Column="10" />
+      <File FileName="Assets\Objects_Characters\SoundManager\MusicManager.cs" Line="41" Column="39" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

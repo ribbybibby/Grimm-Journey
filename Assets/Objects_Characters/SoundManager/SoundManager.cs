@@ -3,7 +3,6 @@ using System.Collections;
 
 public class SoundManager : MonoBehaviour
 {
-	
 		AudioSource BBWHit;
 		AudioSource BBWKilled;
 		AudioSource Bite;
@@ -32,25 +31,27 @@ public class SoundManager : MonoBehaviour
 		AudioSource WCKilled;
 		AudioSource WoodCutterAxe;
 		//Testing narration
-		AudioSource IntroNarration;
+		//AudioSource IntroNarration;
 		//music
-		AudioSource musicLoop;
+		//AudioSource musicLoop;
 		//Array to store sources
 		public AudioSource[] Asources;
 
+		public NarrationManager localNarrationManager;
+
 		//Used to store a volume to be used to quiet down the audio during narration
 		public float setVolume;
-		
-		bool talking;
 
 		// Use this for initialization
 		void Start ()
 		{
 
 			setVolume = 1.0F;
-			talking = false;
+			//talking = false;
 
 			Asources = gameObject.GetComponents<AudioSource> ();
+			
+			localNarrationManager = GameObject.Find ("NarrationManager").GetComponent<NarrationManager> ();
 		
 			BBWHit = Asources [0];
 			BBWKilled = Asources [1];
@@ -79,10 +80,6 @@ public class SoundManager : MonoBehaviour
 			WCHit = Asources [24];
 			WCKilled = Asources [25];
 			WoodCutterAxe = Asources [26];
-			
-			IntroNarration = Asources [27];
-			
-			musicLoop = Asources [28];
 		}
 	
 		// Update is called once per frame
@@ -119,9 +116,9 @@ public class SoundManager : MonoBehaviour
 			WCHit.volume = setVolume;
 			WCKilled.volume = setVolume;
 			WoodCutterAxe.volume = setVolume;
-			musicLoop.volume = setVolume;
 
-			if (!IntroNarration.isPlaying) {
+			//Change this to set a bool whenever any narration is playing inside the narrationmanager
+			if (localNarrationManager.getTalking() == false) {
 				setVolume = 1.0F;
 				Debug.Log (setVolume);
 			}
@@ -138,13 +135,13 @@ public class SoundManager : MonoBehaviour
 			//}
 		//}
 
-		public void PlayIntroNarration ()
-		{
-
-			setVolume = 0.2F;
-			IntroNarration.Play ();
-
-		}
+		//public void PlayIntroNarration ()
+		//{
+		//
+		//	setVolume = 0.2F;
+		//	IntroNarration.Play ();
+		//
+		//}
 
 		public void PlayBBWHit ()
 		{

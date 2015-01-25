@@ -11,8 +11,8 @@ public class CameraPanUp : MonoBehaviour {
 	void Start () {
 		stopPan = false;
 		//StartCoroutine(waitThenPanUp());
-		SoundManager play = GameObject.Find("SoundManager").gameObject.GetComponent<SoundManager>();
-		play.PlayIntroNarration();
+		//SoundManager play = GameObject.Find("SoundManager").gameObject.GetComponent<SoundManager>();
+		//play.PlayIntroNarration();
 	}
 	
 	// Update is called once per frame

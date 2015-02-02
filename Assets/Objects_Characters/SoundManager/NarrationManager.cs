@@ -43,6 +43,11 @@ public class NarrationManager : MonoBehaviour {
 		LittleHealthNarration = Asources [7];
 		LRRHFirstHitNarration = Asources [8];
 		NoBothExitNarration = Asources [9];
+
+		if (Application.loadedLevel == 1) {
+			playForestNar();
+		}
+
 	}
 	
 	// Update is called once per frame
@@ -73,6 +78,12 @@ public class NarrationManager : MonoBehaviour {
 
 	void playForestNar(){
 		ForestNarration.Play ();
+		talking = true;
+
+		if (!ForestNarration.isPlaying) {
+			talking = false;
+			Debug.Log ("!ForestNarration.isPlaying reached");
+		}
 	}
 
 	void playIntroNar(){

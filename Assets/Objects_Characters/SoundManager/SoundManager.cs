@@ -120,7 +120,7 @@ public class SoundManager : MonoBehaviour
 			//Change this to set a bool whenever any narration is playing inside the narrationmanager
 			if (localNarrationManager.getTalking() == true) {
 				setVolume = 0.2F;
-				Debug.Log (setVolume);
+				Debug.Log ("gettalking is " + setVolume);
 			}
 		}
 		

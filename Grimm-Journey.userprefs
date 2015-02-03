@@ -1,11 +1,11 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Objects_Characters\SoundManager\NarrationManager.cs">
     <Files>
-      <File FileName="Assets\Objects_Characters\SoundManager\NarrationManager.cs" Line="85" Column="53" />
+      <File FileName="Assets\Objects_Characters\SoundManager\NarrationManager.cs" Line="48" Column="16" />
       <File FileName="..\..\MyMadeGames\ClausDemo\Assets\MyScripts\MainMenu\main_LevelPan.cs" Line="1" Column="1" />
       <File FileName="Assets\Objects_Characters\SoundManager\MusicManager.cs" Line="1" Column="1" />
-      <File FileName="Assets\Objects_Characters\SoundManager\SoundManager.cs" Line="123" Column="17" />
+      <File FileName="Assets\Objects_Characters\SoundManager\SoundManager.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

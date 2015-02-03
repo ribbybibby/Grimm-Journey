@@ -44,10 +44,21 @@ public class NarrationManager : MonoBehaviour {
 		LRRHFirstHitNarration = Asources [8];
 		NoBothExitNarration = Asources [9];
 
+		if (Application.loadedLevel == 0) {
+			playIntroNar();
+		}
+
 		if (Application.loadedLevel == 1) {
 			playForestNar();
 		}
 
+		if (Application.loadedLevel == 3) {
+			playCastleNar();
+		}
+
+		if (Application.loadedLevel == 4) {
+			playBeanstalkNar();
+		}
 	}
 	
 	// Update is called once per frame

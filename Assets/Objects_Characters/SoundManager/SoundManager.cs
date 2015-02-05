@@ -117,9 +117,16 @@ public class SoundManager : MonoBehaviour
 			WCKilled.volume = setVolume;
 			WoodCutterAxe.volume = setVolume;
 
+			Debug.Log (localNarrationManager.getTalking ());
+
 			//Change this to set a bool whenever any narration is playing inside the narrationmanager
 			if (localNarrationManager.getTalking() == true) {
 				setVolume = 0.2F;
+				Debug.Log ("gettalking is " + setVolume);
+			}
+
+			if (localNarrationManager.getTalking() == false) {
+				setVolume = 1.0F;
 				Debug.Log ("gettalking is " + setVolume);
 			}
 		}

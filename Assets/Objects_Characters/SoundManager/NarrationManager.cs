@@ -5,7 +5,7 @@ using System.Collections;
  * This class is used to store and manage narration
  * If any narration is played we should set talking to true
  * This should then be passed to the sound manager via GetTalking
- * This will then be checked in sound managers upate and if set to true will manage the SFX audio
+ * This will then be checked in sound managers upate and if set to true will manage the SFX audio (turn down soundFX)
  */
 public class NarrationManager : MonoBehaviour {
 
@@ -22,13 +22,14 @@ public class NarrationManager : MonoBehaviour {
 	
 	//Array to store sources
 	public AudioSource[] Asources;
-	
+
+	//Used to set a narration-is-playing state
 	bool talking;
 	
 	// Use this for initialization
 	void Start ()
 	{
-
+		//At the start, no narration
 		talking = false;
 		
 		Asources = gameObject.GetComponents<AudioSource> ();
@@ -44,18 +45,16 @@ public class NarrationManager : MonoBehaviour {
 		LRRHFirstHitNarration = Asources [8];
 		NoBothExitNarration = Asources [9];
 
+		//Depending on the level - play the levels intro narration
 		if (Application.loadedLevel == 0) {
 			playIntroNar();
 		}
-
 		if (Application.loadedLevel == 1) {
 			playForestNar();
 		}
-
 		if (Application.loadedLevel == 3) {
 			playCastleNar();
 		}
-
 		if (Application.loadedLevel == 4) {
 			playBeanstalkNar();
 		}
@@ -65,6 +64,18 @@ public class NarrationManager : MonoBehaviour {
 	void Update ()
 	{
 
+		//BUG ---
+		//The below code works for one narration clip, but we can't do this check for multiple clips
+		// Because the if clause will always be true for at least one narration clip at some point
+		//Need to think of a good way to set talking to false basically
+		// I do it un update to continiously check to see if a narration clip is playing
+		//Can't think of a better way to do this for now - unless we time each narration clip and set talking
+		// to false after x seconds. But that will make adding and removing narration a huge hassle.
+
+		if (!ForestNarration.isPlaying) {
+			talking = false;
+			Debug.Log ("!ForestNarration.isPlaying reached: " + talking);
+		}
 	}
 
 	void playNoAttackNar(){
@@ -87,18 +98,26 @@ public class NarrationManager : MonoBehaviour {
 		FirstTransformNarration.Play ();
 	}
 
+	/*
+	 * We check to see if talking is false, so that we don't overlap other narration and make things sound crazy
+	 * If it's quiet we play the narration clip and set talking to true to show that we are busy playing a narration clip
+	 */
 	void playForestNar(){
-		ForestNarration.Play ();
-		talking = true;
-
-		if (!ForestNarration.isPlaying) {
-			talking = false;
-			Debug.Log ("!ForestNarration.isPlaying reached");
+		if (talking == false) {
+			ForestNarration.Play ();
+			talking = true;
 		}
 	}
 
+	/*
+	 * We check to see if talking is false, so that we don't overlap other narration and make things sound crazy
+	 * If it's quiet we play the narration clip and set talking to true to show that we are busy playing a narration clip
+	 */
 	void playIntroNar(){
-		IntroNarration.Play ();
+		if (talking == false) {
+			IntroNarration.Play ();
+			talking = true;
+		}
 	}
 
 	void playLittleHealthNar(){
@@ -113,6 +132,9 @@ public class NarrationManager : MonoBehaviour {
 		NoBothExitNarration.Play ();
 	}
 
+	/*
+	 * Get method used by Music and Sound manager to get the talking state
+	 */
 	public bool getTalking(){
 		return talking;
 	}

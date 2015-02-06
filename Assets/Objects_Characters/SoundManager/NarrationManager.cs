@@ -33,7 +33,11 @@ public class NarrationManager : MonoBehaviour {
 		talking = false;
 		
 		Asources = gameObject.GetComponents<AudioSource> ();
-		
+
+		/*The below section is now out of date.
+		 * We can use the method names to track the array vals now
+		 * We made tis part obsolute so that we can use teh array directly
+		 * in GetTalkingState()
 		BBWNoAttackNarration = Asources [0];
 		BBWNoJumpNarration = Asources [1];
 		BeanstalkNarration = Asources [2];
@@ -44,6 +48,7 @@ public class NarrationManager : MonoBehaviour {
 		LittleHealthNarration = Asources [7];
 		LRRHFirstHitNarration = Asources [8];
 		NoBothExitNarration = Asources [9];
+		*/
 
 		//Depending on the level - play the levels intro narration
 		if (Application.loadedLevel == 0) {
@@ -58,8 +63,10 @@ public class NarrationManager : MonoBehaviour {
 		if (Application.loadedLevel == 4) {
 			playBeanstalkNar();
 		}
+
+		InvokeRepeating("getTalkingState", 0.2F, 0.2F);
 	}
-	
+
 	// Update is called once per frame
 	void Update ()
 	{
@@ -72,30 +79,63 @@ public class NarrationManager : MonoBehaviour {
 		//Can't think of a better way to do this for now - unless we time each narration clip and set talking
 		// to false after x seconds. But that will make adding and removing narration a huge hassle.
 
-		if (!ForestNarration.isPlaying) {
-			talking = false;
-			Debug.Log ("!ForestNarration.isPlaying reached: " + talking);
+		//if (!ForestNarration.isPlaying) {
+		//	talking = false;
+		//	Debug.Log ("!ForestNarration.isPlaying reached: " + talking);
+		//}
+	}
+
+	void getTalkingState(){
+		//for (int i = 1; i < AudioSources[i]; i++)
+		foreach (AudioSource element in Asources)
+		{
+			if(element.isPlaying){
+				talking = true;
+				break;
+			}else{
+				talking = false;
+			}
 		}
 	}
 
 	void playNoAttackNar(){
-		BBWNoAttackNarration.Play ();
+		//BBWNoAttackNarration.Play ();
+		if (talking == false) {
+			Asources [0].Play ();
+			talking = true;
+		}
 	}
 
 	void playNoJumpNar(){
-		BBWNoJumpNarration.Play ();
+		//BBWNoJumpNarration.Play ();
+		if (talking == false) {
+			Asources [1].Play ();
+			talking = true;
+		}
 	}
 
 	void playBeanstalkNar(){
-		BeanstalkNarration.Play ();
+		//BeanstalkNarration.Play ();
+		if (talking == false) {
+			Asources [2].Play ();
+			talking = true;
+		}
 	}
 
 	void playCastleNar(){
-		CastleNarration.Play ();
+		//CastleNarration.Play ();
+		if (talking == false) {
+			Asources [3].Play ();
+			talking = true;
+		}
 	}
 
 	void playSwitchNar(){
-		FirstTransformNarration.Play ();
+		//FirstTransformNarration.Play ();
+		if (talking == false) {
+			Asources [4].Play ();
+			talking = true;
+		}
 	}
 
 	/*
@@ -104,7 +144,8 @@ public class NarrationManager : MonoBehaviour {
 	 */
 	void playForestNar(){
 		if (talking == false) {
-			ForestNarration.Play ();
+			//ForestNarration.Play ();
+			Asources [5].Play ();
 			talking = true;
 		}
 	}
@@ -115,21 +156,34 @@ public class NarrationManager : MonoBehaviour {
 	 */
 	void playIntroNar(){
 		if (talking == false) {
-			IntroNarration.Play ();
+			//IntroNarration.Play ();
+			Asources [6].Play ();
 			talking = true;
 		}
 	}
 
 	void playLittleHealthNar(){
-		LittleHealthNarration.Play ();
+		//LittleHealthNarration.Play ();
+		if (talking == false) {
+			Asources [7].Play ();
+			talking = true;
+		}
 	}
 
 	void playLRRHFirstHitNar(){
-		LRRHFirstHitNarration.Play ();
+		//LRRHFirstHitNarration.Play ();
+		if (talking == false) {
+			Asources [8].Play ();
+			talking = true;
+		}
 	}
 
 	void playNoBothExitNar(){
-		NoBothExitNarration.Play ();
+		//NoBothExitNarration.Play ();
+		if (talking == false) {
+			Asources [9].Play ();
+			talking = true;
+		}
 	}
 
 	/*

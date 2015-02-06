@@ -19,6 +19,7 @@ public class LRRHController : MonoBehaviour {
 	private float airMoves; //Incremented value for x-axis movement while in the air
 	private float airGravity; //Incremented value for x-axis movement while in the air
 	private float origGravity; //Original gravity of the character
+	private bool horizPlatMove; // Should we move with horizontal platforms?
 
 	//Used to load in the textures for the swap (left text for moving left / right text for moving right)
 	Texture leftTexture;
@@ -164,6 +165,35 @@ public class LRRHController : MonoBehaviour {
 			jumpsMade = 0;
 			airMoves = 1;
 			gameObject.rigidbody2D.gravityScale = origGravity;
+		}
+	}
+
+	// If we're sat on a horizontal-moving platform, and we aren't moving anywhere, we move in sync with the platform
+	void OnCollisionStay2D(Collision2D col)
+	{
+		if (col.gameObject.tag == "MovingPlatform")
+		{
+			if (Input.GetKey (moveLeft) || Input.GetKey (moveJump) || Input.GetKey (moveRight))
+			{
+				horizPlatMove = false;
+			}
+			else
+			{
+				horizPlatMove = true;
+			}
+			PlatformMovement moveScript = col.gameObject.GetComponent<PlatformMovement>();
+			if (moveScript.upAndDown == false)
+			{
+				switch (moveScript.goingRight)
+				{
+				case true:
+					transform.Translate (Vector2.right * moveScript.speed * Time.deltaTime);
+					break;
+				case false:
+					transform.Translate (-Vector2.right * moveScript.speed * Time.deltaTime);
+					break;
+				}
+			}
 		}
 	}
 }

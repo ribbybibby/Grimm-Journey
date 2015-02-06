@@ -27,6 +27,7 @@ public class BBWController : MonoBehaviour {
 	private float origGravity; //Original gravity of the character
 	private SoundManager play; // The sound manager
 	private GameObject glow; // The glow object on BBW
+	private bool horizPlatMove; // Should we move with horizontal platforms?
 
 	void Start () 
 	{	
@@ -260,6 +261,35 @@ public class BBWController : MonoBehaviour {
 						jumpsMade++;
 						airMoves = airMoves + airMoveIncrement;
 					}
+				}
+			}
+		}
+	}
+
+	// If we're sat on a horizontal-moving platform, and we aren't moving anywhere, we move in sync with the platform
+	void OnCollisionStay2D(Collision2D col)
+	{
+		if (col.gameObject.tag == "MovingPlatform")
+		{
+			if (Input.GetKey (moveLeft) || Input.GetKey (moveJump) || Input.GetKey (moveRight))
+			{
+				horizPlatMove = false;
+			}
+			else
+			{
+				horizPlatMove = true;
+			}
+			PlatformMovement moveScript = col.gameObject.GetComponent<PlatformMovement>();
+			if (moveScript.upAndDown == false)
+			{
+				switch (moveScript.goingRight)
+				{
+				case true:
+					transform.Translate (Vector2.right * moveScript.speed * Time.deltaTime);
+					break;
+				case false:
+					transform.Translate (-Vector2.right * moveScript.speed * Time.deltaTime);
+					break;
 				}
 			}
 		}

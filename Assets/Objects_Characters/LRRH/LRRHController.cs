@@ -182,7 +182,7 @@ public class LRRHController : MonoBehaviour {
 				horizPlatMove = true;
 			}
 			PlatformMovement moveScript = col.gameObject.GetComponent<PlatformMovement>();
-			if (moveScript.upAndDown == false)
+			if (moveScript.upAndDown == false && horizPlatMove == true)
 			{
 				switch (moveScript.goingRight)
 				{

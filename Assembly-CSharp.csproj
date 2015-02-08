@@ -49,6 +49,7 @@
      <Compile Include="Assets\AudioBackground1.cs" />
      <Compile Include="Assets\Axe.cs" />
      <Compile Include="Assets\AxeAttack.cs" />
+     <Compile Include="Assets\CameraMove.cs" />
      <Compile Include="Assets\HealthBar.cs" />
      <Compile Include="Assets\Objects_Characters\BBW\BBWController.cs" />
      <Compile Include="Assets\Objects_Characters\Cat\CatMovement.cs" />

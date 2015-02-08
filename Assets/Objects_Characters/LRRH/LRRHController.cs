@@ -20,6 +20,7 @@ public class LRRHController : MonoBehaviour {
 	private float airGravity; //Incremented value for x-axis movement while in the air
 	private float origGravity; //Original gravity of the character
 	private bool horizPlatMove; // Should we move with horizontal platforms?
+	private bool inGround;
 
 	//Used to load in the textures for the swap (left text for moving left / right text for moving right)
 	Texture leftTexture;
@@ -103,6 +104,13 @@ public class LRRHController : MonoBehaviour {
 						airMoves = airMoves + airMoveIncrement;
 					}
 				}
+				if (Input.GetKey (moveDown) || Input.GetAxis ("Vertical_PLR1") < 0) 
+				{
+					if (inGround == false)
+					{
+						gameObject.rigidbody2D.gravityScale = gameObject.rigidbody2D.gravityScale + (airGravityIncrement*5);
+					}
+				}
 				}else{
 				//Copy Paste of the above code, this will be the controls for any player that != player1 (layer12)
 				//As I only have one pad, for now I am removing pad support for player 2. SHould be quick to set up
@@ -153,6 +161,13 @@ public class LRRHController : MonoBehaviour {
 							airMoves = airMoves + airMoveIncrement;
 						}
 					}
+					if (Input.GetKey (moveDown)) 
+					{
+						if (inGround == false)
+						{
+							gameObject.rigidbody2D.gravityScale = gameObject.rigidbody2D.gravityScale + (airGravityIncrement*5);
+						}
+					}
 				}
 		}	
 	}
@@ -160,8 +175,9 @@ public class LRRHController : MonoBehaviour {
 	void OnTriggerEnter2D(Collider2D col)
 	{
 		// If she hits a piece of floor (or BBW's head) reset the available jumps
-		if (col.gameObject.tag == "Ground" || col.gameObject.tag == "BBW") 
+		if (col.gameObject.tag == "Ground") 
 		{
+			inGround = true;
 			jumpsMade = 0;
 			airMoves = 1;
 			gameObject.rigidbody2D.gravityScale = origGravity;
@@ -194,6 +210,14 @@ public class LRRHController : MonoBehaviour {
 					break;
 				}
 			}
+		}
+	}
+
+	void OnTriggerExit2D (Collider2D col)
+	{
+		if (col.gameObject.tag == "Ground")
+		{
+			inGround = false;
 		}
 	}
 }

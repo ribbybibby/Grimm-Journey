@@ -28,6 +28,7 @@ public class BBWController : MonoBehaviour {
 	private SoundManager play; // The sound manager
 	private GameObject glow; // The glow object on BBW
 	private bool horizPlatMove; // Should we move with horizontal platforms?
+	private bool inGround;
 
 	void Start () 
 	{	
@@ -104,7 +105,14 @@ public class BBWController : MonoBehaviour {
 					GameObject.Find ("BBW").gameObject.GetComponent<Renderer> ().material.SetTexture ("_MainTex", leftTexture);
 					glow.transform.localPosition = new Vector3 (0.08f, -0.04f, 0.2f);
 					facingRight = false;
-				}	
+				}
+				if (Input.GetKey (moveDown) || Input.GetAxis ("Vertical_PLR1") < 0) 
+				{
+					if (inGround == false)
+					{
+						gameObject.rigidbody2D.gravityScale = gameObject.rigidbody2D.gravityScale + (airGravityIncrement*5);
+					}
+				}
 			}else{
 			//END OF PLAYER 1 LAYER CHECK
 				if (gameObject.tag == "BBW") {
@@ -147,6 +155,13 @@ public class BBWController : MonoBehaviour {
 						glow.transform.localPosition = new Vector3 (0.08f, -0.04f, 0.2f);
 						facingRight = false;
 					}
+					if (Input.GetKey (moveDown)) 
+					{
+						if (inGround == false)
+						{
+							gameObject.rigidbody2D.gravityScale = gameObject.rigidbody2D.gravityScale + (airGravityIncrement*5);
+						}
+					}
 				}
 			}
 		}
@@ -184,8 +199,9 @@ public class BBWController : MonoBehaviour {
 		}
 		
 		//If BBW hits a piece of floor, reset the available jumps and switch back to normal texture 
-		if (other.tag == "Ground" || other.gameObject.tag == "LRRHTrigger") 
+		if (other.tag == "Ground") 
 		{
+			inGround = true;
 			jumpsMade = 0;
 			airMoves = 1;
 			gameObject.rigidbody2D.gravityScale = origGravity;
@@ -232,6 +248,11 @@ public class BBWController : MonoBehaviour {
 
 	void OnTriggerExit2D(Collider2D other)
 	{
+
+		if (other.tag == "Ground")
+		{
+			inGround = false;
+		}
 		// Disable glow, if Player 1 accept pad and key input, if not just key
 		glow.renderer.enabled = false;		
 		if (other.gameObject.tag == "LRRHTrigger") 

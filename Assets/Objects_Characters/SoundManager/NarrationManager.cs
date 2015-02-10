@@ -178,7 +178,7 @@ public class NarrationManager : MonoBehaviour {
 		}
 	}
 
-	void playNoBothExitNar(){
+	public void playNoBothExitNar(){
 		//NoBothExitNarration.Play ();
 		if (talking == false) {
 			Asources [9].Play ();

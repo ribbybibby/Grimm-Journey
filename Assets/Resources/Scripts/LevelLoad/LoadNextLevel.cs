@@ -10,12 +10,15 @@ public class LoadNextLevel : MonoBehaviour {
 	private bool bbw;
 	private bool lrrh;
 
+	private bool hasPlayedVic;
+
 	public NarrationManager localNarrationManager;
 
 	// Use this for initialization
 	void Start () {
 		bbw = false;
 		lrrh = false;
+		hasPlayedVic = false;
 
 		localNarrationManager = GameObject.Find ("NarrationManager").GetComponent<NarrationManager> ();
 	}
@@ -28,7 +31,7 @@ public class LoadNextLevel : MonoBehaviour {
 		}
 	}
 
-	void OnTriggerEnter2D(Collider2D other) {
+	void OnTriggerStay2D(Collider2D other) {
 		if (other.name == "BBW" || other.name == "LRRH")
 		{
 			other.GetComponent<EnemyReceiver>().invuln = true;
@@ -46,7 +49,11 @@ public class LoadNextLevel : MonoBehaviour {
 
 		if((other.name == "LRRH" && other.name != "BBW") ||(other.name == "BBW" && other.name != "LRRH"))
 		{
-			localNarrationManager.playNoBothExitNar();
+			if(hasPlayedVic == false)
+			{
+				localNarrationManager.playNoBothExitNar();
+				hasPlayedVic = true;
+			}
 		}
 	}
 

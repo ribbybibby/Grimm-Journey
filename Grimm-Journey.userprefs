@@ -1,11 +1,11 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Objects_Characters\SoundManager\NarrationManager.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Resources\Scripts\LevelLoad\LoadNextLevel.cs">
     <Files>
-      <File FileName="Assets\Resources\Scripts\LevelLoad\LoadNextLevel.cs" Line="49" Column="46" />
-      <File FileName="Assets\Objects_Characters\SoundManager\NarrationManager.cs" Line="178" Column="4" />
+      <File FileName="Assets\Resources\Scripts\LevelLoad\LoadNextLevel.cs" Line="1" Column="1" />
+      <File FileName="Assets\Objects_Characters\SoundManager\NarrationManager.cs" Line="1" Column="1" />
       <File FileName="..\..\MyMadeGames\ClausDemo\Assets\MyScripts\MainMenu\main_LevelPan.cs" Line="1" Column="1" />
-      <File FileName="Assets\Objects_Characters\SoundManager\MusicManager.cs" Line="50" Column="41" />
+      <File FileName="Assets\Objects_Characters\SoundManager\MusicManager.cs" Line="1" Column="1" />
       <File FileName="Assets\Objects_Characters\SoundManager\SoundManager.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>

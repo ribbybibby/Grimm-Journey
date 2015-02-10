@@ -10,11 +10,14 @@ public class LoadNextLevel : MonoBehaviour {
 	private bool bbw;
 	private bool lrrh;
 
+	public NarrationManager localNarrationManager;
 
 	// Use this for initialization
 	void Start () {
 		bbw = false;
 		lrrh = false;
+
+		localNarrationManager = GameObject.Find ("NarrationManager").GetComponent<NarrationManager> ();
 	}
 	
 	// Update is called once per frame
@@ -39,6 +42,11 @@ public class LoadNextLevel : MonoBehaviour {
 		if (other.name == "LRRH")
 		{
 			lrrh = true;
+		}
+
+		if((other.name == "LRRH" && other.name != "BBW") ||(other.name == "BBW" && other.name != "LRRH"))
+		{
+			localNarrationManager.playNoBothExitNar();
 		}
 	}
 

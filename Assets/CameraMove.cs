@@ -17,6 +17,10 @@ public class CameraMove : MonoBehaviour {
 	private float screenQuart; // The three-quarter point of the screen
 	private bool moveUp; // Should the camera be moving up?
 	private float newPosY; // New Y position for the camera to move to
+	private bool offScreen; // Are either of LRRH or BBW offscreen?
+	private float topY; // Top of the camera
+	private float bottomY; // Bottom of the camera
+	private int someNumber; // Some number
 
 	// Use this for initialization
 	void Start () {
@@ -35,6 +39,8 @@ public class CameraMove : MonoBehaviour {
 
 		// Start the camera at the midVector
 		gameObject.transform.position = midVector;
+
+		someNumber = 0;
 
 	}
 	
@@ -79,6 +85,10 @@ public class CameraMove : MonoBehaviour {
 			CameraTwo ();
 			break;
 		}
+
+		// Deal with cases where characters are outside the camera's view
+		OffScreen ();
+
 	}
 
 	void CameraOne()
@@ -163,6 +173,38 @@ public class CameraMove : MonoBehaviour {
 		
 		// Move the background in sync with the camera
 		background.transform.position = new Vector3 (gameObject.transform.position.x, gameObject.transform.position.y, background.transform.position.z);
+	}
+
+	void OffScreen ()
+	{
+		// Find the top and bottom y-coords of the camera in world space
+		topY = gameObject.transform.position.y + gameObject.camera.orthographicSize;
+		bottomY = gameObject.transform.position.y - gameObject.camera.orthographicSize;
+		
+		// If either character is above or below, we set offScreen to true
+		if (lrrh.transform.position.y >= topY || lrrh.transform.position.y <= bottomY 
+		    || bbw.transform.position.y >= topY || bbw.transform.position.y <= bottomY)
+		{
+			offScreen = true; 
+		}
+		// Else false
+		else
+		{
+			offScreen = false;
+		}
+		
+		// If offscreen, increment someNumber
+		if (offScreen == true) 
+		{
+			someNumber++;
+			Debug.Log (someNumber);
+		}
+		// If false, bring the number back down to 0
+		if (offScreen == false && someNumber > 0)
+		{
+			someNumber--;
+			Debug.Log (someNumber);
+		}	
 	}
 	
 }

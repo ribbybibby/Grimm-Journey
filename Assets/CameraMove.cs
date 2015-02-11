@@ -7,6 +7,7 @@ public class CameraMove : MonoBehaviour {
 	public float moveDistance; // The distance the camera should be from the midVector before moving
 	public float camSizeDivider; // The number we divide the distance between the characters by (which we then then add to the orthographic camera size)
 	public GameObject background; // The background object
+	public float shakeForce;
 
 	private GameObject bbw; // BBW
 	private GameObject lrrh; // LRRH
@@ -21,6 +22,12 @@ public class CameraMove : MonoBehaviour {
 	private float topY; // Top of the camera
 	private float bottomY; // Bottom of the camera
 	private int someNumber; // Some number
+
+	// Camera shake
+	private bool shakeCentreFound;
+	private bool shakeReturn;
+	private Vector3 shakeCentre;
+
 
 	// Use this for initialization
 	void Start () {
@@ -41,6 +48,10 @@ public class CameraMove : MonoBehaviour {
 		gameObject.transform.position = midVector;
 
 		someNumber = 0;
+
+		// Shake things
+		shakeCentreFound = false;
+		shakeReturn = false;
 
 	}
 	
@@ -197,14 +208,49 @@ public class CameraMove : MonoBehaviour {
 		if (offScreen == true) 
 		{
 			someNumber++;
-			Debug.Log (someNumber);
+			ShakeIt(true);
+//			Debug.Log (someNumber);
 		}
 		// If false, bring the number back down to 0
 		if (offScreen == false && someNumber > 0)
 		{
 			someNumber--;
-			Debug.Log (someNumber);
+			ShakeIt(false);
+			//Debug.Log (someNumber);
 		}	
 	}
+
+	void ShakeIt (bool shakeon)
+	{
+		switch (shakeon){
+		case true:
+			if (shakeCentreFound == false)
+			{
+				shakeCentre = gameObject.transform.position;
+				shakeCentreFound = true;
+			}
+			if (shakeCentreFound == true)
+			{
+				float rndY = Random.Range (-shakeForce, shakeForce);
+				float rndX = Random.Range (-shakeForce, shakeForce);
+				if (shakeReturn == false)
+				{
+					gameObject.transform.position = new Vector3 ((gameObject.transform.position.x + rndX), (gameObject.transform.position.y + rndY), gameObject.transform.position.z);
+					shakeReturn = true;
+				}
+				else
+				{
+					gameObject.transform.position = shakeCentre;
+					shakeReturn = false;
+				}
+			}
+			break;
+		case false:
+			gameObject.transform.position = shakeCentre;;
+			shakeCentreFound = false;
+			break;
+		}
+	}
+
 	
 }

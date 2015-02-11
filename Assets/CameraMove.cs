@@ -208,36 +208,51 @@ public class CameraMove : MonoBehaviour {
 		if (offScreen == true) 
 		{
 			someNumber++;
+			// Shake the screen
 			ShakeIt(true);
-//			Debug.Log (someNumber);
 		}
 		// If false, bring the number back down to 0
 		if (offScreen == false && someNumber > 0)
 		{
 			someNumber--;
+			// Stop shaking the screen
 			ShakeIt(false);
-			//Debug.Log (someNumber);
 		}	
 	}
+
 
 	void ShakeIt (bool shakeon)
 	{
 		switch (shakeon){
+		// Shaking
 		case true:
+			// Find the current position of the camera, which will anchor the shake
 			if (shakeCentreFound == false)
 			{
 				shakeCentre = gameObject.transform.position;
 				shakeCentreFound = true;
 			}
+
+			// Shake
 			if (shakeCentreFound == true)
 			{
+				// Find a random Vector within (-shakeForce, -shakeForce, z) and (shakeForce, shakeForce, z)
 				float rndY = Random.Range (-shakeForce, shakeForce);
 				float rndX = Random.Range (-shakeForce, shakeForce);
+
+				// We alternate between the anchor position and a random position by switching shakeReturn between true and false
 				if (shakeReturn == false)
 				{
+					// Find a random vector within (-shakeForce, -shakeForce, z) and (shakeForce, shakeForce, z)
+					float rndY = Random.Range (-shakeForce, shakeForce);
+					float rndX = Random.Range (-shakeForce, shakeForce);
+
+					// Move the camera to this random vector 
 					gameObject.transform.position = new Vector3 ((gameObject.transform.position.x + rndX), (gameObject.transform.position.y + rndY), gameObject.transform.position.z);
+
 					shakeReturn = true;
 				}
+				// Anchor
 				else
 				{
 					gameObject.transform.position = shakeCentre;
@@ -245,8 +260,12 @@ public class CameraMove : MonoBehaviour {
 				}
 			}
 			break;
+		// Stop shaking
 		case false:
-			gameObject.transform.position = shakeCentre;;
+			// Return the camera back to the centre
+			gameObject.transform.position = shakeCentre;
+
+			// Unset the centre
 			shakeCentreFound = false;
 			break;
 		}

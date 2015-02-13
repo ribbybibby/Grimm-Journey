@@ -14,6 +14,7 @@ public class BBWController : MonoBehaviour {
 	public KeyCode moveJump; // Jump
 	public KeyCode moveDown; // Dash
 	public bool facingRight; // Allows Melee System to tell which direction BBW is facing 
+	public NarrationManager localNarrationManager;
 	
 	//Used to load in the textures for the swap (left text for moving left / right text for moving right)
 	public Texture leftTexture;
@@ -34,6 +35,7 @@ public class BBWController : MonoBehaviour {
 	{	
 		// Grab the soundmanager
 		play = GameObject.Find("SoundManager").gameObject.GetComponent<SoundManager>();
+		localNarrationManager = GameObject.Find ("NarrationManager").GetComponent<NarrationManager> ();
 
 		// Reset jumps to 0
 		if (gameObject.tag == "BBW") 
@@ -211,6 +213,16 @@ public class BBWController : MonoBehaviour {
 	void OnTriggerStay2D(Collider2D other)
 	{
 
+		if (other.gameObject.tag != "LRRHTrigger") 
+		{
+			if (Input.GetKeyDown (moveJump) || Input.GetButtonDown("Jump"))
+			{
+				localNarrationManager.playNoJumpNar();
+			}else{
+				//localNarrationManager
+			}
+		}
+
 		// Enable glow, if Player 1 accept pad and key input, if not just key
 		if (other.gameObject.tag == "LRRHTrigger") 
 		{
@@ -218,7 +230,7 @@ public class BBWController : MonoBehaviour {
 			if (gameObject.layer == 12) 
 			{
 				//Jump
-				if (Input.GetKeyDown (moveJump) || Input.GetButtonUp("Jump"))
+				if (Input.GetKeyDown (moveJump) || Input.GetButtonDown("Jump"))
 				{
 					if (jumpsMade < jumpLimit)
 					{
@@ -260,7 +272,7 @@ public class BBWController : MonoBehaviour {
 			if (gameObject.layer == 12)
 			{
 				//Jump
-				if (Input.GetKeyDown (moveJump) || Input.GetButtonUp("Jump"))
+				if (Input.GetKeyDown (moveJump) || Input.GetButtonDown("Jump"))
 				{
 					if (jumpsMade < jumpLimit)
 					{

@@ -25,13 +25,14 @@ public class NarrationManager : MonoBehaviour {
 
 	//Used to set a narration-is-playing state
 	bool talking;
-	
+	bool cooldownActive;
 	// Use this for initialization
 	void Start ()
 	{
 		//At the start, no narration
 		talking = false;
-		
+		cooldownActive = false;
+
 		Asources = gameObject.GetComponents<AudioSource> ();
 
 		/*The below section is now out of date.
@@ -65,6 +66,9 @@ public class NarrationManager : MonoBehaviour {
 		}
 
 		InvokeRepeating("getTalkingState", 0.2F, 0.2F);
+
+		//Adding cooldowns
+		InvokeRepeating ("runNoJumpCoolDown", 0.2F, 20.0F);
 	}
 
 	// Update is called once per frame
@@ -83,6 +87,11 @@ public class NarrationManager : MonoBehaviour {
 		//	talking = false;
 		//	Debug.Log ("!ForestNarration.isPlaying reached: " + talking);
 		//}
+	}
+
+	//Used to reset cooldown
+	void runNoJumpCoolDown(){
+			cooldownActive = false;
 	}
 
 	void getTalkingState(){
@@ -106,17 +115,20 @@ public class NarrationManager : MonoBehaviour {
 		}
 	}
 
-	void playNoJumpNar(){
+	public void playNoJumpNar(){
 		//BBWNoJumpNarration.Play ();
-		if (talking == false) {
+		if (talking == false && cooldownActive == false)
+		{
 			Asources [1].Play ();
 			talking = true;
+			cooldownActive = true;
 		}
 	}
 
 	void playBeanstalkNar(){
 		//BeanstalkNarration.Play ();
-		if (talking == false) {
+		if (talking == false) 
+		{
 			Asources [2].Play ();
 			talking = true;
 		}

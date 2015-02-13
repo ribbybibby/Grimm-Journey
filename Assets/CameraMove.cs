@@ -244,8 +244,9 @@ public class CameraMove : MonoBehaviour {
 				if (shakeReturn == false)
 				{
 					// Find a random vector within (-shakeForce, -shakeForce, z) and (shakeForce, shakeForce, z)
-					float rndY = Random.Range (-shakeForce, shakeForce);
-					float rndX = Random.Range (-shakeForce, shakeForce);
+					// Rob2 edit - renamed them to rndYn and rndXn, already defined rndYX above :D
+					float rndYn = Random.Range (-shakeForce, shakeForce);
+					float rndXn = Random.Range (-shakeForce, shakeForce);
 
 					// Move the camera to this random vector 
 					gameObject.transform.position = new Vector3 ((gameObject.transform.position.x + rndX), (gameObject.transform.position.y + rndY), gameObject.transform.position.z);

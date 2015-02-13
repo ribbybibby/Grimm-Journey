@@ -1,13 +1,12 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Resources\Scripts\LevelLoad\LoadNextLevel.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Objects_Characters\SoundManager\NarrationManager.cs">
     <Files>
       <File FileName="Assets\Resources\Scripts\LevelLoad\LoadNextLevel.cs" Line="57" Column="41" />
-      <File FileName="Assets\Objects_Characters\SoundManager\NarrationManager.cs" Line="1" Column="1" />
-      <File FileName="..\..\MyMadeGames\ClausDemo\Assets\MyScripts\MainMenu\main_LevelPan.cs" Line="1" Column="1" />
-      <File FileName="Assets\Objects_Characters\SoundManager\MusicManager.cs" Line="1" Column="1" />
-      <File FileName="Assets\Objects_Characters\SoundManager\SoundManager.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\LevelLoad\CameraPanUp.cs" Line="30" Column="27" />
+      <File FileName="Assets\CameraMove.cs" Line="247" Column="84" />
+      <File FileName="Assets\Objects_Characters\SoundManager\NarrationManager.cs" Line="92" Column="26" />
+      <File FileName="Assets\Objects_Characters\BBW\BBWController.cs" Line="216" Column="44" />
+      <File FileName="Assets\Objects_Characters\SoundManager\SoundManager.cs" Line="54" Column="99" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

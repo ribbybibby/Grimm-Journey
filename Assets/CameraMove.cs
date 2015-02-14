@@ -236,9 +236,6 @@ public class CameraMove : MonoBehaviour {
 			// Shake
 			if (shakeCentreFound == true)
 			{
-				// Find a random Vector within (-shakeForce, -shakeForce, z) and (shakeForce, shakeForce, z)
-				float rndY = Random.Range (-shakeForce, shakeForce);
-				float rndX = Random.Range (-shakeForce, shakeForce);
 
 				// We alternate between the anchor position and a random position by switching shakeReturn between true and false
 				if (shakeReturn == false)

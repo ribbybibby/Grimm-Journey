@@ -5,10 +5,11 @@ public class Darkness : MonoBehaviour {
 
 	//float camPanDirection;
 	//bool stopPan;
-	
+	private SoundManager play; // The sound manager
 	// Use this for initialization
 	void Start () {
 		//stopPan = false;
+		play = GameObject.Find("SoundManager").gameObject.GetComponent<SoundManager>();
 	}
 	
 	// Update is called once per frame
@@ -22,13 +23,18 @@ public class Darkness : MonoBehaviour {
 	}
 	
 	void OnTriggerEnter2D(Collider2D other) {
-		//if(other.tag == "enemy" || other.tag == "LRRH" || other.tag == "BBW"){
-			Destroy(other.gameObject);
 
 		if(other.gameObject.name == "BBW" || other.gameObject.name == "LRRH")
 		{
 			Application.LoadLevel(6);
 		}
-		//}
+		
+		if (other.gameObject.tag == "Ground")
+		{
+			play.PlayBwap();
+		}
+
+		Destroy(other.gameObject);
+
 	}
 }

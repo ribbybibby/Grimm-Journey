@@ -30,6 +30,7 @@ public class SoundManager : MonoBehaviour
 		AudioSource WCHit;
 		AudioSource WCKilled;
 		AudioSource WoodCutterAxe;
+		AudioSource Bwap;
 		//Testing narration
 		//AudioSource IntroNarration;
 		//music
@@ -80,6 +81,7 @@ public class SoundManager : MonoBehaviour
 			WCHit = Asources [24];
 			WCKilled = Asources [25];
 			WoodCutterAxe = Asources [26];
+			Bwap = Asources [27];
 		}
 	
 		// Update is called once per frame
@@ -116,6 +118,7 @@ public class SoundManager : MonoBehaviour
 			WCHit.volume = setVolume;
 			WCKilled.volume = setVolume;
 			WoodCutterAxe.volume = setVolume;
+			Bwap.volume = setVolume;
 
 			Debug.Log (localNarrationManager.getTalking ());
 
@@ -149,6 +152,11 @@ public class SoundManager : MonoBehaviour
 		//	IntroNarration.Play ();
 		//
 		//}
+
+		public void PlayBwap ()
+		{
+			Bwap.Play ();
+		}
 
 		public void PlayBBWHit ()
 		{

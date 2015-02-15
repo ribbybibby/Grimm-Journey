@@ -21,6 +21,7 @@ public class ChargeEnemy : MonoBehaviour {
 	public int cooldownLength;  // How long should the enemy wait after charging?
 	public float chargeBackup; // How far to back up from the char before charging
 	public float backUpSpeed; // How fast to back up
+	public float maxChargeDistance;
 
 	// PRIVATE: Used when interacting with BBW
 	private bool chasing; // Is the enemy chasing a char?
@@ -111,7 +112,20 @@ public class ChargeEnemy : MonoBehaviour {
 		// Idenitfy x-axis position of target char
 		if (seen == false)
 		{
-			targetX = bbw.transform.position.x;
+			// If BBW is outside of maxChargeDistance we only charge maxChargeDistance forward
+			if (headingright == true && (bbw.transform.position.x - gameObject.transform.position.x) > maxChargeDistance)
+			{
+				targetX = gameObject.transform.position.x + maxChargeDistance;
+			}
+			else if (headingright == false && (gameObject.transform.position.x - bbw.transform.position.x) > maxChargeDistance)
+			{
+				targetX = gameObject.transform.position.x - maxChargeDistance;
+			}
+
+			else
+			{
+				targetX = bbw.transform.position.x;
+			}
 			seen = true;
 		}
 

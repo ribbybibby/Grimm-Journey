@@ -13,6 +13,7 @@ public class LRRHController : MonoBehaviour {
 	public KeyCode moveLeft; // Left
 	public KeyCode moveJump; // Jump
 	public KeyCode moveDown; // Dash
+	public float jumpCooldown; // Cooldown for the double jump
 
 	// Private
 	private int jumpsMade; //Number of jumps performed since leaving the ground
@@ -21,6 +22,7 @@ public class LRRHController : MonoBehaviour {
 	private float origGravity; //Original gravity of the character
 	private bool horizPlatMove; // Should we move with horizontal platforms?
 	private bool inGround;
+	private bool readyToJump; // Bool that controls the cooldown between jumps
 
 	//Used to load in the textures for the swap (left text for moving left / right text for moving right)
 	Texture leftTexture;
@@ -37,6 +39,7 @@ public class LRRHController : MonoBehaviour {
 			jumpsMade = 0;
 		}
 
+		readyToJump = true;
 		//Loading in the textures :D
 		leftTexture = Resources.Load ("Textures/LRRH_Flip", typeof(Texture)) as Texture;
 		rightTexture = Resources.Load ("Textures/LRRH", typeof(Texture)) as Texture;
@@ -93,7 +96,7 @@ public class LRRHController : MonoBehaviour {
 				//Jump
 				if (Input.GetKeyDown (moveJump) || Input.GetButtonUp("Jump"))
 				{
-					if (jumpsMade < jumpLimit)
+					if (jumpsMade < jumpLimit && readyToJump == true)
 					{
 						SoundManager play = GameObject.Find("SoundManager").gameObject.GetComponent<SoundManager>();
 						play.PlayJumpLRRH();
@@ -102,6 +105,7 @@ public class LRRHController : MonoBehaviour {
 						rigidbody2D.AddForce (Vector2.up * jumpHeight);
 						jumpsMade++;
 						airMoves = airMoves + airMoveIncrement;
+						StartCoroutine (waitJump());
 					}
 				}
 				if (Input.GetKey (moveDown) || Input.GetAxis ("Vertical_PLR1") < 0) 
@@ -150,7 +154,7 @@ public class LRRHController : MonoBehaviour {
 					//Jump
 					if (Input.GetKeyDown (moveJump))
 					{
-						if (jumpsMade < jumpLimit)
+						if (jumpsMade < jumpLimit && readyToJump == true)
 						{
 							SoundManager play = GameObject.Find("SoundManager").gameObject.GetComponent<SoundManager>();
 							play.PlayJumpLRRH();
@@ -159,6 +163,7 @@ public class LRRHController : MonoBehaviour {
 							rigidbody2D.AddForce (Vector2.up * jumpHeight);
 							jumpsMade++;
 							airMoves = airMoves + airMoveIncrement;
+							StartCoroutine (waitJump());
 						}
 					}
 					if (Input.GetKey (moveDown)) 
@@ -219,6 +224,12 @@ public class LRRHController : MonoBehaviour {
 		{
 			inGround = false;
 		}
+	}
+
+	IEnumerator waitJump(){
+		readyToJump = false;
+		yield return new WaitForSeconds(jumpCooldown);
+		readyToJump = true;
 	}
 }
 

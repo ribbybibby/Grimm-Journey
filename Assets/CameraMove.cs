@@ -21,7 +21,7 @@ public class CameraMove : MonoBehaviour {
 	private bool offScreen; // Are either of LRRH or BBW offscreen?
 	private float topY; // Top of the camera
 	private float bottomY; // Bottom of the camera
-	private int someNumber; // Some number
+	private float someNumber; // Some number
 
 	// Camera shake
 	private bool shakeCentreFound;
@@ -188,10 +188,11 @@ public class CameraMove : MonoBehaviour {
 
 	void OffScreen ()
 	{
+
 		// Find the top and bottom y-coords of the camera in world space
 		topY = gameObject.transform.position.y + gameObject.camera.orthographicSize;
 		bottomY = gameObject.transform.position.y - gameObject.camera.orthographicSize;
-		
+
 		// If either character is above or below, we set offScreen to true
 		if (lrrh.transform.position.y >= topY || lrrh.transform.position.y <= bottomY 
 		    || bbw.transform.position.y >= topY || bbw.transform.position.y <= bottomY)
@@ -216,7 +217,7 @@ public class CameraMove : MonoBehaviour {
 		{
 			someNumber--;
 			// Stop shaking the screen
-			ShakeIt(false);
+			ShakeIt(true);
 		}	
 	}
 
@@ -241,8 +242,8 @@ public class CameraMove : MonoBehaviour {
 				if (shakeReturn == false)
 				{
 					// Find a random vector within (-shakeForce, -shakeForce, z) and (shakeForce, shakeForce, z)
-					float rndY = Random.Range (-shakeForce, shakeForce);
-					float rndX = Random.Range (-shakeForce, shakeForce);
+					float rndY = Random.Range (-(someNumber/100), (someNumber/100));
+					float rndX = Random.Range (-(someNumber/100), (someNumber/100));
 
 					// Move the camera to this random vector 
 					gameObject.transform.position = new Vector3 ((gameObject.transform.position.x + rndX), (gameObject.transform.position.y + rndY), gameObject.transform.position.z);

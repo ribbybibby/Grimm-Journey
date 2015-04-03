@@ -4,7 +4,7 @@ using System.Collections;
 public class CameraPanUp : MonoBehaviour {
 
 	float camPanDirection;
-	bool stopPan;
+	public bool stopPan;
 	public int LevelID;
 	
 	// Use this for initialization

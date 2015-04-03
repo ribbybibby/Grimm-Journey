@@ -22,6 +22,7 @@ public class CameraMove : MonoBehaviour {
 	private float topY; // Top of the camera
 	private float bottomY; // Bottom of the camera
 	private float someNumber; // Some number
+	private bool panning; // Is the camera panning for victory?
 
 	// Camera shake
 	private bool shakeCentreFound;
@@ -69,37 +70,45 @@ public class CameraMove : MonoBehaviour {
 		// Find the distance between the two
 		charDistance = Vector3.Distance (bbw.transform.position, lrrh.transform.position);
 
-		switch (lockMidVector) 
+		// Is the camera panning for Victory?
+		panning = gameObject.GetComponent<CameraPanUp> ().stopPan;
+
+		// Move the background in sync with the camera
+		background.transform.position = new Vector3 (gameObject.transform.position.x, gameObject.transform.position.y, background.transform.position.z);
+
+		if (panning != false) 
 		{
-		case 1:
-			// ONE: Moves up or down depending on whether the characters are outside of a tolerance area
-			CameraOne();
-			break;
-		case 2:
-			// TWO: Moves 1:1 with the MidVector
-			CameraTwo();
-			break;
-		case 3:
-			// THREE: Moves 1:1 with BBW
-			CameraThree();
-			break;
-		case 4:
-			// FOUR: Readjusts to the centre of the screen after both characters reach the top quarter of the screen
-			CameraFourandFive(4);
-			break;
-		case 5:
-			// FIVE: Readjusts so that the chars are in the bottom quarter of the camera's view once they reach the top quarter
-			CameraFourandFive(5);
-			break;
-		default:
-			// DEFAULT: Use Camera 2 by default
-			CameraTwo ();
-			break;
+		
+				switch (lockMidVector) {
+				case 1:
+				// ONE: Moves up or down depending on whether the characters are outside of a tolerance area
+						CameraOne ();
+						break;
+				case 2:
+				// TWO: Moves 1:1 with the MidVector
+						CameraTwo ();
+						break;
+				case 3:
+				// THREE: Moves 1:1 with BBW
+						CameraThree ();
+						break;
+				case 4:
+				// FOUR: Readjusts to the centre of the screen after both characters reach the top quarter of the screen
+						CameraFourandFive (4);
+						break;
+				case 5:
+				// FIVE: Readjusts so that the chars are in the bottom quarter of the camera's view once they reach the top quarter
+						CameraFourandFive (5);
+						break;
+				default:
+				// DEFAULT: Use Camera 2 by default
+						CameraTwo ();
+						break;
+				}
+
+				// Deal with cases where characters are outside the camera's view
+				OffScreen ();
 		}
-
-		// Deal with cases where characters are outside the camera's view
-		OffScreen ();
-
 	}
 
 	void CameraOne()
@@ -119,8 +128,6 @@ public class CameraMove : MonoBehaviour {
 		// Move the camera along with the mid vector on the x-axis
 		gameObject.transform.position = new Vector3 (midVector.x, gameObject.transform.position.y, gameObject.transform.position.z);
 		
-		// Move the background in sync with the camera
-		background.transform.position = new Vector3 (gameObject.transform.position.x, gameObject.transform.position.y, background.transform.position.z);
 	}
 	
 	void CameraTwo() 
@@ -131,8 +138,6 @@ public class CameraMove : MonoBehaviour {
 		// Move Camera in sync with the mid vector
 		gameObject.transform.position = new Vector3 (midVector.x, midVector.y, gameObject.transform.position.z);
 		
-		// Move the background in sync with the camera
-		background.transform.position = new Vector3 (gameObject.transform.position.x, gameObject.transform.position.y, background.transform.position.z);
 	}
 	
 	void CameraThree ()
@@ -143,8 +148,6 @@ public class CameraMove : MonoBehaviour {
 		// Move camera in sync with BBW
 		gameObject.transform.position = new Vector3 (bbw.transform.position.x, bbw.transform.position.y, gameObject.transform.position.z);
 		
-		// Move background in sync with the camera
-		background.transform.position = new Vector3 (gameObject.transform.position.x, gameObject.transform.position.y, background.transform.position.z);
 	}
 	
 	void CameraFourandFive (int choice) 
@@ -182,8 +185,6 @@ public class CameraMove : MonoBehaviour {
 			}
 		}
 		
-		// Move the background in sync with the camera
-		background.transform.position = new Vector3 (gameObject.transform.position.x, gameObject.transform.position.y, background.transform.position.z);
 	}
 
 	void OffScreen ()

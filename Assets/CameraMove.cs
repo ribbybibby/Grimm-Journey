@@ -73,13 +73,14 @@ public class CameraMove : MonoBehaviour {
 		// Is the camera panning for Victory?
 		panning = gameObject.GetComponent<CameraPanUp> ().stopPan;
 
-		// Move the background in sync with the camera
-		background.transform.position = new Vector3 (gameObject.transform.position.x, gameObject.transform.position.y, background.transform.position.z);
 
 		if (panning != false) 
 		{
 		
-				switch (cameraMode) {
+			// Move the background in sync with the camera
+			background.transform.position = new Vector3 (gameObject.transform.position.x, gameObject.transform.position.y, background.transform.position.z);
+
+			switch (cameraMode) {
 				case 1:
 				// ONE: Moves up or down depending on whether the characters are outside of a tolerance area
 						CameraOne ();

@@ -2,8 +2,8 @@
 using System.Collections;
 
 public class CameraMove : MonoBehaviour {
-	public int lockMidVector; // 1, 2 or 3 - decides which camera code we use
-	public float camSpeed; // The speed the camera moves at
+	public int cameraMode; // 1, 2 or 3 - decides which camera code we use
+	public float cam	Speed; // The speed the camera moves at
 	public float moveDistance; // The distance the camera should be from the midVector before moving
 	public float camSizeDivider; // The number we divide the distance between the characters by (which we then then add to the orthographic camera size)
 	public GameObject background; // The background object
@@ -79,7 +79,7 @@ public class CameraMove : MonoBehaviour {
 		if (panning != false) 
 		{
 		
-				switch (lockMidVector) {
+				switch (cameraMode) {
 				case 1:
 				// ONE: Moves up or down depending on whether the characters are outside of a tolerance area
 						CameraOne ();

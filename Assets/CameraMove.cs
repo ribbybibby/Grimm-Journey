@@ -7,7 +7,9 @@ public class CameraMove : MonoBehaviour {
 	public float moveDistance; // The distance the camera should be from the midVector before moving
 	public float camSizeDivider; // The number we divide the distance between the characters by (which we then then add to the orthographic camera size)
 	public GameObject background; // The background object
-	public float shakeForce;
+	public float shakeForce; // Force to shake the camera by
+	public int gameOver; // Threshold for gameOver (suggest 140)
+	public int fadeDivider; // Number to divide the fade by (1000 or above is probably reasonable)
 
 	private GameObject bbw; // BBW
 	private GameObject lrrh; // LRRH
@@ -28,6 +30,10 @@ public class CameraMove : MonoBehaviour {
 	private bool shakeCentreFound;
 	private bool shakeReturn;
 	private Vector3 shakeCentre;
+	private Transform camTran;
+
+	// Camera Fade
+	private Color textureColor;
 
 
 	// Use this for initialization
@@ -59,6 +65,12 @@ public class CameraMove : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
 	{
+
+		// Game Over
+		if (someNumber > gameOver)
+		{
+			Application.LoadLevel(6);
+		}
 
 		// Find BBW and LRRH each update, just in case they've switched
 		bbw = GameObject.Find ("BBW");
@@ -226,14 +238,21 @@ public class CameraMove : MonoBehaviour {
 
 	void ShakeIt (bool shakeon)
 	{
-		switch (shakeon){
-		// Shaking
+
+		switch (shakeon)
+		{
+	    // Shaking
 		case true:
+
+			// Fade the black in and out
+			CamFader();
+
 			// Find the current position of the camera, which will anchor the shake
 			if (shakeCentreFound == false)
 			{
 				shakeCentre = gameObject.transform.position;
 				shakeCentreFound = true;
+
 			}
 
 			// Shake
@@ -248,14 +267,15 @@ public class CameraMove : MonoBehaviour {
 					float rndX = Random.Range (-(someNumber/100), (someNumber/100));
 
 					// Move the camera to this random vector 
-					gameObject.transform.position = new Vector3 ((gameObject.transform.position.x + rndX), (gameObject.transform.position.y + rndY), gameObject.transform.position.z);
+					gameObject.transform.position = new Vector3 ((gameObject.transform.position.x + rndX), (gameObject.transform.position.y/* + rndY*/), gameObject.transform.position.z);
 
 					shakeReturn = true;
 				}
 				// Anchor
 				else
 				{
-					gameObject.transform.position = shakeCentre;
+					camTran = gameObject.transform;
+					camTran.position = new Vector3 (shakeCentre.x, camTran.position.y, camTran.position.z);
 					shakeReturn = false;
 				}
 			}
@@ -268,6 +288,28 @@ public class CameraMove : MonoBehaviour {
 			// Unset the centre
 			shakeCentreFound = false;
 			break;
+		}
+	}
+
+	// Fades the camera in and out
+	void CamFader () 
+	{
+		GameObject[] CamFade = GameObject.FindGameObjectsWithTag("CameraFade");
+		for (int i = 0; i < CamFade.Length; i++)
+		{
+			if (offScreen == false && someNumber > 0)
+			{
+				textureColor = CamFade[i].renderer.material.color;
+				textureColor.a = textureColor.a - (someNumber/fadeDivider);
+				CamFade[i].renderer.material.color = textureColor;
+			}
+			else 
+			{
+				textureColor = CamFade[i].renderer.material.color;
+				textureColor.a = textureColor.a + (someNumber/fadeDivider);
+				CamFade[i].renderer.material.color = textureColor;
+			}
+			
 		}
 	}
 

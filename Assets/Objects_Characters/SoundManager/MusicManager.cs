@@ -28,6 +28,30 @@ public class MusicManager : MonoBehaviour {
 		ColdCastleMusic = Asources [0];
 		CreepyWoodsMusic = Asources [1];
 		ToweringBeanstalkMusic = Asources [2];
+
+		//We check to see which level was last loaded (meaning which is the current level
+		//We then use that index to start playing the correct music track
+		switch (Application.loadedLevel)
+		{
+		case 1:
+			CreepyWoodsMusic.Play();
+			break;
+		case 2:
+			CreepyWoodsMusic.Play ();
+			break;
+		case 3:
+			ColdCastleMusic.Play ();
+			break;
+		case 4:
+			ToweringBeanstalkMusic.Play ();
+			break;
+		case 5:
+			ToweringBeanstalkMusic.Play ();
+			break;
+		default:
+			Debug.LogError("Please set audio track in Music Manager for this level index");
+			break;
+		}
 	}
 	
 	// Update is called once per frame

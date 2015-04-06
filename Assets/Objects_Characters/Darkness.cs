@@ -6,10 +6,18 @@ public class Darkness : MonoBehaviour {
 	//float camPanDirection;
 	//bool stopPan;
 	private SoundManager play; // The sound manager
+
+	//Not really required as we only tag floor as Ground
+	//But I added this just in case we tag other things as Ground in the future
+	//Will be used to make sure the Bwap sound only plays once
+	//When the darkness appears on screen
+	bool hasPlayed;
+
 	// Use this for initialization
 	void Start () {
 		//stopPan = false;
 		play = GameObject.Find("SoundManager").gameObject.GetComponent<SoundManager>();
+		hasPlayed = false;
 	}
 	
 	// Update is called once per frame
@@ -29,9 +37,10 @@ public class Darkness : MonoBehaviour {
 			Application.LoadLevel(6);
 		}
 		
-		if (other.gameObject.tag == "Ground")
+		if (other.gameObject.tag == "Ground" && hasPlayed == false)
 		{
 			play.PlayBwap();
+			hasPlayed = true;
 		}
 
 		Destroy(other.gameObject);

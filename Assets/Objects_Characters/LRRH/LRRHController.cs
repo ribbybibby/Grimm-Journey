@@ -104,7 +104,10 @@ public class LRRHController : MonoBehaviour {
 						rigidbody2D.isKinematic = false;
 						rigidbody2D.AddForce (Vector2.up * jumpHeight);
 						jumpsMade++;
-						airMoves = airMoves + airMoveIncrement;
+						if (airMoves == 1) 
+						{
+							airMoves = airMoves + airMoveIncrement;
+						}
 						StartCoroutine (waitJump());
 					}
 				}
@@ -162,7 +165,10 @@ public class LRRHController : MonoBehaviour {
 							rigidbody2D.isKinematic = false;
 							rigidbody2D.AddForce (Vector2.up * jumpHeight);
 							jumpsMade++;
-							airMoves = airMoves + airMoveIncrement;
+							if (airMoves == 1) 
+							{
+								airMoves = airMoves + airMoveIncrement;
+							}
 							StartCoroutine (waitJump());
 						}
 					}

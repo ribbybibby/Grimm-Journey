@@ -1,0 +1,146 @@
+
+skeleton.png
+size: 2048,1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+back_foot
+  rotate: false
+  xy: 791, 584
+  size: 206, 125
+  orig: 206, 125
+  offset: 0, 0
+  index: -1
+back_hand
+  rotate: true
+  xy: 461, 491
+  size: 152, 258
+  orig: 152, 258
+  offset: 0, 0
+  index: -1
+back_lower_arm
+  rotate: false
+  xy: 358, 242
+  size: 225, 247
+  orig: 225, 247
+  offset: 0, 0
+  index: -1
+back_lower_leg
+  rotate: false
+  xy: 922, 418
+  size: 149, 164
+  orig: 149, 164
+  offset: 0, 0
+  index: -1
+back_mid_leg
+  rotate: true
+  xy: 576, 2
+  size: 235, 198
+  orig: 287, 291
+  offset: 17, 93
+  index: -1
+back_upper_arm
+  rotate: true
+  xy: 134, 12
+  size: 135, 199
+  orig: 135, 199
+  offset: 0, 0
+  index: -1
+back_upper_leg
+  rotate: false
+  xy: 1703, 747
+  size: 283, 275
+  orig: 287, 291
+  offset: 4, 16
+  index: -1
+body
+  rotate: false
+  xy: 2, 524
+  size: 457, 498
+  orig: 457, 498
+  offset: 0, 0
+  index: -1
+braclet
+  rotate: false
+  xy: 2, 2
+  size: 130, 145
+  orig: 130, 145
+  offset: 0, 0
+  index: -1
+eye_neutral
+  rotate: true
+  xy: 1382, 738
+  size: 38, 32
+  orig: 38, 32
+  offset: 0, 0
+  index: -1
+front_foot
+  rotate: true
+  xy: 585, 239
+  size: 250, 152
+  orig: 250, 152
+  offset: 0, 0
+  index: -1
+front_hand
+  rotate: true
+  xy: 358, 34
+  size: 206, 216
+  orig: 206, 216
+  offset: 0, 0
+  index: -1
+front_lower_arm
+  rotate: true
+  xy: 1086, 611
+  size: 165, 226
+  orig: 165, 226
+  offset: 0, 0
+  index: -1
+front_lower_foot
+  rotate: false
+  xy: 739, 382
+  size: 181, 200
+  orig: 181, 200
+  offset: 0, 0
+  index: -1
+front_mid_leg
+  rotate: false
+  xy: 1416, 744
+  size: 285, 278
+  orig: 293, 317
+  offset: 4, 39
+  index: -1
+front_upper_arm
+  rotate: false
+  xy: 1086, 778
+  size: 328, 244
+  orig: 328, 244
+  offset: 0, 0
+  index: -1
+front_upper_leg
+  rotate: false
+  xy: 791, 711
+  size: 293, 311
+  orig: 293, 317
+  offset: 0, 6
+  index: -1
+head_neutral
+  rotate: false
+  xy: 2, 149
+  size: 354, 373
+  orig: 354, 373
+  offset: 0, 0
+  index: -1
+neck
+  rotate: false
+  xy: 1314, 625
+  size: 66, 151
+  orig: 66, 151
+  offset: 0, 0
+  index: -1
+tail
+  rotate: false
+  xy: 461, 645
+  size: 328, 377
+  orig: 328, 377
+  offset: 0, 0
+  index: -1

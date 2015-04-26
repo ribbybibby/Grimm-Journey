@@ -48,17 +48,39 @@
   <ItemGroup>
      <Compile Include="Assets\Editor\FindAudioSources.cs" />
      <Compile Include="Assets\Editor\FindMissingScriptsRecursively.cs" />
+     <Compile Include="Assets\Objects_Characters\Spine_Data\spine-unity\Editor\AtlasAssetInspector.cs" />
+     <Compile Include="Assets\Objects_Characters\Spine_Data\spine-unity\Editor\BoneFollowerInspector.cs" />
+     <Compile Include="Assets\Objects_Characters\Spine_Data\spine-unity\Editor\BoundingBoxFollowerInspector.cs" />
+     <Compile Include="Assets\Objects_Characters\Spine_Data\spine-unity\Editor\Menus.cs" />
+     <Compile Include="Assets\Objects_Characters\Spine_Data\spine-unity\Editor\SkeletonAnimationInspector.cs" />
+     <Compile Include="Assets\Objects_Characters\Spine_Data\spine-unity\Editor\SkeletonAnimatorInspector.cs" />
+     <Compile Include="Assets\Objects_Characters\Spine_Data\spine-unity\Editor\SkeletonBaker.cs" />
+     <Compile Include="Assets\Objects_Characters\Spine_Data\spine-unity\Editor\SkeletonDataAssetInspector.cs" />
+     <Compile Include="Assets\Objects_Characters\Spine_Data\spine-unity\Editor\SkeletonRendererInspector.cs" />
+     <Compile Include="Assets\Objects_Characters\Spine_Data\spine-unity\Editor\SpineAttributeDrawers.cs" />
+     <Compile Include="Assets\Objects_Characters\Spine_Data\spine-unity\Editor\SpineEditorUtilities.cs" />
+     <Compile Include="Assets\Objects_Characters\Spine_Data\spine-unity\SkeletonUtility\Editor\SkeletonUtilityBoneInspector.cs" />
+     <Compile Include="Assets\Objects_Characters\Spine_Data\spine-unity\SkeletonUtility\Editor\SkeletonUtilityInspector.cs" />
+     <Compile Include="Assets\Objects_Characters\Spine_Data\spine-unity\SkeletonUtility\Editor\SkeletonUtilitySubmeshRendererInspector.cs" />
      <None Include="Assets\Standard Assets\Projectors\Guidelines.txt" />
+     <None Include="Assets\Objects_Characters\Spine_Data\spine-unity\Shaders\HiddenPass.shader" />
      <None Include="Assets\Standard Assets\Toon Shading\Sources\Shaders\Toony-Basic.shader" />
      <None Include="Assets\Standard Assets\Projectors\Sources\Shaders\Projector Multiply.shader" />
+     <None Include="Assets\Objects_Characters\WoodCutter\WoodCutter_animation\skeleton.atlas.txt" />
      <None Include="Assets\Standard Assets\Tessellation Shaders\BumpedSpecularSmooth.shader" />
      <None Include="Assets\Standard Assets\Particles\Sources\Shaders\Particle Alpha Blend (Queue +100).shader" />
+     <None Include="Assets\Objects_Characters\Troll\Troll_animation\skeleton.atlas.txt" />
      <None Include="Assets\Objects_Characters\Shaders\Test.shader" />
+     <None Include="Assets\Objects_Characters\BBW\BBW_animation\skeleton.atlas.txt" />
      <None Include="Assets\Standard Assets\Toon Shading\Sources\Shaders\Toony-BasicOutline.shader" />
      <None Include="Assets\Standard Assets\Projectors\Sources\Shaders\Projector Light.shader" />
+     <None Include="Assets\Objects_Characters\Spine_Data\spine-unity\Shaders\Bones.shader" />
      <None Include="Assets\Standard Assets\Toon Shading\Sources\Shaders\Toony-LightedOutline.shader" />
      <None Include="Assets\Standard Assets\Toon Shading\Sources\Shaders\Toony-Lighted.shader" />
+     <None Include="Assets\Objects_Characters\LRRH\LRRH_animation\skeleton.atlas.txt" />
+     <None Include="Assets\Objects_Characters\Spine_Data\spine-unity\Shaders\Skeleton.shader" />
      <None Include="Assets\Standard Assets\Tessellation Shaders\BumpedSpecularDisplacement.shader" />
+     <None Include="Assets\Objects_Characters\Spine_Data\spine-unity\Shaders\SkeletonLit.shader" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/4.6.1/UnityEngine.UI.dll</HintPath>
  </Reference>

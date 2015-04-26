@@ -1,0 +1,55 @@
+
+skeleton.png
+size: 1024,256
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+back_front
+  rotate: false
+  xy: 228, 28
+  size: 144, 179
+  orig: 245, 405
+  offset: 62, 17
+  index: -1
+back_leg
+  rotate: false
+  xy: 540, 75
+  size: 111, 132
+  orig: 245, 405
+  offset: 96, 30
+  index: -1
+cape
+  rotate: false
+  xy: 2, 2
+  size: 224, 205
+  orig: 245, 405
+  offset: 11, 187
+  index: -1
+dress bottom
+  rotate: false
+  xy: 374, 72
+  size: 164, 135
+  orig: 245, 405
+  offset: 50, 72
+  index: -1
+dress top
+  rotate: true
+  xy: 653, 140
+  size: 67, 162
+  orig: 245, 405
+  offset: 147, 158
+  index: -1
+face
+  rotate: true
+  xy: 653, 84
+  size: 54, 100
+  orig: 245, 405
+  offset: 179, 268
+  index: -1
+hood
+  rotate: true
+  xy: 817, 127
+  size: 80, 121
+  orig: 245, 405
+  offset: 155, 271
+  index: -1

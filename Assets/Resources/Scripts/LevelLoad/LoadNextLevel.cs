@@ -66,6 +66,7 @@ public class LoadNextLevel : MonoBehaviour {
 					//Do nothing and load next level (see Update())
 				}else{
 					localNarrationManager.playNoBothExitNar();
+					Debug.Log("Does this appear twice?");
 					hasPlayedVic = true;
 				}
 			}

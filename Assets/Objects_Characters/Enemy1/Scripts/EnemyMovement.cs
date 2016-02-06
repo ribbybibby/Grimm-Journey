@@ -15,7 +15,7 @@ public class EnemyMovement : MonoBehaviour {
 	
 	// On collision, apply force upwards and then left/right depending on the Weak Player's relation to this object on the X-axis
 	void OnCollisionEnter2D(Collision2D col) {
-		rigidbody2D.AddForce (Vector3.up * jumpForce);
+		GetComponent<Rigidbody2D>().AddForce (Vector3.up * jumpForce);
 		MoveEnemy (jumpForce);
 	}
 
@@ -42,16 +42,16 @@ public class EnemyMovement : MonoBehaviour {
 		if (targetdiffx > 0f) 
 		{	
 			transform.eulerAngles = new Vector2(0,0); 
-			rigidbody2D.AddForce (Vector3.right * value);
+			GetComponent<Rigidbody2D>().AddForce (Vector3.right * value);
 		}
 		if (targetdiffx < 0f) 
 		{
 			transform.eulerAngles = new Vector3(0,0,180); //flip the character on its x axis
-			rigidbody2D.AddForce (Vector3.left * value);
+			GetComponent<Rigidbody2D>().AddForce (Vector3.left * value);
 		}	
 		if (targetdiffy > 0f) 
 		{
-			rigidbody2D.AddForce (Vector3.up * value);
+			GetComponent<Rigidbody2D>().AddForce (Vector3.up * value);
 		}
 	}
 

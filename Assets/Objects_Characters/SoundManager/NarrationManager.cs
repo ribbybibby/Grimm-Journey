@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
 
 /*
@@ -52,16 +53,16 @@ public class NarrationManager : MonoBehaviour {
 		*/
 
 		//Depending on the level - play the levels intro narration
-		if (Application.loadedLevel == 0) {
+		if (SceneManager.GetActiveScene().buildIndex == 0) {
 			playIntroNar();
 		}
-		if (Application.loadedLevel == 1) {
+		if (SceneManager.GetActiveScene().buildIndex == 1) {
 			playForestNar();
 		}
-		if (Application.loadedLevel == 3) {
+		if (SceneManager.GetActiveScene().buildIndex == 3) {
 			playCastleNar();
 		}
-		if (Application.loadedLevel == 4) {
+		if (SceneManager.GetActiveScene().buildIndex == 4) {
 			playBeanstalkNar();
 		}
 

@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
 
 public class MusicManager : MonoBehaviour {
@@ -31,7 +32,7 @@ public class MusicManager : MonoBehaviour {
 
 		//We check to see which level was last loaded (meaning which is the current level
 		//We then use that index to start playing the correct music track
-		switch (Application.loadedLevel)
+		switch (SceneManager.GetActiveScene().buildIndex)
 		{
 		case 1:
 			CreepyWoodsMusic.Play();
@@ -68,12 +69,12 @@ public class MusicManager : MonoBehaviour {
 		//Change this to set a bool whenever any narration is playing inside the narrationmanager
 		if (localNarrationManager.getTalking() == true) {
 			setVolume = 0.2F;
-			Debug.Log ("FROMMUSIC_gettalking is " + setVolume);
+//			Debug.Log ("FROMMUSIC_gettalking is " + setVolume);
 		}
 		
 		if (localNarrationManager.getTalking() == false) {
 			setVolume = 1.0F;
-			Debug.Log ("FROMMUSIC_gettalking is " + setVolume);
+//			Debug.Log ("FROMMUSIC_gettalking is " + setVolume);
 		}
 	}
 	

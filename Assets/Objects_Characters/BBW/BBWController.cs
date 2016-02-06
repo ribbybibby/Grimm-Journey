@@ -49,11 +49,11 @@ public class BBWController : MonoBehaviour {
 
 		// Set airMoves to 1; save the initial gravity as origGravity
 		airMoves = 1;
-		origGravity = gameObject.rigidbody2D.gravityScale;
+		origGravity = gameObject.GetComponent<Rigidbody2D>().gravityScale;
 
 		// Find the attached Glow object
 		glow = GameObject.Find ("Glow");
-		glow.renderer.enabled = false;
+		glow.GetComponent<Renderer>().enabled = false;
 	}
 
 	// Movement controls
@@ -80,7 +80,7 @@ public class BBWController : MonoBehaviour {
 					{
 						transform.Translate (Vector2.right * (speed / airMoves) * Time.deltaTime);
 						airMoves = airMoves + airMoveIncrement; 
-						gameObject.rigidbody2D.gravityScale = gameObject.rigidbody2D.gravityScale + airGravityIncrement;
+						gameObject.GetComponent<Rigidbody2D>().gravityScale = gameObject.GetComponent<Rigidbody2D>().gravityScale + airGravityIncrement;
 					}
 
 					//Switch to Right Texture, position glow
@@ -100,7 +100,7 @@ public class BBWController : MonoBehaviour {
 					{
 						transform.Translate (-Vector2.right * (speed / airMoves) * Time.deltaTime);
 						airMoves = airMoves + airMoveIncrement; 
-						gameObject.rigidbody2D.gravityScale = gameObject.rigidbody2D.gravityScale + airGravityIncrement;
+						gameObject.GetComponent<Rigidbody2D>().gravityScale = gameObject.GetComponent<Rigidbody2D>().gravityScale + airGravityIncrement;
 					}
 
 					//Switch to Left Texture, position glow
@@ -112,7 +112,7 @@ public class BBWController : MonoBehaviour {
 				{
 					if (inGround == false)
 					{
-						gameObject.rigidbody2D.gravityScale = gameObject.rigidbody2D.gravityScale + (airGravityIncrement*5);
+						gameObject.GetComponent<Rigidbody2D>().gravityScale = gameObject.GetComponent<Rigidbody2D>().gravityScale + (airGravityIncrement*5);
 					}
 				}
 			}else{
@@ -129,7 +129,7 @@ public class BBWController : MonoBehaviour {
 						{
 							transform.Translate (Vector2.right * (speed / airMoves) * Time.deltaTime);
 							airMoves = airMoves + airMoveIncrement; 
-							gameObject.rigidbody2D.gravityScale = gameObject.rigidbody2D.gravityScale + airGravityIncrement;
+							gameObject.GetComponent<Rigidbody2D>().gravityScale = gameObject.GetComponent<Rigidbody2D>().gravityScale + airGravityIncrement;
 						}
 
 						//Switch to Right Texture, position glow
@@ -149,7 +149,7 @@ public class BBWController : MonoBehaviour {
 						{
 							transform.Translate (-Vector2.right * (speed / airMoves) * Time.deltaTime);
 							airMoves = airMoves + airMoveIncrement; 
-							gameObject.rigidbody2D.gravityScale = gameObject.rigidbody2D.gravityScale + airGravityIncrement;
+							gameObject.GetComponent<Rigidbody2D>().gravityScale = gameObject.GetComponent<Rigidbody2D>().gravityScale + airGravityIncrement;
 						}
 
 						//Switch to Left Texture, position glow
@@ -161,7 +161,7 @@ public class BBWController : MonoBehaviour {
 					{
 						if (inGround == false)
 						{
-							gameObject.rigidbody2D.gravityScale = gameObject.rigidbody2D.gravityScale + (airGravityIncrement*5);
+							gameObject.GetComponent<Rigidbody2D>().gravityScale = gameObject.GetComponent<Rigidbody2D>().gravityScale + (airGravityIncrement*5);
 						}
 					}
 				}
@@ -175,14 +175,14 @@ public class BBWController : MonoBehaviour {
 
 		// Enable glow, if Player 1 accept pad and key input, if not just key
 		if (other.gameObject.tag == "LRRHTrigger") {
-			glow.renderer.enabled = true;		
+			glow.GetComponent<Renderer>().enabled = true;		
 			if (gameObject.layer == 12) {
 
 				//Jump
 				if (Input.GetKeyDown (moveJump) || Input.GetButtonUp ("Jump")) {
 					if (jumpsMade < jumpLimit) {
 						play.PlayJumpBBW ();
-						rigidbody2D.AddForce (Vector2.up * jumpHeight);
+						GetComponent<Rigidbody2D>().AddForce (Vector2.up * jumpHeight);
 						jumpsMade++;
 					}
 				}
@@ -193,7 +193,7 @@ public class BBWController : MonoBehaviour {
 				if (Input.GetKeyDown (moveJump)) {
 					if (jumpsMade < jumpLimit) {
 						play.PlayJumpBBW ();
-						rigidbody2D.AddForce (Vector2.up * jumpHeight);
+						GetComponent<Rigidbody2D>().AddForce (Vector2.up * jumpHeight);
 						jumpsMade++;
 					}
 				}
@@ -206,7 +206,7 @@ public class BBWController : MonoBehaviour {
 			inGround = true;
 			jumpsMade = 0;
 			airMoves = 1;
-			gameObject.rigidbody2D.gravityScale = origGravity;
+			gameObject.GetComponent<Rigidbody2D>().gravityScale = origGravity;
 		}
 	}
 
@@ -226,7 +226,7 @@ public class BBWController : MonoBehaviour {
 		// Enable glow, if Player 1 accept pad and key input, if not just key
 		if (other.gameObject.tag == "LRRHTrigger") 
 		{
-			glow.renderer.enabled = true;		
+			glow.GetComponent<Renderer>().enabled = true;		
 			if (gameObject.layer == 12) 
 			{
 				//Jump
@@ -235,7 +235,7 @@ public class BBWController : MonoBehaviour {
 					if (jumpsMade < jumpLimit)
 					{
 						play.PlayJumpBBW();
-						rigidbody2D.AddForce (Vector2.up * jumpHeight);
+						GetComponent<Rigidbody2D>().AddForce (Vector2.up * jumpHeight);
 						jumpsMade++;
 						airMoves = airMoves + airMoveIncrement;
 					}
@@ -249,7 +249,7 @@ public class BBWController : MonoBehaviour {
 					if (jumpsMade < jumpLimit)
 					{
 						play.PlayJumpBBW();
-						rigidbody2D.AddForce (Vector2.up * jumpHeight);
+						GetComponent<Rigidbody2D>().AddForce (Vector2.up * jumpHeight);
 						jumpsMade++;
 						airMoves = airMoves + airMoveIncrement;
 					}
@@ -266,7 +266,7 @@ public class BBWController : MonoBehaviour {
 			inGround = false;
 		}
 		// Disable glow, if Player 1 accept pad and key input, if not just key
-		glow.renderer.enabled = false;		
+		glow.GetComponent<Renderer>().enabled = false;		
 		if (other.gameObject.tag == "LRRHTrigger") 
 		{
 			if (gameObject.layer == 12)
@@ -277,7 +277,7 @@ public class BBWController : MonoBehaviour {
 					if (jumpsMade < jumpLimit)
 					{
 						play.PlayJumpBBW();
-						rigidbody2D.AddForce (Vector2.up * jumpHeight);
+						GetComponent<Rigidbody2D>().AddForce (Vector2.up * jumpHeight);
 						jumpsMade++;
 					}
 				}
@@ -290,7 +290,7 @@ public class BBWController : MonoBehaviour {
 					if (jumpsMade < jumpLimit)
 					{
 						play.PlayJumpBBW();
-						rigidbody2D.AddForce (Vector2.up * jumpHeight);
+						GetComponent<Rigidbody2D>().AddForce (Vector2.up * jumpHeight);
 						jumpsMade++;
 						airMoves = airMoves + airMoveIncrement;
 					}

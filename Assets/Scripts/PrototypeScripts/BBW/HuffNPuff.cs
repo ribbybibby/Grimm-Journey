@@ -31,11 +31,11 @@ public class HuffNPuff : MonoBehaviour {
 
 	void huffBlast(string direction){
 		if(direction == "Left"){
-			rigidbody2D.AddForce (new Vector2(-huffForce,0));
+			GetComponent<Rigidbody2D>().AddForce (new Vector2(-huffForce,0));
 		}
 
 		if(direction == "Right"){
-			rigidbody2D.AddForce (new Vector2(huffForce,0));
+			GetComponent<Rigidbody2D>().AddForce (new Vector2(huffForce,0));
 		}
 	}
 

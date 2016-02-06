@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
 
 public class CameraMove : MonoBehaviour {
@@ -46,7 +47,7 @@ public class CameraMove : MonoBehaviour {
 		midVector = new Vector3 ((bbw.transform.position.x+lrrh.transform.position.x)/2, (bbw.transform.position.y+lrrh.transform.position.y)/2, gameObject.transform.position.z);
 
 		// Store the original size of the camera
-		origCamSize = gameObject.camera.orthographicSize;
+		origCamSize = gameObject.GetComponent<Camera>().orthographicSize;
 
 		// Create the camVector using camSpeed
 		camVector = new Vector3 (0, camSpeed, 0);
@@ -69,7 +70,7 @@ public class CameraMove : MonoBehaviour {
 		// Game Over
 		if (someNumber > gameOver)
 		{
-			Application.LoadLevel(6);
+			SceneManager.LoadScene (6);
 		}
 
 		// Find BBW and LRRH each update, just in case they've switched
@@ -127,7 +128,7 @@ public class CameraMove : MonoBehaviour {
 	void CameraOne()
 	{
 		// Adjust cam size based on charDistance
-		gameObject.camera.orthographicSize = origCamSize + (charDistance / camSizeDivider);
+		gameObject.GetComponent<Camera>().orthographicSize = origCamSize + (charDistance / camSizeDivider);
 		
 		// If the distance between the Camera and the mid vector on the y-axis is below -moveDistance, move the camera down
 		if ((midVector.y - gameObject.transform.position.y) < -moveDistance) {
@@ -146,7 +147,7 @@ public class CameraMove : MonoBehaviour {
 	void CameraTwo() 
 	{
 		// Adjust cam size based on charDistance
-		gameObject.camera.orthographicSize = origCamSize + (charDistance / camSizeDivider);
+		gameObject.GetComponent<Camera>().orthographicSize = origCamSize + (charDistance / camSizeDivider);
 		
 		// Move Camera in sync with the mid vector
 		gameObject.transform.position = new Vector3 (midVector.x, midVector.y, gameObject.transform.position.z);
@@ -156,7 +157,7 @@ public class CameraMove : MonoBehaviour {
 	void CameraThree ()
 	{
 		// Adjust cam size based on charDistance
-		gameObject.camera.orthographicSize = origCamSize + (charDistance / camSizeDivider);
+		gameObject.GetComponent<Camera>().orthographicSize = origCamSize + (charDistance / camSizeDivider);
 		
 		// Move camera in sync with BBW
 		gameObject.transform.position = new Vector3 (bbw.transform.position.x, bbw.transform.position.y, gameObject.transform.position.z);
@@ -166,7 +167,7 @@ public class CameraMove : MonoBehaviour {
 	void CameraFourandFive (int choice) 
 	{
 		// Find the start of the top quarter of the screen (y-axis)
-		screenQuart = gameObject.transform.position.y + (gameObject.camera.orthographicSize/2);
+		screenQuart = gameObject.transform.position.y + (gameObject.GetComponent<Camera>().orthographicSize/2);
 
 		// If both chars are in the top quarter, and the camera isn't currently moving already, move up
 		if (bbw.transform.position.y > screenQuart && lrrh.transform.position.y > screenQuart && moveUp == false)
@@ -179,7 +180,7 @@ public class CameraMove : MonoBehaviour {
 			// Cam 5: Put the chars in the bottom quarter of the screen
 			if (choice == 5)
 			{
-				newPosY = midVector.y + (gameObject.camera.orthographicSize/2);
+				newPosY = midVector.y + (gameObject.GetComponent<Camera>().orthographicSize/2);
 			}
 			moveUp = true;
 		}
@@ -204,8 +205,8 @@ public class CameraMove : MonoBehaviour {
 	{
 
 		// Find the top and bottom y-coords of the camera in world space
-		topY = gameObject.transform.position.y + gameObject.camera.orthographicSize;
-		bottomY = gameObject.transform.position.y - gameObject.camera.orthographicSize;
+		topY = gameObject.transform.position.y + gameObject.GetComponent<Camera>().orthographicSize;
+		bottomY = gameObject.transform.position.y - gameObject.GetComponent<Camera>().orthographicSize;
 
 		// If either character is above or below, we set offScreen to true
 		if (lrrh.transform.position.y >= topY || lrrh.transform.position.y <= bottomY 
@@ -263,7 +264,7 @@ public class CameraMove : MonoBehaviour {
 				if (shakeReturn == false)
 				{
 					// Find a random vector within (-shakeForce, -shakeForce, z) and (shakeForce, shakeForce, z)
-					float rndY = Random.Range (-(someNumber/100), (someNumber/100));
+//					float rndY = Random.Range (-(someNumber/100), (someNumber/100));
 					float rndX = Random.Range (-(someNumber/100), (someNumber/100));
 
 					// Move the camera to this random vector 
@@ -299,15 +300,15 @@ public class CameraMove : MonoBehaviour {
 		{
 			if (offScreen == false && someNumber > 0)
 			{
-				textureColor = CamFade[i].renderer.material.color;
+				textureColor = CamFade[i].GetComponent<Renderer>().material.color;
 				textureColor.a = textureColor.a - (someNumber/fadeDivider);
-				CamFade[i].renderer.material.color = textureColor;
+				CamFade[i].GetComponent<Renderer>().material.color = textureColor;
 			}
 			else 
 			{
-				textureColor = CamFade[i].renderer.material.color;
+				textureColor = CamFade[i].GetComponent<Renderer>().material.color;
 				textureColor.a = textureColor.a + (someNumber/fadeDivider);
-				CamFade[i].renderer.material.color = textureColor;
+				CamFade[i].GetComponent<Renderer>().material.color = textureColor;
 			}
 			
 		}

@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
 
 public class EnemyReceiver : MonoBehaviour {
@@ -45,8 +46,8 @@ public class EnemyReceiver : MonoBehaviour {
 
 
 			// Cause enemy to lose all applied force and movement
-			transform.rigidbody2D.isKinematic = true;
-			transform.rigidbody2D.isKinematic = false;
+			transform.GetComponent<Rigidbody2D>().isKinematic = true;
+			transform.GetComponent<Rigidbody2D>().isKinematic = false;
 
 			// If health is depleted, play kill sound 
 			if (health <= 0) 
@@ -93,7 +94,8 @@ public class EnemyReceiver : MonoBehaviour {
 				// If this is a player-character, then the game is over.
 				if(gameObject.name == "BBW" || gameObject.name == "LRRH")
 				{
-					Application.LoadLevel(6);
+					//Application.LoadLevel(6);
+					SceneManager.LoadScene (6);
 				}
 			}
 

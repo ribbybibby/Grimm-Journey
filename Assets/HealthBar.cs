@@ -21,7 +21,7 @@ public class HealthBar : MonoBehaviour {
 	void Update () {
 		if (hurt == false)
 		{
-			renderer.material.color = Color.white;
+			GetComponent<Renderer>().material.color = Color.white;
 		}
 		
 	}
@@ -38,7 +38,7 @@ public class HealthBar : MonoBehaviour {
 	 * 
 	 */
 	public void TakeDamage (float health){
-		renderer.material.color = Color.red;
+		GetComponent<Renderer>().material.color = Color.red;
 		hurt = true;
 		StartCoroutine(waitWhileHurt());
 		newScale = totalBarSize * (health/totalHealth);
@@ -57,7 +57,7 @@ public class HealthBar : MonoBehaviour {
 	 */
 
 	public void GainHealth (float health){
-		renderer.material.color = Color.green;
+		GetComponent<Renderer>().material.color = Color.green;
 		hurt = true;
 		StartCoroutine(waitWhileHurt());
 		newScale = totalBarSize * (health/totalHealth);

@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
 
 public class CameraPanUp : MonoBehaviour {
@@ -51,7 +52,7 @@ public class CameraPanUp : MonoBehaviour {
 	IEnumerator waitThenPanUp(){
 		stopPan = false;
 		yield return new WaitForSeconds(5.0F);
-		Application.LoadLevel(LevelID);
+		SceneManager.LoadScene (LevelID);
 	}
 
 	//void OnTriggerEnter(Collider other) {

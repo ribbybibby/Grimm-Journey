@@ -46,7 +46,7 @@ public class LRRHController : MonoBehaviour {
 
 		// Set airMoves to 1; save the initial gravity as origGravity
 		airMoves = 1;
-		origGravity = gameObject.rigidbody2D.gravityScale;
+		origGravity = gameObject.GetComponent<Rigidbody2D>().gravityScale;
 
 	}
 
@@ -72,7 +72,7 @@ public class LRRHController : MonoBehaviour {
 					{
 						transform.Translate (Vector2.right * (speed/airMoves) * Time.deltaTime);
 						airMoves = airMoves + airMoveIncrement; 
-						gameObject.rigidbody2D.gravityScale = gameObject.rigidbody2D.gravityScale + airGravityIncrement;
+						gameObject.GetComponent<Rigidbody2D>().gravityScale = gameObject.GetComponent<Rigidbody2D>().gravityScale + airGravityIncrement;
 					}
 					//transform.eulerAngles = new Vector2(0,0); 
 					GameObject.Find("LRRH").gameObject.GetComponent<Renderer>().material.SetTexture("_MainTex", rightTexture);
@@ -88,7 +88,7 @@ public class LRRHController : MonoBehaviour {
 					{
 						transform.Translate (-Vector2.right * (speed/airMoves) * Time.deltaTime);
 						airMoves = airMoves + airMoveIncrement; 
-						gameObject.rigidbody2D.gravityScale = gameObject.rigidbody2D.gravityScale + airGravityIncrement;
+						gameObject.GetComponent<Rigidbody2D>().gravityScale = gameObject.GetComponent<Rigidbody2D>().gravityScale + airGravityIncrement;
 					}
 					//transform.eulerAngles = new Vector2(0,0); //flip the character on its x axis
 					GameObject.Find("LRRH").gameObject.GetComponent<Renderer>().material.SetTexture("_MainTex", leftTexture);
@@ -100,9 +100,9 @@ public class LRRHController : MonoBehaviour {
 					{
 						SoundManager play = GameObject.Find("SoundManager").gameObject.GetComponent<SoundManager>();
 						play.PlayJumpLRRH();
-						rigidbody2D.isKinematic = true;
-						rigidbody2D.isKinematic = false;
-						rigidbody2D.AddForce (Vector2.up * jumpHeight);
+						GetComponent<Rigidbody2D>().isKinematic = true;
+						GetComponent<Rigidbody2D>().isKinematic = false;
+						GetComponent<Rigidbody2D>().AddForce (Vector2.up * jumpHeight);
 						jumpsMade++;
 						if (airMoves == 1) 
 						{
@@ -115,7 +115,7 @@ public class LRRHController : MonoBehaviour {
 				{
 					if (inGround == false)
 					{
-						gameObject.rigidbody2D.gravityScale = gameObject.rigidbody2D.gravityScale + (airGravityIncrement*5);
+						gameObject.GetComponent<Rigidbody2D>().gravityScale = gameObject.GetComponent<Rigidbody2D>().gravityScale + (airGravityIncrement*5);
 					}
 				}
 				}else{
@@ -133,7 +133,7 @@ public class LRRHController : MonoBehaviour {
 						{
 							transform.Translate (Vector2.right * (speed/airMoves) * Time.deltaTime);
 							airMoves = airMoves + airMoveIncrement; 
-							gameObject.rigidbody2D.gravityScale = gameObject.rigidbody2D.gravityScale + airGravityIncrement;
+							gameObject.GetComponent<Rigidbody2D>().gravityScale = gameObject.GetComponent<Rigidbody2D>().gravityScale + airGravityIncrement;
 						}
 						//transform.eulerAngles = new Vector2(0,0); 
 						GameObject.Find("LRRH").gameObject.GetComponent<Renderer>().material.SetTexture("_MainTex", rightTexture);
@@ -149,7 +149,7 @@ public class LRRHController : MonoBehaviour {
 						{
 							transform.Translate (-Vector2.right * (speed/airMoves) * Time.deltaTime);
 							airMoves = airMoves + airMoveIncrement; 
-							gameObject.rigidbody2D.gravityScale = gameObject.rigidbody2D.gravityScale + airGravityIncrement;
+							gameObject.GetComponent<Rigidbody2D>().gravityScale = gameObject.GetComponent<Rigidbody2D>().gravityScale + airGravityIncrement;
 						}
 						//transform.eulerAngles = new Vector2(0,0); //flip the character on its x axis
 						GameObject.Find("LRRH").gameObject.GetComponent<Renderer>().material.SetTexture("_MainTex", leftTexture);
@@ -161,9 +161,9 @@ public class LRRHController : MonoBehaviour {
 						{
 							SoundManager play = GameObject.Find("SoundManager").gameObject.GetComponent<SoundManager>();
 							play.PlayJumpLRRH();
-							rigidbody2D.isKinematic = true;
-							rigidbody2D.isKinematic = false;
-							rigidbody2D.AddForce (Vector2.up * jumpHeight);
+							GetComponent<Rigidbody2D>().isKinematic = true;
+							GetComponent<Rigidbody2D>().isKinematic = false;
+							GetComponent<Rigidbody2D>().AddForce (Vector2.up * jumpHeight);
 							jumpsMade++;
 							if (airMoves == 1) 
 							{
@@ -176,7 +176,7 @@ public class LRRHController : MonoBehaviour {
 					{
 						if (inGround == false)
 						{
-							gameObject.rigidbody2D.gravityScale = gameObject.rigidbody2D.gravityScale + (airGravityIncrement*5);
+							gameObject.GetComponent<Rigidbody2D>().gravityScale = gameObject.GetComponent<Rigidbody2D>().gravityScale + (airGravityIncrement*5);
 						}
 					}
 				}
@@ -191,7 +191,7 @@ public class LRRHController : MonoBehaviour {
 			inGround = true;
 			jumpsMade = 0;
 			airMoves = 1;
-			gameObject.rigidbody2D.gravityScale = origGravity;
+			gameObject.GetComponent<Rigidbody2D>().gravityScale = origGravity;
 		}
 	}
 

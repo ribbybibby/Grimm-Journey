@@ -11,7 +11,7 @@ public class MainMenuAnim : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (Input.anyKey){
-			gameObject.rigidbody2D.isKinematic = false;
+			gameObject.GetComponent<Rigidbody2D>().isKinematic = false;
 		}
 	}
 }

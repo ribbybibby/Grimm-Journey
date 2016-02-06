@@ -14,7 +14,7 @@ public class WoodCutterController : MonoBehaviour {
 	public float wolfRangeRight;
 
 	// Private
-	private int startTimeOut; //
+	//private int startTimeOut;
 	public bool headingright;
 	private int startSpeed;
 	private bool chasing;
@@ -26,7 +26,7 @@ public class WoodCutterController : MonoBehaviour {
 	// Remember starting speed, the start of the timeout and make sure chars in the 'Enemy' layer ignore each other
 	void Start() {
 		startSpeed = speed;
-		startTimeOut = timeout;
+//		startTimeOut = timeout;
 		chasing = false;
 		Physics2D.IgnoreLayerCollision (11, 11);
 

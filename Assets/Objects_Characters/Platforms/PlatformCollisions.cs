@@ -14,7 +14,7 @@ public class PlatformCollisions : MonoBehaviour {
 			{
 				if ((col.gameObject.transform.position.y - platformChild.transform.position.y) > 0)
 				{
-					Physics2D.IgnoreCollision(col.gameObject.collider2D, platformChild.collider2D);
+					Physics2D.IgnoreCollision(col.gameObject.GetComponent<Collider2D>(), platformChild.GetComponent<Collider2D>());
 				}
 			}
 		}
@@ -23,6 +23,6 @@ public class PlatformCollisions : MonoBehaviour {
 	// Once LRRH is outside the trigger, we reset collisions
 	void OnTriggerExit2D(Collider2D col)
 	{
-		Physics2D.IgnoreCollision(col.gameObject.collider2D, platformChild.collider2D, false);
+		Physics2D.IgnoreCollision(col.gameObject.GetComponent<Collider2D>(), platformChild.GetComponent<Collider2D>(), false);
 	}
 }

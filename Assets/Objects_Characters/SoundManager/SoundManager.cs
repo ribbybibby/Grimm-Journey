@@ -120,17 +120,17 @@ public class SoundManager : MonoBehaviour
 			WoodCutterAxe.volume = setVolume;
 			Bwap.volume = setVolume;
 
-			Debug.Log (localNarrationManager.getTalking ());
+//			Debug.Log (localNarrationManager.getTalking ());
 
 			//Change this to set a bool whenever any narration is playing inside the narrationmanager
 			if (localNarrationManager.getTalking() == true) {
 				setVolume = 0.2F;
-				Debug.Log ("gettalking is " + setVolume);
+//				Debug.Log ("gettalking is " + setVolume);
 			}
 
 			if (localNarrationManager.getTalking() == false) {
 				setVolume = 1.0F;
-				Debug.Log ("gettalking is " + setVolume);
+//				Debug.Log ("gettalking is " + setVolume);
 			}
 		}
 		

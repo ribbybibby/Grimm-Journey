@@ -50,7 +50,7 @@ public class CatMovement : MonoBehaviour {
 	void OnTriggerEnter2D(Collider2D col) {
 		if (col.tag == "Ground")
 		{
-			rigidbody2D.AddForce (Vector3.up * jumpForce);
+			GetComponent<Rigidbody2D>().AddForce (Vector3.up * jumpForce);
 			MoveEnemy (jumpForce);
 		}
 	}
@@ -93,16 +93,16 @@ public class CatMovement : MonoBehaviour {
 		if (targetdiffx > 0f) 
 		{	
 			gameObject.GetComponent<Renderer>().material.SetTexture("_MainTex", rightTexture);
-			rigidbody2D.AddForce (Vector3.right * value);
+			GetComponent<Rigidbody2D>().AddForce (Vector3.right * value);
 		}
 		if (targetdiffx < 0f) 
 		{
 			gameObject.GetComponent<Renderer>().material.SetTexture("_MainTex", leftTexture);
-			rigidbody2D.AddForce (Vector3.left * value);
+			GetComponent<Rigidbody2D>().AddForce (Vector3.left * value);
 		}	
 		if (targetdiffy > 0f) 
 		{
-			rigidbody2D.AddForce (Vector3.up * value);
+			GetComponent<Rigidbody2D>().AddForce (Vector3.up * value);
 		}
 	}
 	

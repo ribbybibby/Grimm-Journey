@@ -7,9 +7,9 @@ public class Fader : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		textureColor = renderer.material.color;
+		textureColor = GetComponent<Renderer>().material.color;
 		textureColor.a = 0;
-		renderer.material.color = textureColor;
+		GetComponent<Renderer>().material.color = textureColor;
 	}
 
 }

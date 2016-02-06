@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
 
 public class MainMenuClick : MonoBehaviour {
@@ -25,7 +26,7 @@ public class MainMenuClick : MonoBehaviour {
 		//if (Input.anyKey){
 		yield return new WaitForSeconds(3);
 		if (yesToStart == true){
-			Application.LoadLevel(LevelToLoad);
+			SceneManager.LoadScene (LevelToLoad);
 		}
 	}
 }

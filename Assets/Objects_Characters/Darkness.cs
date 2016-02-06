@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
 
 public class Darkness : MonoBehaviour {
@@ -34,7 +35,7 @@ public class Darkness : MonoBehaviour {
 
 		if(other.gameObject.name == "BBW" || other.gameObject.name == "LRRH")
 		{
-			Application.LoadLevel(6);
+			SceneManager.LoadScene (6);
 		}
 		
 		if (other.gameObject.tag == "Ground" && hasPlayed == false)

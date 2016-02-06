@@ -35,7 +35,7 @@ public class PickUpBehaviour : MonoBehaviour {
 		// Find how far away LRRH and BBW are from the pickup
 		tracklrrh = GameObject.FindGameObjectWithTag ("LRRH");
 		trackbbw = GameObject.FindGameObjectWithTag ("BBW");
-
+		
 		lrrhDistance = Vector3.Distance (gameObject.transform.position, tracklrrh.transform.position);
 		bbwDistance = Vector3.Distance (gameObject.transform.position, trackbbw.transform.position);
 
@@ -100,12 +100,12 @@ public class PickUpBehaviour : MonoBehaviour {
 	// Waits for timeout
 	// And then reverts the hiding
 	IEnumerator waitThenShow(){
-		gameObject.renderer.enabled = false;
+		gameObject.GetComponent<Renderer>().enabled = false;
 		mask.enabled = false;
 		hidden = true;
 		yield return new WaitForSeconds(timeout);
 		hidden = false;
 		mask.enabled = true;
-		gameObject.renderer.enabled = true;
+		gameObject.GetComponent<Renderer>().enabled = true;
 	}
 }

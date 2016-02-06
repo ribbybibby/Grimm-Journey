@@ -162,7 +162,7 @@ public static class SkeletonBaker {
 #if UNITY_5_0
 					controller.AddMotion(clip);
 #else
-					UnityEditorInternal.AnimatorController.AddAnimationClipToController(controller, clip);
+//					UnityEditor.Animations.AnimatorController.AddAnimationClipToController(controller, clip);
 #endif
 
 				}

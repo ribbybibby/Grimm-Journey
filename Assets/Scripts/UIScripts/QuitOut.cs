@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
 
 public class QuitOut : MonoBehaviour {
@@ -14,7 +15,7 @@ public class QuitOut : MonoBehaviour {
 	}
 
 	public void quit(){
-		Application.LoadLevel(0);
+		SceneManager.LoadScene (0);
 	}
 
 	public void quitAll(){

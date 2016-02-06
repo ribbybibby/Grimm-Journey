@@ -7,8 +7,6 @@ Project("{49117E43-09DA-6780-5B40-C3CFFB91C270}") = "Grimm-Journey", "Assembly-C
 EndProject
 Project("{49117E43-09DA-6780-5B40-C3CFFB91C270}") = "Grimm-Journey", "Assembly-CSharp-Editor.csproj", "{3CD5C9AB-F7EF-FA57-A08A-7F0F1C140085}"
 EndProject
-Project("{49117E43-09DA-6780-5B40-C3CFFB91C270}") = "Grimm-Journey", "Assembly-UnityScript-firstpass.unityproj", "{489D5A49-9259-2A1E-DE16-20B32A05EE04}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,10 +25,6 @@ Global
 		{3CD5C9AB-F7EF-FA57-A08A-7F0F1C140085}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3CD5C9AB-F7EF-FA57-A08A-7F0F1C140085}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3CD5C9AB-F7EF-FA57-A08A-7F0F1C140085}.Release|Any CPU.Build.0 = Release|Any CPU
-		{489D5A49-9259-2A1E-DE16-20B32A05EE04}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{489D5A49-9259-2A1E-DE16-20B32A05EE04}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{489D5A49-9259-2A1E-DE16-20B32A05EE04}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{489D5A49-9259-2A1E-DE16-20B32A05EE04}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -53,5 +47,4 @@ Global
 		$3.inheritsScope = text/plain
 		$3.scope = text/plain
 	EndGlobalSection
-
 EndGlobal

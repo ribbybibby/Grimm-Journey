@@ -89,7 +89,7 @@ public static class SkeletonBaker {
 
 		var skeletonData = skeletonDataAsset.GetSkeletonData(true);
 		bool hasAnimations = bakeAnimations && skeletonData.Animations.Count > 0;
-#if UNITY_5
+#if UNITY_5_3
 		UnityEditor.Animations.AnimatorController controller = null;
 #else
 		UnityEditorInternal.AnimatorController controller = null;
@@ -100,7 +100,7 @@ public static class SkeletonBaker {
 
 			var runtimeController = AssetDatabase.LoadAssetAtPath(controllerPath, typeof(RuntimeAnimatorController));
 
-#if UNITY_5
+#if UNITY_5_3
 			if (runtimeController != null) {
 				controller = (UnityEditor.Animations.AnimatorController)runtimeController;
 			} else {
@@ -159,10 +159,10 @@ public static class SkeletonBaker {
 					unusedClipNames.Remove(clip.name);
 				} else {
 					AssetDatabase.AddObjectToAsset(clip, controller);
-#if UNITY_5_0
+#if UNITY_5_3
 					controller.AddMotion(clip);
 #else
-//					UnityEditor.Animations.AnimatorController.AddAnimationClipToController(controller, clip);
+					UnityEditor.Animations.AnimatorController.AddAnimationClipToController(controller, clip);
 #endif
 
 				}
@@ -382,7 +382,7 @@ public static class SkeletonBaker {
 		string controllerPath = dataPath.Replace("_SkeletonData", "_Controller").Replace(".asset", ".controller");
 
 
-#if UNITY_5
+#if UNITY_5_3
 		UnityEditor.Animations.AnimatorController controller;
 
 		if (skeletonDataAsset.controller != null) {
@@ -439,7 +439,7 @@ public static class SkeletonBaker {
 				//generate new dummy clip
 				AnimationClip newClip = new AnimationClip();
 				newClip.name = name;
-#if UNITY_5
+#if UNITY_5_3
 #else
 				AnimationUtility.SetAnimationType(newClip, ModelImporterAnimationType.Generic);
 #endif
@@ -773,7 +773,7 @@ public static class SkeletonBaker {
 	}
 
 	static void SetAnimationSettings (AnimationClip clip, AnimationClipSettings settings) {
-#if UNITY_5
+#if UNITY_5_3
 		AnimationUtility.SetAnimationClipSettings(clip, settings);
 #else
 		MethodInfo methodInfo = typeof(AnimationUtility).GetMethod("SetAnimationClipSettings", BindingFlags.Static | BindingFlags.NonPublic);
@@ -795,7 +795,7 @@ public static class SkeletonBaker {
 			AnimationUtility.SetAnimationEvents(clip, new AnimationEvent[0]);
 		}
 
-#if UNITY_5
+#if UNITY_5_3
 
 #else
 		AnimationUtility.SetAnimationType(clip, ModelImporterAnimationType.Generic);
